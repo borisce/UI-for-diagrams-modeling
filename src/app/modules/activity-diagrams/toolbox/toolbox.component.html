@@ -1,0 +1,197 @@
+<div id="toolbox" class="toolbox">
+    <!-- Elements wrapper -->
+    <div>
+        <h5>Elements</h5>
+        <div class="elementsWrapper">
+            <button mat-stroked-button matTooltip="{{keyboardShortcutService.getTooltip('action')}}" color="basic"
+                id="addAction" class="elementButton" (click)="addElement.emit('action')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                    <path fill="#888888"
+                        d="M4 20q-.825 0-1.413-.588T2 18V6q0-.825.588-1.413T4 4h16q.825 0 1.413.588T22 6v12q0 .825-.588 1.413T20 20H4Zm0-2h16V6H4v12Zm0 0V6v12Z" />
+                </svg>
+            </button>
+            <button mat-stroked-button matTooltip="{{keyboardShortcutService.getTooltip('if')}}" color="basic"
+                id="addDiamondIf" class="elementButton" (click)="addElement.emit('if')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 256 256">
+                    <path fill="#888888"
+                        d="M238.16 113.89L142.1 17.83a20 20 0 0 0-28.21 0l-96 96.06a20 20 0 0 0 0 28.22l96.05 96.06a20 20 0 0 0 28.21 0l96-96.06a20 20 0 0 0 0-28.22ZM128 218.33L37.68 128L128 37.67L218.32 128Z" />
+                </svg>
+            </button>
+            <button mat-stroked-button matTooltip="{{keyboardShortcutService.getTooltip('case')}}" color="basic"
+                id="addDiamondCase" class="elementButton" (click)="addElement.emit('case')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 256 256">
+                    <path fill="#888888"
+                        d="M240 128a15.85 15.85 0 0 1-4.67 11.28l-96.05 96.06a16 16 0 0 1-22.56 0l-96-96.06a16 16 0 0 1 0-22.56l96.05-96.06a16 16 0 0 1 22.56 0l96.05 96.06A15.85 15.85 0 0 1 240 128" />
+                </svg>
+            </button>
+            <button mat-stroked-button color="basic" matTooltip="{{keyboardShortcutService.getTooltip('merge')}}"
+                id="addJoin" class="elementButton" (click)="addElement.emit('merge')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 256 256">
+                    <g fill="#888888">
+                        <path
+                            d="m229.67 133.62l-96 96a7.94 7.94 0 0 1-11.24 0l-96-96a7.94 7.94 0 0 1 0-11.24l96.05-96a7.94 7.94 0 0 1 11.24 0l96 96.05a7.94 7.94 0 0 1-.05 11.19"
+                            opacity=".2" />
+                        <path
+                            d="m235.33 116.72l-96.05-96.06a16 16 0 0 0-22.56 0l-96 96.06a16 16 0 0 0 0 22.56l96.05 96.06a16 16 0 0 0 22.56 0l96.05-96.06a16 16 0 0 0 0-22.56ZM128 224l-96-96l96-96l96 96Z" />
+                    </g>
+                </svg>
+            </button>
+            <button mat-stroked-button color="basic" matTooltip="{{keyboardShortcutService.getTooltip('start')}}"
+                id="addStart" class="elementButton" (click)="addElement.emit('start')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                    <path fill="#888888"
+                        d="M12 20a8 8 0 0 1-8-8a8 8 0 0 1 8-8a8 8 0 0 1 8 8a8 8 0 0 1-8 8m0-18A10 10 0 0 0 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2" />
+                </svg>
+            </button>
+            <button mat-stroked-button color="basic" matTooltip="{{keyboardShortcutService.getTooltip('end')}}"
+                id="addEnd" class="elementButton" (click)="addElement.emit('end')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                    <path fill="#888888"
+                        d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2" />
+                </svg>
+            </button>
+            <button mat-stroked-button color="basic" matTooltip="{{keyboardShortcutService.getTooltip('loop')}}"
+                id="addLoop" class="elementButton" (click)="addElement.emit('loop')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                    <path fill="#888888"
+                        d="M12 4a7.986 7.986 0 0 0-6.357 3.143L8 9.5H2v-6l2.219 2.219A9.982 9.982 0 0 1 12 2c5.523 0 10 4.477 10 10h-2a8 8 0 0 0-8-8m-8 8a8 8 0 0 0 14.357 4.857L16 14.5h6v6l-2.219-2.219A9.982 9.982 0 0 1 12 22C6.477 22 2 17.523 2 12z" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- I/O, signals, parameters -->
+    <div>
+        <h5>I/O & signals</h5>
+        <div class="elementsWrapper">
+            <button mat-stroked-button color="basic" matTooltip="{{keyboardShortcutService.getTooltip('inputs')}}"
+                class="elementButton" (click)="openTable.emit('inputs')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                    <path fill="#888888"
+                        d="M4 20q-.825 0-1.412-.587T2 18v-3h2v3h16V6H4v3H2V6q0-.825.588-1.412T4 4h16q.825 0 1.413.588T22 6v12q0 .825-.587 1.413T20 20zm7.5-3.5l-1.4-1.45L12.175 13H2v-2h10.175L10.1 8.95l1.4-1.45L16 12z" />
+                </svg>
+            </button>
+            <button mat-stroked-button color="basic" matTooltip="{{keyboardShortcutService.getTooltip('outputs')}}"
+                class="elementButton" (click)="openTable.emit('outputs')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                    <path fill="#888888"
+                        d="M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h14q.825 0 1.413.588T21 5v2h-2V5H5v14h14v-2h2v2q0 .825-.587 1.413T19 21zm12-4l-1.4-1.4l2.575-2.6H9v-2h9.175L15.6 8.4L17 7l5 5z" />
+                </svg>
+            </button>
+            <button mat-stroked-button color="basic" matTooltip="{{keyboardShortcutService.getTooltip('signals')}}"
+                class="elementButton" (click)="openTable.emit('signals')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                    <g fill="#888888">
+                        <path d="m20.708 4.412l-10.25 10.287h3.59v2h-7v-7h2v3.58L19.293 3z" />
+                        <path d="M11 4.706v2H5v12h12v-6h2v8H3v-16z" />
+                    </g>
+                </svg>
+            </button>
+            <button mat-stroked-button color="basic" matTooltip="{{keyboardShortcutService.getTooltip('parameters')}}"
+                class="elementButton" (click)="openTable.emit('parameters')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+                    <path fill="#888888"
+                        d="M28 13V8a2.002 2.002 0 0 0-2-2h-3v2h3v5a3.976 3.976 0 0 0 1.382 3A3.976 3.976 0 0 0 26 19v5h-3v2h3a2.002 2.002 0 0 0 2-2v-5a2.002 2.002 0 0 1 2-2v-2a2.002 2.002 0 0 1-2-2" />
+                    <path fill="#888888" fill-rule="evenodd"
+                        d="m17 9l-.857 3h2L19 9h2l-.857 3H22v2h-2.428l-1.143 4H21v2h-3.143L17 23h-2l.857-3h-2L13 23h-2l.857-3H10v-2h2.429l1.143-4H11v-2h3.143L15 9Zm.572 5h-2l-1.143 4h2Z" />
+                    <path fill="#888888"
+                        d="M6 13V8h3V6H6a2.002 2.002 0 0 0-2 2v5a2.002 2.002 0 0 1-2 2v2a2.002 2.002 0 0 1 2 2v5a2.002 2.002 0 0 0 2 2h3v-2H6v-5a3.976 3.976 0 0 0-1.382-3A3.976 3.976 0 0 0 6 13" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Paper actions-->
+    <div>
+        <h5>Paper actions</h5>
+        <div class="elementsWrapper">
+            <button mat-stroked-button color="basic" matTooltip="Moving mode" class="elementButton"
+                (click)="changeMode.emit()" [ngClass]="drawingMode ? 'modeButton' : 'modeButtonClicked'">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                    <path fill="currentColor"
+                        d="M12.8 23q-2.05 0-3.85-.937T6 19.45L1.2 12.4l1.675-1.675L7 13.575V3h2v9h2V1h2v11h2V2h2v10h2V4h2v10.8q0 3.425-2.387 5.813T12.8 23" />
+                </svg></button>
+            <button mat-stroked-button color="basic" matTooltip="Drawing mode" class="elementButton"
+                (click)="changeMode.emit()" [ngClass]="drawingMode ? 'modeButtonClicked' : 'modeButton'"><svg
+                    xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                    <path fill="currentColor"
+                        d=" M3 21v-4.25L17.625 2.175L21.8 6.45L7.25 21zM17.6 7.8L19 6.4L17.6 5l-1.4 1.4z" />
+                </svg></button>
+
+            <button mat-stroked-button color="basic" matTooltip="{{keyboardShortcutService.getTooltip('zoomIn')}}"
+                class="elementButton" (click)="zoomIn.emit()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                    <path fill="#888888"
+                        d="M8.5 10.5h-1q-.425 0-.712-.288T6.5 9.5q0-.425.288-.712T7.5 8.5h1v-1q0-.425.288-.712T9.5 6.5q.425 0 .713.288t.287.712v1h1q.425 0 .713.288t.287.712q0 .425-.288.713t-.712.287h-1v1q0 .425-.288.713T9.5 12.5q-.425 0-.712-.288T8.5 11.5zm1 5.5q-2.725 0-4.612-1.888T3 9.5q0-2.725 1.888-4.612T9.5 3q2.725 0 4.613 1.888T16 9.5q0 1.1-.35 2.075T14.7 13.3l5.6 5.6q.275.275.275.7t-.275.7q-.275.275-.7.275t-.7-.275l-5.6-5.6q-.75.6-1.725.95T9.5 16m0-2q1.875 0 3.188-1.312T14 9.5q0-1.875-1.312-3.187T9.5 5Q7.625 5 6.313 6.313T5 9.5q0 1.875 1.313 3.188T9.5 14" />
+                </svg>
+            </button>
+
+            <button mat-stroked-button color="basic" matTooltip="{{keyboardShortcutService.getTooltip('zoomOut')}}"
+                class="elementButton" (click)="zoomOut.emit()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                    <path fill="#888888"
+                        d="m19.6 21l-6.3-6.3q-.75.6-1.725.95T9.5 16q-2.725 0-4.612-1.888T3 9.5q0-2.725 1.888-4.612T9.5 3q2.725 0 4.613 1.888T16 9.5q0 1.1-.35 2.075T14.7 13.3l6.3 6.3zM9.5 14q1.875 0 3.188-1.312T14 9.5q0-1.875-1.312-3.187T9.5 5Q7.625 5 6.313 6.313T5 9.5q0 1.875 1.313 3.188T9.5 14M7 10.5v-2h5v2z" />
+                </svg>
+            </button>
+
+            <button mat-stroked-button color="basic" id="clearGraph"
+                matTooltip="{{keyboardShortcutService.getTooltip('clearPaper')}}" class="elementButton"
+                (click)="clear.emit()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                    viewBox="0 0 24 24">
+                    <path fill="#888888"
+                        d="m9.4 16.5l2.6-2.6l2.6 2.6l1.4-1.4l-2.6-2.6L16 9.9l-1.4-1.4l-2.6 2.6l-2.6-2.6L8 9.9l2.6 2.6L8 15.1zM7 21q-.825 0-1.412-.587T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.587 1.413T17 21z" />
+                </svg>
+            </button>
+
+            <button mat-stroked-button color="basic" matTooltip="{{keyboardShortcutService.getTooltip('format')}}"
+                class="elementButton" (click)="format.emit()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                    <path fill="#888888"
+                        d="M4 21q-.425 0-.712-.288T3 20q0-.425.288-.712T4 19h16q.425 0 .713.288T21 20q0 .425-.288.713T20 21zm0-4q-.425 0-.712-.288T3 16q0-.425.288-.712T4 15h16q.425 0 .713.288T21 16q0 .425-.288.713T20 17zm0-4q-.425 0-.712-.288T3 12q0-.425.288-.712T4 11h16q.425 0 .713.288T21 12q0 .425-.288.713T20 13zm0-4q-.425 0-.712-.288T3 8q0-.425.288-.712T4 7h16q.425 0 .713.288T21 8q0 .425-.288.713T20 9zm0-4q-.425 0-.712-.288T3 4q0-.425.288-.712T4 3h16q.425 0 .713.288T21 4q0 .425-.288.713T20 5z" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Save & load, generate -->
+    <div>
+        <h5>Save & load</h5>
+        <div class="elementsWrapper">
+            <button mat-stroked-button color="basic" matTooltip="{{keyboardShortcutService.getTooltip('save')}}"
+                class="elementButton" (click)="save.emit()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                    <path fill="#888888"
+                        d="M21 7v12q0 .825-.587 1.413T19 21H5q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h12zm-9 11q1.25 0 2.125-.875T15 15q0-1.25-.875-2.125T12 12q-1.25 0-2.125.875T9 15q0 1.25.875 2.125T12 18m-6-8h9V6H6z" />
+                </svg>
+            </button>
+            <button mat-stroked-button color="basic" matTooltip="{{keyboardShortcutService.getTooltip('load')}}"
+                class="elementButton" (click)="load.emit()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                    <path fill="#888888" d="M4 22v-2h16v2zm5-4v-7H5l7-9l7 9h-4v7z" />
+                </svg>
+            </button>
+
+            <button mat-stroked-button color="basic" matTooltip="Generate code" class="elementButton"
+                (click)="generateCode.emit()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                    viewBox="0 0 24 24">
+                    <path fill="#888888"
+                        d="m8 18l-6-6l6-6l1.425 1.425l-4.6 4.6L9.4 16.6zm8 0l-1.425-1.425l4.6-4.6L14.6 7.4L16 6l6 6z" />
+                </svg>
+            </button>
+            <button mat-stroked-button color="basic" matTooltip="Generate diagram" class="elementButton"
+                (click)="generateDiagram.emit()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                    <path fill="#888888"
+                        d="M8 17.95q.25.025.488.038T9 18t.513-.012t.487-.038V20h10V10h-2.05q.025-.25.038-.488T18 9t-.012-.513T17.95 8H20q.825 0 1.413.588T22 10v10q0 .825-.587 1.413T20 22H10q-.825 0-1.412-.587T8 20zM9 16q-2.925 0-4.962-2.037T2 9t2.038-4.962T9 2t4.963 2.038T16 9t-2.037 4.963T9 16m0-2q2.075 0 3.538-1.463T14 9t-1.463-3.537T9 4T5.463 5.463T4 9t1.463 3.538T9 14m0-5" />
+                </svg>
+            </button>
+            <button mat-stroked-button color="basic" matTooltip="Export diagram as image" class="elementButton"
+                (click)="exportImage.emit()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                    <path fill="#888888"
+                        d="M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h8q.425 0 .713.288T14 4t-.288.713T13 5H5v14h14v-8q0-.425.288-.712T20 10t.713.288T21 11v8q0 .825-.587 1.413T19 21zM17 7h-1q-.425 0-.712-.288T15 6t.288-.712T16 5h1V4q0-.425.288-.712T18 3t.713.288T19 4v1h1q.425 0 .713.288T21 6t-.288.713T20 7h-1v1q0 .425-.288.713T18 9t-.712-.288T17 8zm-5.75 9L9.4 13.525q-.15-.2-.4-.2t-.4.2l-2 2.675q-.2.25-.05.525T7 17h10q.3 0 .45-.275t-.05-.525l-2.75-3.675q-.15-.2-.4-.2t-.4.2zm.75-4" />
+                </svg>
+            </button>
+        </div>
+    </div>
+</div>

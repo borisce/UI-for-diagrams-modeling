@@ -1,0 +1,8 @@
+<h1 mat-dialog-title> Delete repository <b>"{{ repo.name }}"</b>? </h1>
+<mat-dialog-content>
+  <p> This action cannot be undone. This will permanently delete the <b>"{{ repo.name }}"</b> repository. </p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="false"> Cancel </button>
+  <button mat-button color="warn" [mat-dialog-close]="true"> Delete </button>
+</mat-dialog-actions>

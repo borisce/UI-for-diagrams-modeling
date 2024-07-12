@@ -1,0 +1,55 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+.dialog {
+  &-header {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &-header > h1 {
+    margin: 0px;
+  }
+
+  &-controls {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    width: 100%;
+
+    button {
+      width: 100%;
+    }
+  }
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 8px;
+}
+
+.icon-button {
+  background-color: transparent;
+  border: transparent;
+  transition: ease 0.5s background-color;
+  box-shadow: none;
+  color: black;
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.icon-button:hover {
+  background-color: #eee;
+}

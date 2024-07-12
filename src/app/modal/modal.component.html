@@ -1,0 +1,52 @@
+<div class="modal-wrapper">
+  <mat-tab-group animationDuration="0ms" at-align-tabs="start">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <div class="tab-label">
+          <mat-icon>add</mat-icon>
+          Create repository
+        </div>
+      </ng-template>
+
+      <div class="tab-content-wrapper">
+        <h3>Create a new repository</h3>
+
+        <form (ngSubmit)="onSubmitNewRepo()" [formGroup]="repoNoGitFrom">
+          <mat-form-field appearance="fill">
+            <mat-label>Name</mat-label>
+            <input formControlName="name" matInput required="true">
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Description</mat-label>
+            <textarea formControlName="description" matInput></textarea>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Select template</mat-label>
+            <mat-select [(value)]="selected">
+              <mat-option value="default">Default folders</mat-option>
+              <mat-option value="empty">Empty</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-checkbox (change)="checkboxPrivateHandler($event)" color="primary" id="checkbox-private">
+            Private repository
+          </mat-checkbox>
+
+          <div class="button-group">
+            <button [disabled]="loading" color="primary" mat-flat-button>
+              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+              Save
+            </button>
+            <button (click)="onNoClick()" color="primary" mat-stroked-button>
+              Close
+            </button>
+          </div>
+        </form>
+
+        <span *ngIf="errorNew" class="error-message">{{errorNew}}</span>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

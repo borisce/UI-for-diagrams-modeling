@@ -1,0 +1,39 @@
+.code-review {
+  opacity: 0.3;
+
+  &.white {
+    background-color: #FFF;
+  }
+
+  &.red {
+    background-color: #F00;
+  }
+
+  &.green {
+    background-color: #0F0;
+  }
+
+  &.blue {
+    background-color: #00F;
+  }
+
+  &.yellow {
+    background-color: #FF0;
+  }
+
+  &.orange {
+    background-color: #F90;
+  }
+
+  &.purple {
+    background-color: #F0F;
+  }
+
+  &.pink {
+    background-color: #F0F;
+  }
+
+  &.gray {
+    background-color: #888;
+  }
+}

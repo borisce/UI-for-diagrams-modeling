@@ -1,0 +1,18 @@
+<h1 mat-dialog-title> Create a new organization </h1>
+<mat-dialog-content>
+  <p> This action will create a new organization. </p>
+  <form [formGroup]="nameForm" (ngSubmit)="onSubmit()">
+    <mat-form-field class="full-width">
+      <mat-label>Name</mat-label>
+      <input matInput type="text" formControlName="name" [errorStateMatcher]="matcher" [formControl]="nameForm.get('name')" />
+      <mat-hint>Use 6 to 200 character as the name</mat-hint>
+      <mat-error *ngIf="nameForm.invalid">
+        Invalid organization name
+      </mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="false"> Cancel </button>
+  <button mat-button color="primary" (click)="onSubmit()"> Create </button>
+</mat-dialog-actions>

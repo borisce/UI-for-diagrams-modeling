@@ -1,0 +1,57 @@
+<mat-nav-list>
+  <div fxLayout="column">
+    <span>ASICDE</span>
+    <br>
+    <a (click)="onSidenavClose()" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/']" mat-button
+       routerLinkActive="active_route">Home</a>
+    <br>
+    <a (click)="onSidenavClose()" [routerLink]="['/about-us']" mat-button routerLinkActive="active_route">About Us</a>
+    <br>
+    <a (click)="onSidenavClose()" [routerLink]="['/features']" mat-button routerLinkActive="active_route">Features</a>
+    <br>
+    <a (click)="onSidenavClose()" [routerLink]="['/pricing']" mat-button routerLinkActive="active_route">Pricing</a>
+    <br>
+    <div *ngIf="authenticationService.loggedIn; else unauthorized">
+      <button (click)="onSidenavClose()" mat-button routerLink="/organization/repos" routerLinkActive="active_route">
+        Organization
+      </button>
+      <br>
+      <button (click)="onSidenavClose()" mat-button routerLink="/my-repos" routerLinkActive="active_route">
+        Repositories
+      </button>
+      <br>
+      <button (click)="onSidenavClose()" id="loggedInUser" mat-button>
+        {{authenticationService.currentUser.firstName.charAt(0).toUpperCase() + authenticationService.currentUser.lastName.charAt(0).toUpperCase()}}
+      </button>
+      <mat-menu #menu="matMenu">
+        <button (click)="onSidenavClose()" mat-menu-item routerLink="/editUser/user">
+          <mat-icon>person</mat-icon>
+          <span>My account</span>
+        </button>
+        <button (click)="onSidenavClose()" mat-menu-item routerLink="/orders">
+          <mat-icon>request_quote</mat-icon>
+          <span>My orders</span>
+        </button>
+        <button (click)="onSidenavClose()" mat-menu-item routerLink="/cores/my">
+          <mat-icon>memory</mat-icon>
+          <span>My IP cores</span>
+        </button>
+        <button (click)="onSidenavClose()" mat-menu-item routerLink="/cores/purchased">
+          <mat-icon>payments</mat-icon>
+          <span>Purchased IP cores</span>
+        </button>
+        <button (click)="createOrganizationdialog(); onSidenavClose()"
+                *ngIf="!authenticationService.currentOrganization"
+                mat-menu-item>
+          <mat-icon>group</mat-icon>
+          <span>Create new Organization</span>
+        </button>
+        <button (click)="authenticationService.logout(); onSidenavClose()" mat-menu-item>
+          <mat-icon>exit_to_app</mat-icon>
+          <span>Sign out</span>
+        </button>
+      </mat-menu>
+    </div>
+    <ng-template #unauthorized></ng-template>
+  </div>
+</mat-nav-list>

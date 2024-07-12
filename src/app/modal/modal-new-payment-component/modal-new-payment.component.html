@@ -1,0 +1,32 @@
+<div *ngIf="paymentMethods == null; else loaded">
+  <mat-spinner></mat-spinner>
+</div>
+<ng-template #loaded>
+  <div>
+    <h4>New payment</h4>
+    <form (ngSubmit)="onSubmit()" [formGroup]="form">
+      <mat-radio-group [formControlName]="'payment_method'">
+        <div *ngFor="let paymentMethod of paymentMethods" class="mt-4 mb-4">
+          <mat-radio-button [value]="paymentMethod.namespace" color="primary">
+            <div>
+              <!--              <h4>{{paymentMethod.name}}</h4>-->
+              <img [matTooltip]="paymentMethod.description" [src]="paymentMethod.logo" alt="{{paymentMethod.name}} logo"
+                   matTooltipPosition="right"
+                   style="height: 50px;">
+              <!--              <div style="max-width: 400px;white-space: initial !important;">{{paymentMethod.description}}</div>-->
+            </div>
+          </mat-radio-button>
+        </div>
+      </mat-radio-group>
+      <div class="actions">
+        <button (click)="closeDialog($event)" class="mr-2" mat-flat-button>
+          Cancel
+        </button>
+        <button [disabled]="form.controls.payment_method.invalid" color="primary" mat-flat-button>
+          Create and pay {{data.order.total_tax_price | priceFormat}}
+        </button>
+      </div>
+    </form>
+  </div>
+
+</ng-template>

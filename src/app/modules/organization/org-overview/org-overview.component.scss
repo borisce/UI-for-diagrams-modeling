@@ -1,0 +1,72 @@
+.wrapper {
+  width: 90%;
+  margin: 20px auto;
+  display: flex;
+  @media only screen and (max-width: 1100px) {
+    flex-direction: column;
+  }
+}
+
+.overview {
+  &-pane {
+    margin: 10px;
+    padding: 20px;
+    border-radius: 5px;
+    -webkit-box-shadow: 5px 5px 15px 0px rgba(204, 204, 204, 1);
+    -moz-box-shadow: 5px 5px 15px 0px rgba(204, 204, 204, 1);
+    box-shadow: 5px 5px 15px 0px rgba(204, 204, 204, 1);
+  }
+
+  &-leftpane {
+    width: 500px;
+    min-width: 500px;
+    @media only screen and (max-width: 1100px) {
+      width: auto;
+      min-width: 0;
+    }
+  }
+
+  &-rightpane {
+    width: auto;
+    flex-grow: 1;
+  }
+
+  &-repos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+
+    app-repo-card {
+      flex: 1 0 450px;
+      margin: 10px;
+    }
+  }
+
+  &-emptyrepo {
+    flex: 1 0 450px;
+    margin: 10px;
+    height: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  &-norepos {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin: 50px 0;
+
+    mat-icon,
+    div {
+      align-self: center;
+      display: block;
+      color: #aaa;
+      font-size: 36px;
+      margin: 10px 0;
+    }
+
+    mat-icon {
+      font-size: 24px;
+      transform: scale(2);
+    }
+  }
+}

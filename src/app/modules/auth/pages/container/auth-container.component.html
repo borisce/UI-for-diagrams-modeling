@@ -1,0 +1,22 @@
+<div class="auth-background">
+  <div class="main-card-wrapper">
+    <div class="main-card">
+      <mat-grid-list (window:resize)="onResize($event)" [cols]="breakpoint" rowHeight="1:1">
+        <mat-grid-tile class="auth-left">
+          <div class="auth-image-wrapper">
+            <div class="title">
+              <h1 class="typed-element">> ASICDE</h1>
+            </div>
+            <img alt="image" src="assets/images/duotone.png"/>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile class="auth-right">
+          <app-login *ngIf="isLogin && !resetPwd"></app-login>
+          <app-register *ngIf="!isLogin && !resetPwd"></app-register>
+          <app-reset-password *ngIf="resetPwd && !isLogin"></app-reset-password>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
+  </div>
+</div>
+

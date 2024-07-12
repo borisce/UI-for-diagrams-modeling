@@ -1,0 +1,73 @@
+<div class="dialog">
+    <div class="dialog-header">
+        <h1 mat-dialog-title>{{data.inv[6]}}</h1>
+        <button mat-button matTooltip="Close" [mat-dialog-close]="null">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <mat-dialog-content>
+        <mat-card class="invitation-card">
+            <div class="info" *ngIf="data.type === 'rec'; else sentMsg">
+                <mat-card-title>Invitation from <span style="color: #3f51b5;">{{data.inv[5]}}</span></mat-card-title>
+                <mat-divider></mat-divider>
+                <mat-card-subtitle class="first-subtitle">organization: <span>{{data.inv[6]}}</span></mat-card-subtitle>
+                <mat-card-subtitle>from: <span>{{data.inv[5]}}</span></mat-card-subtitle>
+                <mat-card-subtitle>received: <span>{{data.inv[4]}}</span></mat-card-subtitle>
+                <mat-card-subtitle *ngIf="data.inv[1] === 'PENDING'">status: <span
+                        style="color:rgb(255 161 2);">{{data.inv[1]}}</span></mat-card-subtitle>
+                <mat-card-subtitle *ngIf="data.inv[1] === 'ACCEPTED'">status: <span
+                        style="color:green;">{{data.inv[1]}}</span></mat-card-subtitle>
+                <mat-card-subtitle *ngIf="data.inv[1] === 'REJECTED'">status: <span
+                        style="color:red;">{{data.inv[1]}}</span></mat-card-subtitle>
+                <mat-card-content>
+                    <p>You have got an invitation from <span>{{data.inv[5]}}</span> to join their organization -
+                        <span>{{data.inv[6]}}</span>.</p>
+                </mat-card-content>
+            </div>
+            <ng-template #sentMsg>
+                <div class="info">
+                    <mat-card-title>Sent invitation to <span style="color: #3f51b5;">{{data.inv[0]}}</span>
+                    </mat-card-title>
+                    <mat-divider></mat-divider>
+                    <mat-card-subtitle class="first-subtitle">organization: <span>{{data.inv[6]}}</span>
+                    </mat-card-subtitle>
+                    <mat-card-subtitle>owner: <span>{{data.inv[5]}}</span></mat-card-subtitle>
+                    <mat-card-subtitle>to: <span>{{data.inv[0]}}</span></mat-card-subtitle>
+                    <mat-card-subtitle>sent: <span>{{data.inv[4]}}</span></mat-card-subtitle>
+                    <mat-card-subtitle *ngIf="data.inv[1] === 'PENDING'">status: <span
+                            style="color:rgb(255 161 2);">{{data.inv[1]}}</span></mat-card-subtitle>
+                    <mat-card-subtitle *ngIf="data.inv[1] === 'ACCEPTED'">status: <span
+                            style="color:green;">{{data.inv[1]}}</span></mat-card-subtitle>
+                    <mat-card-subtitle *ngIf="data.inv[1] === 'REJECTED'">status: <span
+                            style="color:red;">{{data.inv[1]}}</span></mat-card-subtitle>
+                    <mat-card-content>
+                        <p>You have sent an invitation to <span>{{data.inv[0]}}</span> to join your organization -
+                            <span>{{data.inv[6]}}</span>.</p>
+                    </mat-card-content>
+                </div>
+            </ng-template>
+            <div class="action">
+                <mat-card-actions *ngIf="data.type == 'sent' && data.inv[1] === 'PENDING'">
+                    <button mat-flat-button disabled="false" color="primary" [mat-dialog-close]="true"
+                        id="no-button">Cancel invite</button>
+                </mat-card-actions>
+                <mat-card-actions *ngIf="data.type == 'sent' && data.inv[1] != 'PENDING'">
+                    <button mat-flat-button disabled="true" color="primary" [mat-dialog-close]="true"
+                        id="no-button">Cancel invite</button>
+                </mat-card-actions>
+
+                <mat-card-actions *ngIf="data.canEdit && data.type == 'rec'">
+                    <button mat-flat-button disabled="false" color="primary" [mat-dialog-close]="true"
+                        id="yes-button">JOIN</button>
+                    <button mat-stroked-button disabled="false" [mat-dialog-close]="false"
+                        id="no-button">Reject</button>
+                </mat-card-actions>
+                <mat-card-actions *ngIf="!data.canEdit && data.type == 'rec'">
+                    <button mat-flat-button disabled="true" color="primary" [mat-dialog-close]="true"
+                        id="yes-button">JOIN</button>
+                    <button mat-stroked-button disabled="true" [mat-dialog-close]="false" id="no-button">Reject</button>
+                </mat-card-actions>
+            </div>
+        </mat-card>
+    </mat-dialog-content>
+</div>

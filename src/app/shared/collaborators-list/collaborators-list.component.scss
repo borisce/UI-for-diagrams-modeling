@@ -1,0 +1,65 @@
+#collaboratorsList {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  margin-right: 30px;
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.list-container {
+  transition-property: max-height;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  overflow: hidden;
+}
+
+button {
+  background-color: #313331 !important;
+}
+
+li {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+li p {
+  transition-property: border-left-width;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  margin: 0;
+  color: grey;
+  border-left: 2px solid;
+  text-align: end;
+  padding: 5px 10px;
+}
+
+li p:hover {
+  border-left-width: 25px;
+}
+
+ul {
+  list-style: none;
+  min-width: 250px;
+  max-width: 500px;
+  padding: 20px 0;
+  border-radius: 20px;
+  background-color: #313331;
+}
+
+.list-container.hidden {
+  max-height: 0;
+}
+
+.list-container.shown {
+  max-height: 35vh;
+}
+
+li.empty p {
+  text-align: center;
+  padding-right: 0;
+  border-left: none;
+}

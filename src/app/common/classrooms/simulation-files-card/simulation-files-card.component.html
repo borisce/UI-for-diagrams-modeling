@@ -1,0 +1,52 @@
+<div style="width: 180px">
+  <div>
+    <ngx-monaco-editor
+      *ngIf="showTooltip"
+      class="custom-tooltip"
+      [options]="{
+        theme: 'VerilogDark',
+        language: 'SystemVerilog',
+        inlineSuggest: true
+      }"
+      [(ngModel)]="showCode"
+    ></ngx-monaco-editor>
+  </div>
+  <div [formGroup]="pointsFrom">
+    Test {{ testNumber }}
+    <br />
+
+    <mat-form-field class="modal-create-assignment-form-field">
+      <mat-label>Repository</mat-label>
+      <mat-select formControlName="repository">
+        <mat-option *ngFor="let repo of repositories" [value]="repo">
+          {{ repo.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="modal-create-assignment-form-field">
+      <mat-label>Test bench File</mat-label>
+      <mat-select formControlName="testBenchFile">
+        <mat-option
+          (mouseenter)="changeCode(path.fullPath)"
+          (mouseleave)="showTooltip = false"
+          *ngFor="let path of allFiles"
+          [value]="path"
+        >
+          {{ path.path }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="modal-create-assignment-form-field">
+      <mat-label for="uri">Correct test output:</mat-label>
+      <textarea
+        formControlName="testOutput"
+        matInput
+        type="text"
+        placeholder="The output is correct"
+      ></textarea>
+      <mat-error>Uri is required!</mat-error>
+    </mat-form-field>
+  </div>
+</div>

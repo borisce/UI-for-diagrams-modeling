@@ -1,0 +1,107 @@
+.modal-create-assignment {
+  &-wrapper {
+    padding: 0px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &-points-card {
+    width: 150px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  &-form-field {
+    width: 100%;
+  }
+
+  &-spacer {
+    height: 8px;
+    width: 100%;
+  }
+
+  &-card-content {
+    width: 180px;
+  }
+
+  &-icon-tray {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &-icon {
+    cursor: pointer;
+  }
+
+  &-input-icon {
+    color: gray;
+    font-size: 15px;
+    margin-right: 5px;
+  }
+}
+
+.close {
+  margin-top: -10px;
+}
+
+h4 {
+  padding-bottom: 12px;
+}
+
+.card-container {
+  display: flex;
+  gap: 14px;
+}
+
+.assignment-description {
+  width: 100%;
+  height: 83px;
+}
+
+.form-group {
+  max-height: 70vh;
+}
+
+/* Style for the file input container */
+.file-upload-container {
+  position: relative;
+}
+
+/* Style for the file input */
+.file-upload-input {
+  position: absolute;
+  top: -20;
+  left: 0;
+  width: 100%;
+  height: 75%;
+  opacity: 0;
+  z-index: 2;
+  cursor: pointer;
+}
+
+/* Style for the visible button */
+.file-upload-button {
+  border: none;
+  z-index: 1;
+}
+
+/* Focus effect for the visible button */
+.file-upload-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.3); /* Adjust color as needed */
+}
+
+/* Container to display the selected file name */
+.file-name-container {
+  margin-top: 8px;
+}
+
+/* Styling for the selected file name */
+.file-name {
+  color: #333;
+  font-size: 14px;
+}
+
+.mat-icon {
+  height: auto;
+}

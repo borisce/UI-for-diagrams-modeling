@@ -1,0 +1,168 @@
+<div class="synthesis-results-sidebar">
+  <h3>Synthesis results</h3>
+  <div class="synthesis-results-sidebar__list">
+    <div *ngIf="results.length == 0" class="synthesis-results-sidebar__list__empty">
+      <p>No results yet...</p>
+    </div>
+    <div *ngFor="let result of results" class="synthesis-results-sidebar__list__item pb-2">
+      <div *ngIf="result.finished" matTooltip="Download zip" matTooltipPosition="above"
+        (click)="downloadZip('output.zip', result)" class="synthesis-results-sidebar__list__item__download">
+        <mat-icon class="download-icon">download</mat-icon>
+      </div>
+      <div *ngIf="result.finished" matTooltip="Delete this result" matTooltipPosition="above"
+        (click)="deleteSynthesis(result)"
+        [ngClass]="'synthesis-results-sidebar__list__item__delete ' + (result.deleting_status ? 'opacity-50' : '')">
+        <mat-icon class="delete-icon">delete</mat-icon>
+        <div *ngIf="result.deleting_status" class="running-spinner">
+          <mat-spinner [diameter]="20"></mat-spinner>
+        </div>
+      </div>
+      <div class="synthesis-results-sidebar__list__item__name">
+        {{result.top_module_file}} <span *ngIf="result.technology"
+          class="synthesis-results-sidebar__list__item__name__time">[{{result.technology}}]</span>
+        <br>
+        <span class="synthesis-results-sidebar__list__item__name__time">{{result.end_time
+          | date: 'd.M.Y HH:mm'}}</span>
+      </div>
+      <div class="d-flex">
+        <small matTooltip="Synthesis" matTooltipPosition="above" matTooltipClass="synthesis-result-step-tooltip"
+          [ngClass]="'px-2 relative result-step ' + (result.synthesize == 'finished' ? 'finished' : (result.synthesize == 'crashed' ? 'crashed' : 'running'))">
+          <div *ngIf="result.synthesize == 'running'" class="running-spinner">
+            <mat-spinner [diameter]="20"></mat-spinner>
+          </div>
+          Syn
+        </small>
+        <small matTooltip="Place" matTooltipPosition="above" matTooltipClass="synthesis-result-step-tooltip"
+          [ngClass]="'px-2 relative result-step ' + (result.place == 'finished' ? 'finished' : 'running')">
+          <div *ngIf="result.place == 'running'" class="running-spinner">
+            <mat-spinner [diameter]="20"></mat-spinner>
+          </div>
+          Pl
+        </small>
+        <small matTooltip="Static timing analysis" matTooltipPosition="above"
+          matTooltipClass="synthesis-result-step-tooltip"
+          [ngClass]="'px-2 relative result-step ' + (result.sta == 'finished' ? 'finished' : 'running')">
+          <div *ngIf="result.sta == 'running'" class="running-spinner">
+            <mat-spinner [diameter]="20"></mat-spinner>
+          </div>
+          Sta
+        </small>
+        <small matTooltip="Route" matTooltipPosition="above" matTooltipClass="synthesis-result-step-tooltip"
+          [ngClass]="'px-2 relative result-step ' + (result.route == 'finished' ? 'finished' : 'running')">
+          <div *ngIf="result.route == 'running'" class="running-spinner">
+            <mat-spinner [diameter]="20"></mat-spinner>
+          </div>
+          Ro
+        </small>
+        <small matTooltip="Post-route static timing analysis" matTooltipPosition="above"
+          matTooltipClass="synthesis-result-step-tooltip"
+          [ngClass]="'px-2 relative result-step ' + (result.backanno == 'finished' ? 'finished' : 'running')">
+          <div *ngIf="result.backanno == 'running'" class="running-spinner">
+            <mat-spinner [diameter]="20"></mat-spinner>
+          </div>
+          PostSTA
+        </small>
+        <!-- <small [ngClass]="'px-2 relative ' + (result.clean == 'finished' ? 'finished' : 'running')">
+          <div *ngIf="result.clean == 'running'" class="running-spinner">
+            <mat-spinner [diameter]="20"></mat-spinner>
+          </div>
+          Cl
+        </small> -->
+        <small [matTooltip]="result.finished == true ? 'Process finished' : 'Not finished yet'"
+          matTooltipPosition="above" matTooltipClass="synthesis-result-step-tooltip"
+          [ngClass]="'px-2 relative result-step ' + getFinishedCssClass(result)">
+          <!-- <div class="running-spinner">
+            <mat-spinner [diameter]="20"></mat-spinner>
+          </div> -->
+          <mat-icon>sports_score</mat-icon>
+        </small>
+      </div>
+      <div *ngIf="result.finished == true" class="d-flex synthesis-results-sidebar__list__item__files__root"
+        (click)="result.file_explorer_open = !result.file_explorer_open">
+        <div class="e-list-icon dir"></div>
+        <div class="synthesis-results-sidebar__list__item__files__file__name">files <small>({{ result.files.length
+            }})</small></div>
+      </div>
+
+      <div *ngIf="result.files && result.finished == true && result.file_explorer_open == true" class="w-100">
+        <div (click)="result.synthesis_folder_open = !result.synthesis_folder_open"
+          class="synthesis-results-sidebar__list__item__files">
+          <div
+            [ngClass]="'synthesis-results-sidebar__list__item__files__dir ' + (result.synthesis_folder_open ? 'open' : '')">
+            <div class="e-list-icon dir"></div>
+            <div class="synthesis-results-sidebar__list__item__files__file__name">synthesis <small>({{
+                getFilesInDir(result, 'synthesis').length
+                }})</small></div>
+          </div>
+        </div>
+        <div *ngIf="result.synthesis_folder_open" class="w-100">
+          <div *ngFor="let file of getFilesInDir(result, 'synthesis')"
+            class="synthesis-results-sidebar__list__item__files__file"
+            (click)="openFile(file.file_name, result, file.uuid)">
+            <div class="e-list-icon file"></div>
+            <div class="synthesis-results-sidebar__list__item__files__file__name">{{file.file_name.replace('synthesis/',
+              '')}}</div>
+            <div matTooltip="Download file" matTooltipPosition="above"
+              class="synthesis-results-sidebar__list__item__files__file__name__download"
+              (click)="downloadFile(file.file_name, result, file.uuid); $event.stopPropagation();">
+              <mat-icon class="download-icon">download</mat-icon>
+            </div>
+          </div>
+        </div>
+
+        <div (click)="result.layout_folder_open = !result.layout_folder_open"
+          class="synthesis-results-sidebar__list__item__files">
+          <div
+            [ngClass]="'synthesis-results-sidebar__list__item__files__dir ' + (result.layout_folder_open ? 'open' : '')">
+            <div class="e-list-icon dir"></div>
+            <div class="synthesis-results-sidebar__list__item__files__file__name">layout <small>({{
+                getFilesInDir(result, 'layout').length
+                }})</small></div>
+          </div>
+        </div>
+        <div *ngIf="result.layout_folder_open" class="w-100">
+          <div *ngFor="let file of getFilesInDir(result, 'layout')"
+            class="synthesis-results-sidebar__list__item__files__file"
+            (click)="openFile(file.file_name, result, file.uuid)">
+            <div class="e-list-icon file"></div>
+            <div class="synthesis-results-sidebar__list__item__files__file__name">{{file.file_name.replace('layout/',
+              '')}}</div>
+            <div matTooltip="Download file" matTooltipPosition="above"
+              class="synthesis-results-sidebar__list__item__files__file__name__download"
+              (click)="downloadFile(file.file_name, result, file.uuid); $event.stopPropagation();">
+              <mat-icon class="download-icon">download</mat-icon>
+            </div>
+          </div>
+        </div>
+
+        <div (click)="result.log_folder_open = !result.log_folder_open"
+          class="synthesis-results-sidebar__list__item__files">
+          <div
+            [ngClass]="'synthesis-results-sidebar__list__item__files__dir ' + (result.log_folder_open ? 'open' : '')">
+            <div class="e-list-icon dir"></div>
+            <div class="synthesis-results-sidebar__list__item__files__file__name">log <small>({{
+                getFilesInDir(result, 'log').length
+                }})</small></div>
+          </div>
+        </div>
+        <div *ngIf="result.log_folder_open" class="w-100">
+          <div *ngFor="let file of getFilesInDir(result, 'log')"
+            class="synthesis-results-sidebar__list__item__files__file"
+            (click)="openFile(file.file_name, result, file.uuid)">
+            <div class="e-list-icon file"></div>
+            <div class="synthesis-results-sidebar__list__item__files__file__name">{{file.file_name.replace('log/',
+              '')}}</div>
+            <div matTooltip="Download file" matTooltipPosition="above"
+              class="synthesis-results-sidebar__list__item__files__file__name__download"
+              (click)="downloadFile(file.file_name, result, file.uuid); $event.stopPropagation();">
+              <mat-icon class="download-icon">download</mat-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <mat-paginator [length]="resultsTotalElements" [pageSize]="resultsPageSize" [pageSizeOptions]="[3, 5, 10, 25]"
+      (page)="resultsPage = $event.pageIndex; resultsPageSize = $event.pageSize; getResults();"
+      aria-label="Select page">
+    </mat-paginator>
+  </div>

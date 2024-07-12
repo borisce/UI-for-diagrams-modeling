@@ -1,0 +1,107 @@
+<div class="wrapper">
+  <div class="members-controls">
+    <h1 class="mat-h1">Organization members</h1>
+    <div class="members-controlsbtn">
+      <button mat-mini-fab matTooltip="Invite member to organization" (click)="inviteMember()">
+        <mat-icon>add</mat-icon>
+      </button>
+      <button mat-mini-fab matTooltip="Delete selected members from organization" (click)="deleteMembers()">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <mat-paginator [length]="dataItems" [pageSize]="pageSize" [pageSizeOptions]="[30, 60, 90, 120]"
+                     (page)="pageEvent($event)">
+      </mat-paginator>
+    </div>
+  </div>
+  <div>
+    <div>
+      <h5>Available packages:</h5>
+      <div>
+        <span class="mr-5">Synthesis: <b>{{ synthesis }}</b></span>
+        <span class="mr-5">Simulations: <b>{{ simulations }}</b></span>
+        <span class="mr-5">Diagrams: <b>{{ diagrams }}</b></span>
+        <span>Editor: <b>{{ editor }}</b></span>
+      </div>
+    </div>
+  </div>
+  <div class="members-table" *ngIf="!loading">
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+      <ng-container matColumnDef="selector">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox #select_all_checkbox (change)="selectAll()" color="primary"></mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <mat-checkbox color="primary" [(ngModel)]="element.selected"></mat-checkbox>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="first_name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>First name</th>
+        <td mat-cell *matCellDef="let element">
+          <span class="avatar">{{
+              element.firstName.substring(0, 1).toUpperCase() +
+              element.lastName.substring(0, 1).toUpperCase()
+            }}</span>{{ element.firstName }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="last_name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Last name</th>
+        <td mat-cell *matCellDef="let element">{{ element.lastName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="username">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Username</th>
+        <td mat-cell *matCellDef="let element">{{ element.username }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+        <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Add permissions</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-button matTooltip="Synthesis"
+                  (click)="updateUserPackage(element, [3,8], 1)"
+                  class="relative">
+            <mat-icon
+              style="color: grey">tornado
+            </mat-icon>
+          </button>
+          <button mat-button matTooltip="Simulations"
+                  (click)="updateUserPackage(element, [7,2], 2)"
+                  class="relative">
+            <mat-icon
+              style="color: grey">play_arrow
+            </mat-icon>
+          </button>
+          <button mat-button matTooltip="Diagrams"
+                  (click)="updateUserPackage(element, [4, 9], 3)"
+                  class="relative">
+            <mat-icon
+              style="color: grey">blur_linear
+            </mat-icon>
+          </button>
+          <button mat-button matTooltip="Editor"
+                  (click)="updateUserPackage(element, [5,10], 4)"
+                  class="relative">
+            <mat-icon
+              style="color: grey">folder
+            </mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="role">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Role</th>
+        <td mat-cell *matCellDef="let element">
+          {{ organizationOwnerUuid == element.uuid ? "Owner" : "Member" }}
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+  <mat-spinner [hidden]="!loading"></mat-spinner>
+</div>

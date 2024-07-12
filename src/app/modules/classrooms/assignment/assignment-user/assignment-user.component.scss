@@ -1,0 +1,99 @@
+.classroom {
+  &-wrapper {
+    padding: 30px;
+  }
+
+  &-header {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    span {
+      font-weight: 600;
+    }
+  }
+
+  &-header > h1 {
+    margin: 0px;
+  }
+
+  &-header > button {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    color: black;
+    transition: ease 0.5s background-color;
+  }
+
+  &-header > button:hover {
+    background-color: #eee;
+  }
+
+  &-content {
+    width: 100%;
+    margin-bottom: 20px;
+    // align-items: flex-start;
+  }
+
+  &-students,
+  &-assignments {
+    background-color: rgb(239, 239, 239);
+    width: 100%;
+  }
+
+  &-hr {
+    color: black;
+    width: 100%;
+  }
+
+  &-tab-wrapper {
+    height: 70vh;
+    overflow: hidden; /* This property ensures that any content overflowing the parent will be hidden */
+    width: 100%;
+
+    &-with-center {
+      height: 70vh;
+      overflow: hidden; /* This property ensures that any content overflowing the parent will be hidden */
+      width: 100%;
+      align-items: center;
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  &-button {
+    float: right;
+  }
+
+  &-grid {
+    display: flex;
+
+    &-card {
+      width: 100%;
+    }
+  }
+
+  &-points {
+    &-card {
+      width: 100%;
+      display: flex;
+      gap: 40px;
+    }
+  }
+}
+
+mat-paginator {
+  display: inline-block;
+}
+
+button {
+  border: none;
+  background-color: #fafafa;
+  transition: background-color 0.5s;
+}
+
+button:hover {
+  background-color: rgb(237, 237, 237);
+}

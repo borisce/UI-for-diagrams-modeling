@@ -1,0 +1,57 @@
+#fetch-and-pull-popup {
+  position: absolute;
+  left: 8px;
+  top: 55px;
+  background: #35393d;
+  border-radius: 16px;
+  border-top-left-radius: 0;
+  padding: 16px;
+  width: 240px;
+  z-index: 10;
+
+  &.visible {
+    display: block;
+  }
+
+  &.hidden {
+    display: none;
+  }
+
+  label {
+    display: block;
+    font-size: 12px;
+    color: #c5c5c5;
+    margin-bottom: 8px;
+  }
+
+  textarea {
+    width: 100%;
+    border-radius: 8px;
+    background: #2c2f33;
+    border: none;
+    color: #c5c5c5;
+    padding: 8px;
+    font-size: 12px;
+    outline: none;
+    margin-bottom: 16px;
+
+    &:focus {
+      outline: none;
+      box-shadow: none;
+    }
+  }
+
+  .button-wrapper {
+    display: flex;
+    gap: 8px;
+
+    button {
+      border: 1px solid #70767e;
+      color: #fff;
+      font-size: 12px;
+      padding: .05rem .5rem;
+      background-color: transparent;
+    }
+  }
+
+}

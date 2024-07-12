@@ -1,0 +1,29 @@
+<div  *ngIf="isOpen" class="popup">
+  <div class="popup-header">
+    <h3>Code Completion Settings</h3>
+    <button class="close-button" (click)="close()">x</button>
+  </div>
+  <div class="popup-description">
+    <p>Settings will apply only to code completions that use neural network models to generate suggestions.</p>
+  </div>
+  <div class="popup-content">
+    <div class="popup-row">
+      <label for="maxNumberPredictions">Maximum length of suggestion list:</label>
+      <input type="number" id="maxNumberPredictions" [(ngModel)]="maxNumberPredictions" min=1 max=15 value="maxNumberPredictions">
+    </div>
+    <div class="popup-row">
+      <label for="minLen">Minimal prediction length:</label>
+      <input type="number" id="minLen" min=1 max=7 [(ngModel)]="minLen" value="minLen">
+    </div>
+    <div class="popup-row">
+      <label for="showSnippets">Show snippets in code completions:</label>
+      <input type="checkbox" id="showSnippets" [(ngModel)]="showSnippets">
+    </div>
+    <div class="popup-buttons">
+      <button (click)="save()">Save</button>
+      <button (click)="close()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+  

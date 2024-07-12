@@ -1,0 +1,32 @@
+<div matRipple class="classroom-card">
+  <div class="classroom-grid">
+    <div class="classroom-header">
+      <div (click)="classroomSelected()" style="width: 100%">
+        <mat-icon>class</mat-icon>
+        <h1 (click)="selectedClassroom()">{{ classroom.name }}</h1>
+      </div>
+      <span class="classroom-menu">
+        <button
+          [matMenuTriggerFor]="menu"
+          class="icon-button"
+          matTooltip="More options"
+        >
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="classroomDeleted()">
+            <mat-icon>delete</mat-icon>Delete
+          </button>
+          <button mat-menu-item (click)="classroomSettingsSelected()">
+            <mat-icon>settings</mat-icon>Settings
+          </button>
+        </mat-menu>
+      </span>
+    </div>
+    <div class="classroom-content" (click)="classroomSelected()">
+      <p>
+        Slug: {{ classroom.slug }}<br />Created by: {{ classroom.createdBy }}
+      </p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,77 @@
+<div [ngStyle]="{'z-index': 1}" id="toolbarContainer">
+  <div id="settingsButtonContainer" style="position: relative;">
+    <button (click)="toggleCompileOptions()" matTooltip="Display settings" mat-stroked-button>
+      <mat-icon>settings</mat-icon>
+    </button>
+    <div id="settings" *ngIf="compileOptionsVisible">
+      <mat-checkbox [(ngModel)]="pendingCompileDefiniteUnsuccessfulInstances" (change)="onCompileDefiniteUnsuccessfulInstancesChange($event)">
+        Show definite unsuccessful instances
+      </mat-checkbox>
+      <mat-checkbox [(ngModel)]="pendingCompileIndefiniteInstances" (change)="onCompileIndefiniteInstancesChange($event)">
+        Show indefinite instances
+      </mat-checkbox>
+    </div>
+  </div>
+  <button (click)="toggleInteractionMode()" matTooltip="Interaction mode" mat-stroked-button>
+    <mat-icon>{{ getInteractionIcon() }}</mat-icon>
+  </button>
+  <button (click)="toggleGrid()" matTooltip="Grid display" mat-stroked-button>
+    <mat-icon>{{paper.options.drawGrid ? 'grid_on' : 'grid_off'}}</mat-icon>
+  </button>
+  <button *ngIf="allowHistory()" (click)="undo()" matTooltip="Undo" [disabled]="!canUndo()" mat-stroked-button>
+    <mat-icon>undo</mat-icon>
+  </button>
+  <button *ngIf="allowHistory()" (click)="redo()" matTooltip="Redo" [disabled]="!canRedo()" mat-stroked-button>
+    <mat-icon>redo</mat-icon>
+  </button>
+  <button (click)="selectTopModuleFile()" matTooltip="Select root file" mat-stroked-button>
+    <mat-icon>folder_open</mat-icon>
+  </button>
+  <button mat-stroked-button matTooltip="Save diagram" (click)="onDownloadSvg()">
+    <mat-icon>save</mat-icon>
+  </button>
+  <button (click)="refreshGraph()" matTooltip="Regenerate diagram" [disabled]="!canRefreshGraph()" mat-stroked-button>
+    <mat-icon>refresh</mat-icon>
+  </button>
+<!--  <button (click)="removeElements()" [disabled]="!canRemoveElements()" mat-stroked-button>-->
+<!--    <mat-icon>delete</mat-icon>-->
+<!--  </button>-->
+</div>
+
+<div *ngIf="isLoading" class="overlay">
+  <mat-progress-spinner mode="indeterminate" diameter="200"></mat-progress-spinner>
+</div>
+
+<div id="link-hover-tooltip" style="">
+  <div *ngIf="customHoverData">
+    <div *ngIf="customHoverData.totalInstantiations !== null">
+      <mat-icon>view_list</mat-icon>
+      <strong>Total Instantiations:</strong> {{ customHoverData.totalInstantiations }}
+    </div>
+    <div *ngIf="customHoverData.successInstantiations !== null">
+      <mat-icon style="color: darkgreen">check_circle</mat-icon>
+      <strong>Definite successful instances:</strong> {{ customHoverData.successInstantiations }}
+    </div>
+    <div *ngIf="customHoverData.failedInstantiations !== null">
+      <mat-icon style="color: darkred">cancel</mat-icon>
+      <strong>Definite unsuccessful instances:</strong> {{ customHoverData.failedInstantiations }}
+    </div>
+    <div *ngIf="customHoverData.undefinedInstantiations !== null">
+      <mat-icon style="color: darkgoldenrod">help</mat-icon>
+      <strong>Indefinite instances:</strong> {{ customHoverData.undefinedInstantiations }}
+    </div>
+    <div *ngIf="customHoverData.conditions !== null">
+      <mat-icon style="color: #505050">info</mat-icon>
+      <strong>Conditions:</strong> {{ customHoverData.conditions }}
+    </div>
+  </div>
+</div>
+
+<div [ngStyle]="{'z-index': 1}" id="buttonsContainer">
+  <button (click)="zoomIn()" matTooltip="Zoom in" matTooltipPosition="left" color="primary" mat-mini-fab>
+    <mat-icon>add</mat-icon>
+  </button>
+  <button (click)="zoomOut()" matTooltip="Zoom out" matTooltipPosition="left" color="primary" mat-mini-fab>
+    <mat-icon>remove</mat-icon>
+  </button>
+</div>

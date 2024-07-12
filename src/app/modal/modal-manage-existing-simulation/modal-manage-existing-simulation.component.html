@@ -1,0 +1,20 @@
+<div class="wrapper">
+  <div class="dialog-header">
+    <h3>Existing simulation environments</h3>
+    <button mat-mini-fab matTooltip="Close" [mat-dialog-close]="''">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div>
+    <ul>
+      <li *ngFor="let env of environments" color="primary">
+        <strong>Created by: </strong>{{env.createdBy}}, <strong>Created at: </strong>{{env.createdAt}}, <strong>State:
+        </strong>{{env.state}}
+        <span [hidden]="currentContainerId !== env.id">CURRENT</span>
+        <button mat-button (click)="deleteEnviroment(env.id)" [disabled]="currentContainerId === env.id">
+          Delete
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>

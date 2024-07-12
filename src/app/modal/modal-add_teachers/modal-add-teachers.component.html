@@ -1,0 +1,40 @@
+<div>
+  <div>
+    <div class="header">
+      <h1 class="mat-h1">Share classroom with other teachers</h1>
+
+      <button [mat-dialog-close]="true" class="icon-button">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <hr>
+
+  <form (ngSubmit)="onSubmit()" [formGroup]="addTeachers">
+    <div class="wrapper">
+      <mat-form-field appearance="fill">
+        <mat-label>E-mail</mat-label>
+        <input formControlName="newTeacher" matInput required="true">
+      </mat-form-field>
+
+      <button (click)="addTeacher()" class="icon-button">
+        <mat-icon>add_box</mat-icon>
+      </button>
+    </div>
+
+    <div *ngIf="teachersToAdd.length > 0">
+      <div *ngFor="let teacher of teachersToAdd" class="wrapper">
+        <span>{{ teacher }}</span>
+        <button (click)="removeTeacher(teacher)" mat-button type="button">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+
+
+    <button color="primary" mat-flat-button type="submit">
+      Share
+    </button>
+  </form>
+</div>

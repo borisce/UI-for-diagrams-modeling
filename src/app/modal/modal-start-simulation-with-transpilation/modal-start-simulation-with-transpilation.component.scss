@@ -1,0 +1,50 @@
+.dialog {
+  &-controls, &-header {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    align-items: stretch;
+    margin-bottom: 5px;
+  }
+
+  &-header > button {
+    background-color: transparent;
+    border: transparent;
+    transition: ease .5s background-color;
+    box-shadow: none;
+    color: black;
+  }
+
+  &-header > button:hover {
+    background-color: #eee;
+  }
+
+  &-controls {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    align-items: stretch;
+  }
+
+  &-content{
+    text-align: center;
+  }
+}
+
+.mat-option {
+  &-header {
+    color: black;
+    font-weight: 900;
+  }
+
+  &-footer {
+    color: lightgrey;
+    font-weight: 200;
+  }
+}
+
+mat-radio-button {
+  display: block;
+}

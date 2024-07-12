@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-8 offset-sm-2">
+      <h4>Please insert new branch name.</h4>
+      <form [formGroup]="repoEditForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="newBranch">Message</label>
+          <input type="text" formControlName="newBranch" class="form-control"
+                 [ngClass]="{ 'is-invalid': submitted && f.newBranch.errors }"/>
+          <div *ngIf="submitted && f.newBranch.errors" class="invalid-feedback">
+            <div *ngIf="f.newBranch.errors.required">New branch name is required ! </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary">
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

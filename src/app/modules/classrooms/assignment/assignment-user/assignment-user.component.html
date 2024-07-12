@@ -1,0 +1,212 @@
+<div class="classroom-wrapper">
+  <div class="classroom-header" *ngIf="!loadingState">
+    <div style="display: flex; align-items: center">
+      <mat-icon [style.color]="'gray'">person</mat-icon>
+      <h4 style="margin: 0 0 0 10px">{{ studentName }}</h4>
+    </div>
+
+    <div style="display: flex; gap: 40px">
+      <button
+        style="display: flex; align-items: center"
+        (click)="backToAssignment()"
+      >
+        <mat-icon [style.color]="'gray'">assignment</mat-icon>
+        <h4 style="margin: 0 0 0 10px">{{ assignment.name }}</h4>
+      </button>
+      <button
+        style="display: flex; align-items: center; padding: 0"
+        (click)="backToClassroom()"
+      >
+        <mat-icon [style.color]="'gray'">class</mat-icon>
+        <h4 style="margin: 0 0 0 10px" *ngIf="!loadingState">
+          {{ classroom.name }}
+        </h4>
+      </button>
+    </div>
+  </div>
+
+  <hr />
+
+  <mat-card class="classroom-content" *ngIf="!loadingState">
+    <mat-tab-group (selectedTabChange)="onTabFocusChange($event)">
+      <mat-tab label="Descriptions">
+        <div class="classroom-tab-wrapper">
+          <div class="classroom-grid">
+            <mat-spinner [hidden]="!loadingState"></mat-spinner>
+            <mat-card class="classroom-grid-card">
+              <mat-card-title>Assignment description</mat-card-title>
+              <hr />
+              <mat-spinner [hidden]="!loadingState"></mat-spinner>
+              <pdf-viewer
+                *ngIf="teacherPDFsrc; else noAssginmentDescription"
+                [src]="teacherPDFsrc"
+                [render-text]="true"
+                [zoom]="0.7"
+                style="width: 100%; height: 70vh; max-width: 50vw"
+              ></pdf-viewer>
+              <ng-container #noAssginmentDescription>
+                <div style="width: 100%; height: 70vh">
+                  No description submitted
+                </div>
+              </ng-container>
+            </mat-card>
+
+            <mat-card class="classroom-grid-card">
+              <mat-card-title>Student description</mat-card-title>
+              <hr />
+              <mat-spinner [hidden]="!loadingState"></mat-spinner>
+              <pdf-viewer
+                *ngIf="studentPDFsrc; else noAssginmentDescription"
+                [src]="studentPDFsrc"
+                [zoom]="0.7"
+                style="width: 100%; height: 70vh; max-width: 50vw"
+              ></pdf-viewer>
+              <ng-container #noAssginmentDescription>
+                <div style="width: 100%; height: 70vh">
+                  No description submitted
+                </div>
+              </ng-container>
+            </mat-card>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Repository" (click)="showVCD = false">
+        <div class="classroom-tab-wrapper">
+          <div>
+            <app-editor-component *ngIf="loadRepos"></app-editor-component>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab *ngIf="assignment.simulationPoints" label="Simulation">
+        <div class="classroom-tab-wrapper">
+          <div class="classroom-grid" style="width: 100%">
+            <div style="max-height: 70vh; width: 350px; overflow: auto">
+              <div
+                style="
+                  margin-left: 20px;
+                  margin-right: 25px;
+                  display: flex;
+                  justify-content: space-between;
+                  padding: 16px;
+                "
+              >
+                <span style="font-size: 15px; color: gray">Test results</span>
+                <ng-container *ngFor="let sc of simulationConfig">
+                  <mat-icon
+                    [style.color]="
+                      checkTestSuccessfull(sc.simulationTestNumber)
+                    "
+                    >filter_{{ sc.simulationTestNumber[5] }}</mat-icon
+                  >
+                </ng-container>
+              </div>
+              <mat-divider></mat-divider>
+
+              <mat-list *ngIf="folders">
+                <ng-container *ngFor="let folder of folders">
+                  <div
+                    mat-subheader
+                    style="display: flex; justify-content: space-around"
+                  >
+                    <span>Files from {{ folder.start_time | date }}</span>
+
+                    <mat-icon
+                      mat-list-icon
+                      [matTooltip]="
+                        folder.repo_simulation_configuration.simulationTestNumber.toLowerCase() +
+                        (folder.test ? ' done' : ' failed')
+                      "
+                      *ngIf="folder.repo_simulation_configuration"
+                      [style.color]="folder.test ? 'green' : 'red'"
+                      >filter_{{
+                        folder.repo_simulation_configuration
+                          .simulationTestNumber[5]
+                      }}</mat-icon
+                    >
+                  </div>
+
+                  <mat-list-item
+                    (click)="
+                      chooseFile(
+                        folder.files[0].file_name,
+                        folder,
+                        folder.files[0].uuid
+                      )
+                    "
+                  >
+                    <mat-icon mat-list-icon>note</mat-icon>
+                    <div mat-line>{{ folder.files[0].file_name }}</div>
+                    <div mat-line>{{ folder.start_time | date }}</div>
+                  </mat-list-item>
+
+                  <mat-list-item
+                    (click)="
+                      chooseFile(
+                        folder.files[1].file_name,
+                        folder,
+                        folder.files[1].uuid
+                      )
+                    "
+                  >
+                    <mat-icon mat-list-icon>note</mat-icon>
+                    <div mat-line>{{ folder.files[1].file_name }}</div>
+                    <div mat-line>{{ folder.start_time | date }}</div>
+                  </mat-list-item>
+                  <mat-divider></mat-divider>
+                </ng-container>
+              </mat-list>
+            </div>
+
+            <ngx-monaco-editor
+              *ngIf="showText"
+              style="width: 100%; height: 70vh"
+              [options]="{
+                theme: 'VerilogDark',
+                language: 'SystemVerilog',
+                inlineSuggest: true
+              }"
+              [(ngModel)]="fileText"
+            ></ngx-monaco-editor>
+
+            <app-editor-visualisation-tool
+              *ngIf="showVCD"
+              style="width: 100%; height: 70vh"
+            ></app-editor-visualisation-tool>
+          </div>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Points">
+        <div class="classroom-tab-wrapper-with-center">
+          <div class="classroom-grid">
+            <div class="classroom-points">
+              <div class="classroom-points-card" *ngIf="assignmentUser">
+                <app-points-card
+                  *ngIf="!assignmentUser.graded"
+                  [title]="'Give points'"
+                  [maxPoints]="maxPoints"
+                  (getPointsForm)="getPointsForm($event)"
+                ></app-points-card>
+
+                <app-points-card
+                  [title]="'Got and max points'"
+                  [disable]="true"
+                  [maxPoints]="maxPoints"
+                  [gotPoints]="gotPoints"
+                ></app-points-card>
+              </div>
+              <button
+                *ngIf="!assignmentUser.graded"
+                (click)="updatePoints()"
+                class="classroom-button"
+                mat-raised-button
+              >
+                Save points
+              </button>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+</div>

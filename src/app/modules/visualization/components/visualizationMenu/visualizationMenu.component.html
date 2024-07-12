@@ -1,0 +1,810 @@
+<app-modal-dialog-windows (moduleDataSubmitted)="onSubmittedNewModule($event)" 
+                          (portDataSubmitted)="onSubmittedNewPort($event)" 
+                          (orDataSubmitted)="onSubmittedNewOr($event)" 
+                          (orCustomPortsDataSubmitted)="onSubmittedNewOrCustomPorts($event)"
+                          (andDataSubmitted)="onSubmittedNewAnd($event)"
+                          (andCustomPortsDataSubmitted)="onSubmittedNewAndCustomPorts($event)" 
+                          (norDataSubmitted)="onSubmittedNewNor($event)"
+                          (norCustomPortsDataSubmitted)="onSubmittedNewNorCustomPorts($event)" 
+                          (nandDataSubmitted)="onSubmittedNewNand($event)"
+                          (nandCustomPortsDataSubmitted)="onSubmittedNewNandCustomPorts($event)" 
+                          (xorDataSubmitted)="onSubmittedNewXor($event)"
+                          (xorCustomPortsDataSubmitted)="onSubmittedNewXorCustomPorts($event)" 
+                          (xnorDataSubmitted)="onSubmittedNewXnor($event)"
+                          (xnorCustomPortsDataSubmitted)="onSubmittedNewXnorCustomPorts($event)"
+                          (notDataSubmitted)="onSubmittedNewNot($event)" 
+                          (multiplexorDataSubmitted)="onSubmittedNewMultiplexor($event)"
+                          (existingModuleDataSubmitted)="onSubmittedExistingModule($event)" 
+                          (FileNameToLoadSubmitted)="onSubmittedFileName($event)" 
+                          (decoderDataSubmitted)="onSubmittedNewDecoder($event)" 
+                          (encoderDataSubmitted)="onSubmittedNewEncoder($event)"
+                          (adderDataSubmitted)="onSubmittedNewAdder($event)" 
+                          (registerDataSubmitted)="onSubmittedNewRegister($event)" 
+                          (FileNameToSaveSubmitted)="onSubmittedNewSaveName($event)"
+                          (FileNameToSaveVhdlSourceSubmitted)="onSubmittedNewVhdlSourceCodeName($event)"
+                          (FileNameToSaveSystemVerilogSourceSubmitted)="onSubmittedNewSystemVerilogSourceCodeName($event)">
+</app-modal-dialog-windows>
+<app-diagram-paper></app-diagram-paper>
+<app-text-area></app-text-area>
+<app-diagram-generation (subdiagramDataSubmitted)="onVisualizeSubdiagramDataSubmitted($event)" (packageDataSubmitted)="onPackageDataSubmitted($event)"></app-diagram-generation>
+<div #content (window:resize)="onResize($event)">
+    <jqxMenu #jqxMenu [width]="'100%'" [height]="38" [theme]="'material'">
+        <ul>
+            <!-- <li>
+                <img style='float: left; margin-right: 5px;' src='assets/log_gate_icons/moduleNew.png' />
+                <span>Add module</span>
+                <ul style='width: 180px;'>
+                    <li (click)="onAddNewModuleClicked()">New Module</li>
+                    <li (click)="onAddExistingModuleClicked()">Existing Module</li>
+                </ul>
+            </li>
+            <li (click)="onAddNewStandAlonePortClicked()">
+                <img style='float: left; margin-right: 5px;' src='assets/log_gate_icons/standalonePort.png' />
+                <span>Add standalone port</span>
+            </li> -->
+            <li (click)="onSaveDiagramClicked()">
+                <img style='float: left; margin-right: 10px;' width="30px" src='assets/log_gate_icons/saveIcon.png' />
+                <span>Save diagram</span>
+            </li>
+            <li>
+                <img style='float: left; margin-right: 10px;' width="30px" src='assets/log_gate_icons/loadDiagram.png' />
+                <span>Load diagram</span>
+                <ul style='width: 200px;'>
+                    <li (click)="onLoadDiagramFromJSONClicked()">Existing diagram</li>
+                    <li (click)="onLoadDiagramFromSVClicked()">New from code</li>
+                </ul>
+            </li>
+            <li>
+                <img style='float: left; margin-right: 10px;' width="30px" src='assets/log_gate_icons/saveCodeIcon.png' />
+                <span>Save generated code from diagram</span>
+                <ul style='width: 180px;'>
+                    <li (click)="onSaveSystemVerilogCodeClicked()">System Verilog</li>
+                    <li (click)="onSaveVhdlCodeClicked()">VHDL</li>
+                </ul>
+            </li>
+        </ul>
+    </jqxMenu>
+</div>
+<!--onPrintPaperStateClicked
+    onSaveSystemVerilogCodeClicked
+    onSaveVhdlCodeClicked
+    <div class="topMenuDiv">
+    <div class="box2">
+        <h1>{{title}}</h1>
+    </div>
+    <div class="box2">
+        <div class="btn-group" style="width: 100% ">
+            <button (click)="onAddNewModuleClicked()">New Module</button>
+            <button (click)="onAddExistingModuleClicked()">Existing Module</button>
+            <button (click)="onAddNewStandAlonePortClicked()">Standalone Port</button>
+            <button (click)="onSaveDiagramClicked()">Save diagram</button>
+            <button (click)="onLoadDiagramFromJSONClicked()">Load JSON</button>
+            <button (click)="onLoadDiagramFromSVClicked()">Load SV</button>
+        </div>
+    </div>
+    <div class="box2">
+        <h1>Code generation:</h1>
+    </div>
+    <div class="box2">
+        <div class="btn-group ">
+            <button (click)="onPrintPaperStateClicked() ">Print code</button>
+        </div>
+    </div>
+</div>-->
+<div class="elementsAdditionDiv ">
+  <!--<div *ngIf="availableBoards.length > 0">
+    <button (click)="renameBoard()" [disabled]="boardControl.value === 'default'" mat-icon-button>
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button (click)="removeBoard()" [disabled]="boardControl.value === 'default'" mat-icon-button>
+      <mat-icon>delete</mat-icon>
+    </button>
+    <button (click)="addNewBoard()" mat-icon-button>
+      <mat-icon>add</mat-icon>
+    </button>
+    <form [formGroup]="boardSelection">
+      <mat-form-field appearance="fill" class="w-100 p-0">
+        <mat-label>Board selection</mat-label>
+        <mat-select (ngModelChange)="onBoardSelected($event)" [formControl]="boardControl">
+          <mat-option *ngFor="let board of availableBoards" [value]="board.id">{{board.title}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+  </div>-->
+  <jqxMenu #jqxVerticalMenu [mode]="'vertical'" [width]="'100%'" [theme]="'material'">
+    <ul>
+        <!--<li (click)="displayNewPackageImportProperties()">
+             <span class="package_import" style="padding-left: 3em; padding-bottom: 3em; text-align: center;">Import packages</span>
+        </li>-->
+        <li (click)="displayNewStandalonePortInProperties()">
+            <img style='float: left; margin-right: 20px;' width="35px" src='assets/log_gate_icons/portNew.png' />
+            <span style="text-align: center;">Input port</span>
+        </li>
+        <li (click)="displayNewStandalonePortOutProperties()">
+            <img style='float: left; margin-right: 20px;' width="35px" src='assets/log_gate_icons/outputPortNew.png' />
+            <span style="text-align: center;">Output port</span>
+        </li>
+        <li>
+            <img style='float: left; margin-right: 20px;' width="35px" src='assets/log_gate_icons/rectangle.png' />
+            <span style="text-align: center;">Module/Component</span>
+            <ul style='width: 180px;'>
+                <li (click)="displayNewModuleProperties()">New module/component</li>
+                <li (click)="displayExistingModuleProperties()">Existing module/component</li>
+            </ul>
+        </li>
+      <li>
+        <img style='float: left; margin-right: 20px;' width="35px" src='assets/log_gate_icons/integratedCircuit.png'/>
+        <span style="text-align: center;">Logic</span>
+                <ul>
+                    <li (click)="displayNewOrGateCustomPortsProperties()">
+                        <img style='float: left; margin-right: 10px;' width="35px" src='assets/log_gate_icons/orIcon.png'/>
+                        <span>OR</span>
+                    </li>
+                    <li (click)="displayNewAndGateCustomPortsProperties()">
+                        <img style='float: left; margin-right: 10px;' width="35px" src='assets/log_gate_icons/andIcon.png'/>
+                        <span>AND</span>
+                    </li>
+                    <li (click)="displayNewNorGateCustomPortsProperties()">
+                        <img style='float: left; margin-right: 10px;' width="35px" src='assets/log_gate_icons/norIcon.png'/>
+                        <span>NOR</span>
+                    </li>
+                    <li (click)="displayNewNandGateCustomPortsProperties()">
+                        <img style='float: left; margin-right: 10px;' width="35px" src='assets/log_gate_icons/nandIcon.png'/>
+                        <span>NAND</span>
+                    </li>
+                    <li (click)="displayNewXorGateCustomPortsProperties()">
+                        <img style='float: left; margin-right: 10px;' width="35px" src='assets/log_gate_icons/xorIcon.png'/>
+                        <span>XOR</span>
+                    </li>
+                    <li (click)="displayNewXnorGateCustomPortsProperties()">
+                        <img style='float: left; margin-right: 10px;' width="35px" src='assets/log_gate_icons/xnorIcon.png'/>
+                        <span>XNOR</span>
+                    </li>
+                    <li (click)="displayNewNotGateProperties()">
+                        <img style='float: left; margin-right: 10px;' width="35px" src='assets/log_gate_icons/notIcon.png' />
+                        <span>NOT</span>
+                    </li>
+                    
+                    <!--<li (click)="onAddNewOrGateCustomPortsClicked2()">
+                        <img style='float: left; margin-right: 10px;' width="35px" src='assets/log_gate_icons/orIcon.png'/>
+                        <span>druhy OR moj</span>
+                    </li>
+                    <li (click)="onAddNewOrGateClicked()">
+                        <img style='float: left; margin-right: 10px;' width="35px" src='assets/log_gate_icons/orIcon.png'/>
+                        <span>OR</span>
+                    </li>
+                    <li (click)="onAddNewAndGateClicked()">
+                        <img style='float: left; margin-right: 10px;' width="35px" src='assets/log_gate_icons/andIcon.png' />
+                        <span>AND</span>
+                    </li>
+                    <li (click)="onAddNewNorGateClicked()">
+                        <img style='float: left; margin-right: 10px;' width="35px" src='assets/log_gate_icons/norIcon.png' />
+                        <span>NOR</span>
+                    </li>
+                    <li (click)="onAddNewNandGateClicked()">
+                        <img style='float: left; margin-right: 10px;' width="35px" src='assets/log_gate_icons/nandIcon.png' />
+                        <span>NAND</span>
+                    </li>
+                    <li (click)="onAddNewXorGateClicked()">
+                        <img style='float: left; margin-right: 10px;' width="35px" src='assets/log_gate_icons/xorIcon.png' />
+                        <span>XOR</span>
+                    </li>
+                    <li (click)="onAddNewXnorGateClicked()">
+                        <img style='float: left; margin-right: 10px;' width="35px" src='assets/log_gate_icons/xnorIcon.png' />
+                        <span>XNOR</span>
+                    </li>-->
+                </ul>
+            </li>
+            <li>
+                <img style='float: left; margin-right: 20px;' width="35px" src='assets/log_gate_icons/comLog.png' />
+                <span style="text-align: center;">Complex Logic</span>
+                <ul style='width: 220px;'>
+                    <li (click)="displayNewMultiplexorProperties()">
+                        <img style='float: left; margin-right: 5px;' src='assets/log_gate_icons/multiplexer.png' />
+                        <span>Multiplexer</span>
+                    </li>
+                    <li (click)="displayNewDecoderProperties()">
+                        <img style='float: left; margin-right: 5px;' src='assets/log_gate_icons/decoder.png' />
+                        <span>Decoder</span>
+                    </li>
+                    <li (click)="displayNewEncoderProperties()">
+                        <img style='float: left; margin-right: 5px;' src='assets/log_gate_icons/encoder.png' />
+                        <span>Encoder</span>
+                    </li>
+                    <li (click)="displayNewAdderProperties()">
+                        <img style='float: left; margin-right: 5px;' src='assets/log_gate_icons/adder.png' />
+                        <span>Adder</span>
+                    </li>
+                    <li (click)="displayNewSubtractorProperties()">
+                        <img style='float: left; margin-right: 5px;' src='assets/log_gate_icons/adder.png' />
+                        <span>Subtractor</span>
+                    </li>
+                    <li (click)="displayNewComparatorProperties()">
+                        <img style='float: left; margin-right: 5px;' src='assets/log_gate_icons/adder.png' />
+                        <span>Comparator</span>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <img style='float: left; margin-right: 20px;' width="35px" src='assets/log_gate_icons/ramm.png' />
+                <span style="text-align: center;">Memory</span>
+                <ul style='width: 220px;'>
+                    <li (click)="displayNewRamProperties()">
+                        <img style='float: left; margin-right: 5px;' src='assets/log_gate_icons/ram.png' />
+                        <span>Ram</span>
+                    </li>
+                    <li (click)="displayNewRegisterProperties()">
+                        <img style='float: left; margin-right: 5px;' src='assets/log_gate_icons/register.png' />
+                        <span>Register</span>
+                    </li>
+                    <!-- <li>
+                        <img style='float: left; margin-right: 5px;' src='assets/log_gate_icons/clk.png' />
+                        <span>Encoder</span>
+                    </li> -->
+                </ul>
+            </li>
+        </ul>
+    </jqxMenu>
+    <div class="objectsPropertiesWrapper">
+        
+        <div id="NewOrCustomPortsProperties" class="modal-content">
+            <form>
+                <label id="panelOrCustomPortsNameLabel" class="insideFormLab" for="panelOrCustomPortsNameInput">OR signal's name:</label>
+                <input #panelOrCustomPortsNameInput type="text" id="panelOrCustomPortsNameInput" name="panelOrCustomPortsNameInput" placeholder="Insert OR's name">
+                <label for="orCustomPortsBandwidth">Select OR's width:    </label>
+                <label class="radio-inline">
+                    <input type="radio" name="optradio" id="panelORCustomPortsGBitRadio" checked (click)="orCustomPortsPropertiesBitChecked()"> Bit
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="optradio" id="panelORCustomPortsGVectorRadio" (click)="orCustomPortsPropertiesVectorChecked()"> Vector
+                </label>
+            
+                <label style="display:block;" for="panelOrCustomPortsNumberofInPortsInput">Number of input ports:  </label>
+                <input #panelOrCustomPortsNumberofInPortsInput Input type="text" id="panelOrCustomPortsNumberofInPortsInput" name="panelOrCustomPortsNumberofInPortsInput" placeholder="OR gate's number of input ports" value="2">
+                <label id="panelOrCustomPortsBandwidthInputLabel" class="insideFormLab" for="panelOrCustomPortsBandwidthInput">Width of vector:</label>
+                <input #panelOrCustomPortsBandwidthInput type="text" id="panelOrCustomPortsBandwidthInput" name="panelOrCustomPortsBandwidth" placeholder="OR gate's width.." value="2">
+                
+                <input class="submitButton" type="button" value="Submit" (click)="onModalWindowSubmitClickedNewOrCustomPorts(panelOrCustomPortsBandwidthInput.value, panelOrCustomPortsNameInput.value, panelOrCustomPortsNumberofInPortsInput.value)">
+            </form>
+        </div>            
+        
+        <div id="NewAndCustomPortsProperties" class="modal-content">
+            <form>
+                <label id="panelAndCustomPortsNameLabel" class="insideFormLab" for="panelAndCustomPortsNameInput">AND signal's name:</label>
+                <input #panelAndCustomPortsNameInput type="text" id="panelAndCustomPortsNameInput" name="panelAndCustomPortsNameInput" placeholder="Insert AND's name">
+                <label for="panelAndCustomPortsBandwidth">Select AND's width:  </label>
+                <label class="radio-inline">
+                    <input type="radio" name="optradio" id="panelANDCustomPortsGBitRadio" checked (click)="andCustomPortsPropertiesBitChecked()"> Bit
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="optradio" id="panelANDCustomPortsGVectorRadio" (click)="andCustomPortsPropertiesVectorChecked()"> Vector
+                </label>
+                
+                <label for="panelAndCustomPortsNumberofInPortsInput">Number of input ports:</label>
+                <input #panelAndCustomPortsNumberofInPortsInput type="text" id="panelAndCustomPortsNumberofInPortsInput" name="panelAndCustomPortsNumberOfInPorts" placeholder="AND gate's number of input ports" value="2">
+                <label id="panelAndCustomPortsBandwidthInputLabel" class="insideFormLab" for="panelAndCustomPortsBandwidthInput">Width of vector:</label>
+                <input #panelAndCustomPortsBandwidthInput type="text" id="panelAndCustomPortsBandwidthInput" name="panelAndCustomPortsBandwidth" placeholder="AND gate's width.." value="2">
+                
+                <input class="submitButton" type="button" value="Submit" (click)="onModalWindowSubmitClickedNewAndCustomPorts(panelAndCustomPortsBandwidthInput.value, panelAndCustomPortsNameInput.value, panelAndCustomPortsNumberofInPortsInput.value)">
+            </form>
+        </div>    
+        
+
+        <div id="NewNorCustomPortsProperties" class="modal-content">
+            <form>
+                <label id="panelNorCustomPortsNameLabel" class="insideFormLab" for="panelNorCustomPortsNameInput">NOR signal's name:</label>
+                <input #panelNorCustomPortsNameInput type="text" id="panelNorCustomPortsNameInput" name="panelNorCustomPortsNameInput" placeholder="Insert NOR's name">
+                <label for="panelNorCustomPortsBandwidth">Select NOR's width:</label>
+                <label class="radio-inline">
+                    <input type="radio" name="optradio" id="panelNORCustomPortsGBitRadio" checked (click)="norCustomPortsPropertiesBitChecked()"> Bit
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="optradio" id="panelNORCustomPortsGVectorRadio" (click)="norCustomPortsPropertiesVectorChecked()"> Vector
+                </label>
+                <label for="panelNorCustomPortsNumberofInPortsInput">Number of input ports:  </label>
+                <input #panelNorCustomPortsNumberofInPortsInput type="text" id="panelNorCustomPortsNumberofInPortsInput" name="panelNorCustomPortsNumberOfInPorts" placeholder="NOR gate's number of input ports" value="2">
+                <label id="panelNorCustomPortsBandwidthInputLabel" class="insideFormLab" for="panelNorCustomPortsBandwidthInput">Width of vector:</label>
+                <input #panelNorCustomPortsBandwidthInput type="text" id="panelNorCustomPortsBandwidthInput" name="panelNorCustomPortsBandwidth" placeholder="NOR gate's width.." value="2">
+                
+                <input class="submitButton" type="button" value="Submit" (click)="onModalWindowSubmitClickedNewNorCustomPorts(panelNorCustomPortsBandwidthInput.value, panelNorCustomPortsNameInput.value, panelNorCustomPortsNumberofInPortsInput.value)">
+            </form>
+        </div>
+        
+        
+        <div id="NewNandCustomPortsProperties" class="modal-content">
+            <form>
+                <label id="panelNandCustomPortsNameLabel" class="insideFormLab" for="panelNandCustomPortsNameInput">NAND signal's name:</label>
+                <input #panelNandCustomPortsNameInput type="text" id="panelNandCustomPortsNameInput" name="panelNandCustomPortsNameInput" placeholder="Insert NAND's name">
+                <label for="panelNandCustomPortsBandwidth">Select NAND's width:  </label>
+                <label class="radio-inline">
+                    <input type="radio" name="optradio" id="panelNANDCustomPortsGBitRadio" checked (click)="nandCustomPortsPropertiesBitChecked()"> Bit
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="optradio" id="panelNANDCustomPortsGVectorRadio" (click)="nandCustomPortsPropertiesVectorChecked()"> Vector
+                </label>
+                
+                <label for="panelNandCustomPortsNumberofInPortsInput">Number of input ports:  </label>
+                <input #panelNandCustomPortsNumberofInPortsInput type="text" id="panelNandCustomPortsNumberofInPortsInput" name="panelNandCustomPortsNumberOfInPorts" placeholder="NAND gate's number of input ports" value="2">
+                <label id="panelNandCustomPortsBandwidthInputLabel" class="insideFormLab" for="panelNandCustomPortsBandwidthInput">Width of vector:</label>
+                <input #panelNandCustomPortsBandwidthInput type="text" id="panelNandCustomPortsBandwidthInput" name="panelNandCustomPortsBandwidth" placeholder="NAND gate's width.." value="2">
+                <input class="submitButton" type="button" value="Submit" (click)="onModalWindowSubmitClickedNewNandCustomPorts(panelNandCustomPortsBandwidthInput.value, panelNandCustomPortsNameInput.value, panelNandCustomPortsNumberofInPortsInput.value)">
+                
+            </form>
+        </div>    
+        
+        
+        <div id="NewXorCustomPortsProperties" class="modal-content">
+            <form>
+                <label id="panelXorCustomPortsNameLabel" class="insideFormLab" for="panelXorCustomPortsNameInput">XOR signal's name:</label>
+                <input #panelXorCustomPortsNameInput type="text" id="panelXorCustomPortsNameInput" name="panelXorCustomPortsNameInput" placeholder="Insert XOR's name">
+                <label for="panelXorCustomPortsBandwidth">Select XOR's width:</label>
+                <label class="radio-inline">
+                    <input type="radio" name="optradio" id="panelXORCustomPortsGBitRadio" checked (click)="xorCustomPortsPropertiesBitChecked()"> Bit
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="optradio" id="panelXORCustomPortsGVectorRadio" (click)="xorCustomPortsPropertiesVectorChecked()"> Vector
+                </label>
+                <label style="display:block;" for="panelXorCustomPortsNumberofInPortsInput">Number of input ports:  </label>
+                <input #panelXorCustomPortsNumberofInPortsInput type="text" id="panelXorCustomPortsNumberofInPortsInput" name="panelXorCustomPortsNumberOfInPorts" placeholder="XOR gate's number of input ports" value="2">
+                <label id="panelXorCustomPortsBandwidthInputLabel" class="insideFormLab" for="panelXorCustomPortsBandwidthInput">Width of vector:</label>
+                <input #panelXorCustomPortsBandwidthInput type="text" id="panelXorCustomPortsBandwidthInput" name="panelXorCustomPortsBandwidth" placeholder="XOR gate's width.." value="2">
+                <input class="submitButton" type="button" value="Submit" (click)="onModalWindowSubmitClickedNewXorCustomPorts(panelXorCustomPortsBandwidthInput.value, panelXorCustomPortsNameInput.value, panelXorCustomPortsNumberofInPortsInput.value)">
+            </form>
+        </div>                
+
+        <div id="NewXnorCustomPortsProperties" class="modal-content">
+            <form>
+                <label id="panelXnorCustomPortsNameLabel" class="insideFormLab" for="panelXnorCustomPortsNameInput">XNOR signal's name:</label>
+                <input #panelXnorCustomPortsNameInput type="text" id="panelXnorCustomPortsNameInput" name="panelXnorCustomPortsNameInput" placeholder="Insert XNOR's name">
+                <label for="panelXnorCustomPortsBandwidth">Select XNOR's width:</label>
+                <label class="radio-inline">
+                    <input type="radio" name="optradio" id="panelXNORCustomPortsGBitRadio" checked (click)="xnorCustomPortsPropertiesBitChecked()"> Bit
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="optradio" id="panelXNORCustomPortsGVectorRadio" (click)="xnorCustomPortsPropertiesVectorChecked()"> Vector
+                </label>
+                <label for="panelXnorCustomPortsNumberofInPortsInput">Number of XNOR's input ports:</label>
+                <input #panelXnorCustomPortsNumberofInPortsInput type="text" id="panelXnorCustomPortsNumberofInPortsInput" name="panelXnorCustomPortsNumberOfInPorts" placeholder="XNOR gate's number of input ports" value="2">
+                <label id="panelXnorCustomPortsBandwidthInputLabel" class="insideFormLab" for="panelXnorCustomPortsBandwidthInput">Width of vector:</label>
+                <input #panelXnorCustomPortsBandwidthInput type="text" id="panelXnorCustomPortsBandwidthInput" name="panelXnorCustomPortsBandwidth" placeholder="XNOR gate's width.." value="2">
+                <label id="panelXnorCustomPortsStructLabel" class="insideFormLab" for="panelXnorCustomPortsStruct">Choose custom struct:</label>
+                <input class="submitButton" type="button" value="Submit" (click)="onModalWindowSubmitClickedNewXnorCustomPorts(panelXnorCustomPortsBandwidthInput.value, panelXnorCustomPortsNameInput.value, panelXnorCustomPortsNumberofInPortsInput.value)">
+            </form>
+        </div>        
+        
+        <div id="NewNotProperties" class="modal-content">
+            <form>
+                <label id="panelNotNameLabel" class="insideFormLab" for="panelNotNameInput">NOT signal's name:</label>
+                <input #panelNotNameInput type="text" id="panelNotNameInput" name="notNameInput" placeholder="Insert NOT's name">
+                <label for="panelNotBandwidth">Select NOT's width:  </label>
+                <label class="radio-inline">
+                    <input type="radio" name="optradio" id="panelNOTGBitRadio" checked (click)="notPropertiesBitChecked()"> Bit
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="optradio" id="panelNOTGVectorRadio" (click)="notPropertiesVectorChecked()"> Vector
+                </label>
+                <label id="panelNotBandwidthInputLabel" class="insideFormLab" for="panelNotBandwidthInput">Width of vector:</label>
+                <input #panelNotBandwidthInput type="text" id="panelNotBandwidthInput" name="panelNotBandwidth" placeholder="NOT gate's width.." value="2">
+                <input class="submitButton" type="button" value="Submit" (click)="onModalWindowSubmitClickedNewNot(panelNotBandwidthInput.value, panelNotNameInput.value)">
+            </form>
+        </div>    
+    
+        <div id="NewMultiplexorProperties" class="modal-content">
+            <form>
+                <label id="panelMulNameLabel" class="insideFormLab" for="panelMulNameInput">Multiplexer signal's name:</label>
+                <input #panelMulNameInput type="text" id="panelMulNameInput" name="panelMulNameInput" placeholder="Insert mux name">
+      
+                <!-- <div id="singleSelSelected">
+                    <label class="label-inline" for="multiplexorBandwidth">Select multiplexer's SEL width:  </label>
+                    <label class="radio-inline">
+                    <input type="radio" #selBit name="optradio" id="MULTIPLEXORGBitRadio" checked (click)="multiplexorSelBitChecked()"> Bit
+                    </label>
+                    <label class="radio-inline">
+                    <input type="radio" name="optradio" #selVector id="MULTIPLEXORGVectorRadio" (click)="multiplexorSelVectorChecked()"> Vector
+                    </label>
+                    <label id="multiplexorBandwidthInputLabel" class="insideFormLab" for="multiplexorBandwidthInput">Width of vector:</label>
+                    <input #multiplexorBandwidthInput type="text" id="multiplexorBandwidthInput" name="multiplexorBandwidth" placeholder="SEL's width.." value="2">
+                </div> -->
+      
+                <div id="panelMultiplexerDataBandwidth">
+                    <label class="label-inline" for="andBandwidth">Select DATA input(s) width:  </label>
+                    <label class="radio-inline">
+                    <input #panelMulDataRadBit type="radio" name="panelMuldataBandwidth" id="panelMulDataBitRadio" checked (click)="mulDataPropertiesBitChecked()"> Bit
+                    </label>
+                    <label class="radio-inline">
+                    <input #panelMulDataRadVector type="radio" name="panelMuldataBandwidth" id="panelMulDataVectorRadio" (click)="mulDataPropertiesVectorChecked()"> Vector
+                    </label>
+                    <label class="radio-inline">
+                    <input #panelMulDataRadStruct type="radio" name="panelMuldataBandwidth" id="panelMulDataStructRadio" (click)="mulDataPropertiesCustomChecked()"> User defined
+                    </label>
+                    <label id="panelMulDataBandwidthInputLabel" class="insideFormLab" for="panelMulDataBandwidthInput">Width of vector:</label>
+                    <input #panelMulDataBandwidthInput type="text" id="panelMulDataBandwidthInput" name="panelMulDataBandwidth" value="2">
+                    <!--pozriet pred pridanim vlastnych struktur-->
+                    <label id="panelMulDataPackageLabel" class="insideFormLab" for="panelMulDataPackage">Choose package file:</label>
+                    <select #panelMulDataPackage id="panelMulDataPackage" name="portPackage" (change)="onPackageSelectChanged($event.target.value)">
+                        <option value="" disabled selected hidden>Select an option</option>
+                        <option *ngFor="let reference of availablePackageFiles" [value]="reference.name">
+                            {{reference.displayName}}
+                        </option>
+                    </select>
+                    <label id="panelMulDataStructLabel" class="insideFormLab" for="panelMulDataStruct">Choose user defined type:</label>
+                    <select #panelMulDataStruct id="panelMulDataStruct" name="portStructure" (change)="onDatatypeSelectChanged($event.target.value)">
+                        <option *ngFor="let data of packageDefines" [value]="data.dataName">
+                            {{data.dataType + ": " + data.dataName}}
+                        </option>
+                    </select>
+                    <!--<label id="panelMulDataStructPartsLabel" class="insideFormLab" for="panelMulDataStructParts">Choose part of the datatype:</label>
+                    <select #panelMulDataStructParts id="panelMulDataStructParts" name="portStructure">
+                        <option *ngFor="let data of packageDatatypeSubtypes" [value]="data">
+                            {{data}}
+                        </option>
+                    </select>-->
+                </div>
+      
+                <div id="panelMultiplexerType">
+                  <label class="label-inline" for="panelMultiplexerType">Multiplexer type:  </label>
+                  <label class="radio-inline">
+                  <input #panelMulTypeTwo type="radio" name="panelMulType" id="panelMulTypeTwoRadio" checked> 2-to-1
+                  </label>
+                  <label class="radio-inline">
+                  <input #panelMulTypeFour type="radio" name="panelMulType" id="panelMulTypeFourRadio"> 4-to-1
+                  </label>
+                  <label class="radio-inline">
+                  <input #panelMulTypeEight type="radio" name="panelMulType" id="panelMulTypeEightRadio"> 8-to-1
+                  </label>
+                </div>
+      
+      
+                <input class="submitButton" type="button" value="Submit" (click)="onModalWindowSubmitClickedNewMULTIPLEXOR(panelMulDataRadBit.checked, panelMulDataRadVector.checked, panelMulDataRadStruct.checked, panelMulDataBandwidthInput.value,panelMulDataPackage.value, panelMulDataStruct.value, 'All parts', panelMulNameInput.value, panelMulTypeTwo.checked, panelMulTypeFour.checked, panelMulTypeEight.checked)">
+            </form>
+        </div>
+
+        <div id="NewDecoderProperties" class="modal-content">
+            <form>
+                <label id="panelDecoderOutNameLabel" class="insideFormLab" for="panelDecoderOutName">DECODER name:</label>
+                <input #panelDecoderOutName type="text" id="panelDecoderOutName" name="panelDecoderOutName" placeholder="Instance name..">
+                <div id="panelDecodSingleDatSelected">
+                    <label id="panelDecoderBandwidthInputLabel" class="insideFormLab" for="panelDecoderBandwidthInput">DATA width:</label>
+                    <input #panelDecoderBandwidthInput type="text" id="panelDecoderBandwidthInput" name="panelDecoderBandwidth" placeholder="DATA's width.." value="2">
+                </div>
+                <!--<label  class="label-inline" for="panelDecodEnableRad">Add ENABLE port:  </label>
+                <label style="display: inline;" class="radio-inline">
+                    <input  #panelDecodEnableRad type="checkbox" name="panelDecodEnableRad" id="panelDecodEnableRad" unchecked>
+                </label>-->
+                <br>
+                <!--<label class="label-inline" for="panelDecoderOutMultiplicity">Select DECODER's OUT multiplicity:  </label>
+                <label class="radio-inline">
+                    <input #panelDecoderOutSingle type="radio" name="multiplicity" value="single" id="panelDECODERSingleOutRadio" checked> Single port
+                </label>
+                <label class="radio-inline">
+                    <input #panelDecoderOutMultiple type="radio" name="multiplicity" value="multiple" id="panelDECODERMultipleOutRadio"> Multiple ports
+                </label>-->
+                <input class="submitButton" type="button" value="Submit" (click)="onModalWindowSubmitClickedNewDECODER(panelDecoderBandwidthInput.value, false, panelDecoderOutName.value)">
+            </form>
+        </div>
+
+        <div id="NewEncoderProperties" class="modal-content">
+            <form>
+                <label id="panelEncoderOutNameLabel" class="insideFormLab" for="panelEncoderOutName">ENCODER name:</label>
+                <input #panelEncoderOutName type="text" id="panelEncoderOutName" name="panelEncoderOutName" placeholder="Instance name..">
+                <div id="encodSingleDatSelected">
+                    <label id="panelEncoderBandwidthInputLabel" class="insideFormLab" for="panelEncoderBandwidthInput">DATA width:</label>
+                    <input #panelEncoderBandwidthInput type="text" id="panelEncoderBandwidthInput" name="panelEncoderBandwidth" placeholder="DATA's width.." value="4">
+                </div>
+                <br>
+                <input class="submitButton" type="button" value="Submit" (click)="onModalWindowSubmitClickedNewENCODER(panelEncoderBandwidthInput.value, panelEncoderOutName.value)">
+            </form>
+        </div>
+
+        <div id="NewAdderProperties" class="modal-content">
+            <form>
+                <label id="panelAdderOutNameLabel" class="insideFormLab" for="panelAdderOutName">ADDER name:</label>
+                <input #panelAdderOutName type="text" id="panelAdderOutName" name="panelAdderOutName" placeholder="Instance name..">
+                <div>
+                    <label id="panelAdderBandwidthInputLabel" class="insideFormLab" for="panelAdderBandwidthInput">DATA width:</label>
+                    <input #panelAdderBandwidthInput type="text" id="panelAdderBandwidthInput" name="panelAdderBandwidth" placeholder="DATA's width.." value="2">
+                </div>
+                <br>
+                <input class="submitButton" type="button" value="Submit" (click)="onModalWindowSubmitClickedNewAdder(panelAdderBandwidthInput.value, panelAdderOutName.value)">
+            </form>
+        </div>
+
+        <div id="NewSubtractorProperties" class="modal-content">
+            <form>
+                <label id="panelSubtractorOutNameLabel" class="insideFormLab" for="panelSubtractorOutName">Subtractor name:</label>
+                <input #panelSubtractorOutName type="text" id="panelSubtractorOutName" name="panelSubtractorOutName" placeholder="Instance name..">
+                <div>
+                    <label id="panelSubtractorBandwidthInputLabel" class="insideFormLab" for="panelSubtractorBandwidthInput">DATA width:</label>
+                    <input #panelSubtractorBandwidthInput type="text" id="panelSubtractorBandwidthInput" name="panelSubtractorBandwidth" placeholder="DATA's width.." value="2">
+                </div>
+                <br>
+                <input class="submitButton" type="button" value="Submit" (click)="onModalWindowSubmitClickedNewSubtractor(panelSubtractorBandwidthInput.value, panelSubtractorOutName.value)">
+            </form>
+        </div>
+
+        <div id="NewComparatorProperties" class="modal-content">
+            <form>
+                <label id="panelComparatorOutNameLabel" class="insideFormLab" for="panelComparatorOutName">Comparator name:</label>
+                <input #panelComparatorOutName type="text" id="panelComparatorOutName" name="panelComparatorOutName" placeholder="Instance name..">
+                <div>
+                    <label id="panelComparatorBandwidthInputLabel" class="insideFormLab" for="panelComparatorBandwidthInput">DATA width:</label>
+                    <input #panelComparatorBandwidthInput type="text" id="panelComparatorBandwidthInput" name="panelComparatorBandwidth" placeholder="DATA's width.." value="2">
+                </div>
+                <label for="comparatorTypeSelect">Choose comparator type:</label>
+                <select name="comparatorTypeSelect" id="comparatorTypeSelect" [(ngModel)]="selectedComparatorType">
+                <option value="&gt;">&gt;</option>
+                <option value="&lt;">&lt;</option>
+                <option value="&gt;=">&gt;=</option>
+                <option value="&lt;=">&lt;=</option>
+                <option value="==">==</option>
+                <option value="!=">!=</option>
+                </select>
+                <br>
+                <input class="submitButton" type="button" value="Submit" (click)="onModalWindowSubmitClickedNewComparator(panelComparatorBandwidthInput.value, panelComparatorOutName.value,selectedComparatorType)">
+            </form>
+        </div>
+
+        <div id="NewRegisterProperties" class="modal-content">
+            <form>
+                <label id="panelRegisterOutNameLabel" class="insideFormLab" for="panelRegisterOutName">REGISTER name:</label>
+                <input #panelRegisterOutName type="text" id="panelRegisterOutName" name="panelRegisterOutName" placeholder="Instance name..">
+                <div>
+                    <label class="label-inline" for="andBandwidth">Select DATA input width:  </label>
+                    <label class="radio-inline">
+                    <input #panelRegisterDataRadBit type="radio" name="dataBandwidth" id="panelRegisterDataBitRadio" checked (click)="registerDataPropertiesBitChecked()"> Bit
+                    </label>
+                    <label class="radio-inline">
+                    <input #panelRegisterDataRadVector type="radio" name="dataBandwidth" id="panelRegisterDataVectorRadio" (click)="registerDataPropertiesVectorChecked()"> Vector
+                    </label>
+                    <label class="radio-inline">
+                        <input #panelRegisterDataRadCustom type="radio" name="dataBandwidth" id="panelRegisterDataCustomRadio" (click)="registerDataPropertiesCustomChecked()" > User defined
+                    </label>
+                    <label id="panelRegisterBandwidthInputLabel" class="insideFormLab" for="panelRegisterBandwidthInput">Width of vector:</label>
+                    <input #panelRegisterBandwidthInput type="text" id="panelRegisterBandwidthInput" name="panelRegisterBandwidthInput" placeholder="DATA's width.." value="2">
+                    <label id="panelRegisterDataPackageLabel" class="insideFormLab" for="panelRegisterDataPackage">Choose package file:</label>
+                    <select #panelRegisterDataPackage id="panelRegisterDataPackage" name="portPackage" (change)="onPackageSelectChanged($event.target.value)">
+                        <option value="" disabled selected hidden>Select an option</option>
+                        <option *ngFor="let reference of availablePackageFiles" [value]="reference.name">
+                            {{reference.displayName}}
+                        </option>
+                    </select>
+                    <label id="panelRegisterDataStructLabel" class="insideFormLab" for="panelRegisterDataStruct">Choose user defined type:</label>
+                    <select #panelRegisterDataStruct id="panelRegisterDataStruct" name="portStructure" (change)="onDatatypeSelectChanged($event.target.value)">
+                        <option value=""  disabled selected hidden>Select an option</option>
+                        <option *ngFor="let data of packageDefines" [value]="data.dataName">
+                            {{data.dataType + ": " + data.dataName}}
+                        </option>
+                    </select>
+                    <!--<label id="panelRegisterDataStructPartsLabel" class="insideFormLab" for="panelRegisterDataStructParts">Choose part of the datatype:</label>
+                    <select #panelRegisterDataStructParts id="panelRegisterDataStructParts" name="portStructure">
+                        <option *ngFor="let data of packageDatatypeSubtypes" [value]="data">
+                            {{data}}
+                        </option>
+                    </select>-->
+                </div>
+                <label class="radio-inline">
+                    <input #panelRegisterEnable type="checkbox" name="enableOpt" value="enable" id="panelRegisterEnableCheckBox"> Enable port
+                </label>
+                <label class="radio-inline">
+                    <input #panelRegisterReset type="checkbox" name="resetOpt" value="reset" id="panelRegisterResetCheckBox"> Reset port
+                </label>
+                <br>
+                <input class="submitButton" type="button" value="Submit" (click)="onModalWindowSubmitClickedNewRegister(panelRegisterBandwidthInput.value, panelRegisterOutName.value, panelRegisterDataPackage.value, panelRegisterDataStruct.value, 'All parts', panelRegisterEnable.checked, panelRegisterReset.checked)">
+            </form>
+        </div>
+
+        <div id="NewRamProperties" class="modal-content">
+            <form>
+                <label id="panelRamOutNameLabel" class="insideFormLab" for="panelRamOutName">RAM name:</label>
+                <input #panelRamOutName type="text" id="panelRamOutName" name="panelRamOutName" placeholder="Instance name..">
+                <div>
+                    <label class="label-inline" for="panelRamAddrBandwidthInput">Address's width:  </label>
+                    <input #panelRamAddrBandwidthInput type="text" id="panelRamAddrBandwidthInput" name="panelRamAddrBandwidthInput" placeholder="Address's width.." value="8">
+                    <label class="label-inline" for="andBandwidth">Select DATA width:  </label>
+                    <label class="radio-inline">
+                        <input #panelRamDataRadVector type="radio" name="dataBandwidth" id="panelRamDataVectorRadio" checked (click)="ramDataPropertiesVectorChecked()"> Vector
+                    </label>
+                    <label class="radio-inline">
+                        <input #panelRamDataRadCustom type="radio" name="dataBandwidth" id="panelRamDataCustomRadio" (click)="ramDataPropertiesCustomChecked()" > User defined
+                    </label>
+                    <label id="panelRamDataBandwidthInputLabel" class="insideFormLab" for="panelRamDataBandwidthInput">Width of vector:</label>
+                    <input #panelRamDataBandwidthInput type="text" id="panelRamDataBandwidthInput" name="panelRamDataBandwidthInput" placeholder="DATA's width.." value="2">
+                    <label id="panelRamDataPackageLabel" class="insideFormLab" for="panelRamDataPackage">Choose package file:</label>
+                    <select #panelRamDataPackage id="panelRamDataPackage" name="portPackage" (change)="onPackageSelectChanged($event.target.value)">
+                        <option value="" disabled selected hidden>Select an option</option>
+                        <option *ngFor="let reference of availablePackageFiles" [value]="reference.name">
+                            {{reference.displayName}}
+                        </option>
+                    </select>
+                    <label id="panelRamDataStructLabel" class="insideFormLab" for="panelRamDataStruct">Choose user defined type:</label>
+                    <select #panelRamDataStruct id="panelRamDataStruct" name="portStructure" (change)="onDatatypeSelectChanged($event.target.value)">
+                        <option *ngFor="let data of packageDefines" [value]="data.dataName">
+                            {{data.dataType + ": " + data.dataName}}
+                        </option>
+                    </select>
+                    <!--<label id="panelRamDataStructPartsLabel" class="insideFormLab" for="panelRamDataStructParts">Choose part of the datatype:</label>
+                    <select #panelRamDataStructParts id="panelRamDataStructParts" name="portStructure">
+                        <option *ngFor="let data of packageDatatypeSubtypes" [value]="data">
+                            {{data}}
+                        </option>
+                    </select>-->
+                <input class="submitButton" type="button" value="Submit" (click)="onModalWindowSubmitClickedNewRam(panelRamOutName.value, panelRamAddrBandwidthInput.value, panelRamDataBandwidthInput.value, panelRamDataPackage.value, panelRamDataStruct.value, 'All parts', panelRamDataRadVector.checked, panelRamDataRadCustom.checked)">
+                </div>
+            </form>
+        </div>
+    
+
+        <div id="NewStandalonePortInProperties" class="modal-content">
+            <form>
+                <label for="panelPName">Name of your in Port:</label>
+                <input #panelPName (keyup)="checkInputStateFowNewPort(pName.value, panelPBandwidthInput.value)" type="text" id="panelPortName" name="panelPortName" [(ngModel)]="name" placeholder="Port's name..">
+                <label class="label-inline" for="pBandwidth">Select Port's width:  </label>
+                <label class="radio-inline">
+                    <input type="radio" name="optradio" id="panelStandAlonePBitRadio" checked (click)="bitPortPropertiesChecked()"> Bit
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="optradio" id="panelStandAlonePVectorRadio" (click)="vectorPortPropertiesChecked()"> Vector
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="optradio" id="panelStandAlonePStructRadio" (click)="customPortPropertiesChecked()"> User defined
+                </label>
+                <label id="panelPBandwidthInputLabel" class="insideFormLab" for="panelPBandwidthInput">Width of vector:</label>
+                <input #panelPBandwidthInput (keyup)="checkInputStateFowNewPort(panelPName.value, panelPBandwidthInput.value)" type="text" id="panelPBandwidthInput" name="panelPortBandwidth" placeholder="Port's width.." value="2">
+                <label id="panelPPackageLabel" class="insideFormLab" for="panelPPackage">Choose package file:</label>
+                <select #panelPPackage id="panelPPackage" name="panelPortPackage" (change)="onPackageSelectChanged($event.target.value)">
+                    <option value="" disabled selected hidden>Select an option</option>
+                    <option *ngFor="let reference of availablePackageFiles" [value]="reference.name">
+                        {{reference.displayName}}
+                    </option>
+                </select>
+                <label id="panelPStructLabel" class="insideFormLab" for="panelPStruct">Choose user defined type:</label>
+                <select #panelPStruct id="panelPStruct" name="panelPortStructure" (change)="onDatatypeSelectChanged($event.target.value)">
+                    <option *ngFor="let data of packageDefines" [value]="data.dataName">
+                        {{data.dataType + ": " + data.dataName}}
+                    </option>
+                </select>
+
+                <!--<label id="panelPStructPartsLabel" class="insideFormLab" for="panelPStructParts">Choose part of the datatype:</label>
+                <select #panelPStructParts id="panelPStructParts" name="panelPortStructureParts" (change)="onDatatypeSelectChanged($event.target.value)">
+                    <option *ngFor="let data of packageDatatypeSubtypes" [value]="data">
+                        {{data}}
+                    </option>
+                </select>-->
+                <br>
+                <input class="submitButton" type="button" value="Submit" [disabled]="textCheckNewPort" (click)="onModalWindowSubmitClickedNewPort(panelPName.value, panelPBandwidthInput.value, 'in',panelPPackage.value, panelPStruct.value, 'All parts')">
+            </form>
+        </div>
+
+        <div id="NewStandalonePortOutProperties" class="modal-content">
+            <form>
+                <label for="panelPName">Name of your out Port:</label>
+                <input #pName (keyup)="checkInputStateFowNewPort(panelPName.value, panelPBandwidthInputOut.value)" type="text" id="panelPName" name="panelPortName" [(ngModel)]="name" placeholder="Port's name..">
+                <label class="label-inline" for="panelPBandwidthOut">Select Port's width:  </label>
+                <label class="radio-inline">
+                    <input type="radio" name="optradio" id="panelStandAlonePBitRadioOut" checked (click)="bitPortPropertiesCheckedOut()"> Bit
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="optradio" id="panelStandAlonePVectorRadioOut" (click)="vectorPortPropertiesCheckedOut()"> Vector
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="optradio" id="panelStandAlonePStructRadioOut" (click)="customPortPropertiesCheckedOut()"> User defined
+                </label>
+                <label id="panelPBandwidthInputLabelOut" class="insideFormLab" for="panelPBandwidthInputOut">Width of vector:</label>
+                <input #panelPBandwidthInputOut (keyup)="checkInputStateFowNewPort(panelPName.value, panelPBandwidthInputOut.value)" type="text" id="panelPBandwidthInputOut" name="panelPortBandwidth" placeholder="Port's width.." value="2">
+                <label id="panelPPackageLabelOut" class="insideFormLab" for="panelPPackageOut">Choose package file:</label>
+                <select #panelPPackageOut id="panelPPackageOut" name="panelPortPackage" (change)="onPackageSelectChanged($event.target.value)">
+                    <option value="" disabled selected hidden>Select an option</option>
+                    <option *ngFor="let reference of availablePackageFiles" [value]="reference.name">
+                        {{reference.displayName}}
+                    </option>
+                </select>
+                <label id="panelPStructLabelOut" class="insideFormLab" for="panelPStructOut">Choose user defined type:</label>
+                <select #panelPStructOut id="panelPStructOut" name="panelPortStructure" (change)="onDatatypeSelectChanged($event.target.value)">
+                    <option *ngFor="let data of packageDefines" [value]="data.dataName">
+                        {{data.dataType + ": " + data.dataName}}
+                    </option>
+                </select>
+                <!--<label id="panelPStructPartsLabelOut" class="insideFormLab" for="panelPStructPartsOut">Choose part of the datatype:</label>
+                <select #panelPStructPartsOut id="panelPStructPartsOut" name="panelPortStructureParts" (change)="onDatatypeSelectChanged($event.target.value)">
+                    <option *ngFor="let data of packageDatatypeSubtypes" [value]="data">
+                        {{data}}
+                    </option>
+                </select>-->
+                <br>
+                <input class="submitButton" type="button" value="Submit" [disabled]="textCheckNewPort" (click)="onModalWindowSubmitClickedNewPort(panelPName.value, panelPBandwidthInputOut.value, 'out', panelPPackageOut.value, panelPStructOut.value, 'All parts')">
+                
+            </form>
+        </div>
+
+        <div id="PackageImportProperties" class="modal-content">
+            <form>
+                <label style="display: block;">Import package file:</label>
+                <label for="panelPackageFileSelect">Choose file</label>
+                <select #panelPackageFileSelect id="panelPackageFileSelect" name="panelPackageFileSelect">
+                    <option *ngFor="let reference of availablePackageFiles" [value]="reference.name">
+                      {{reference.displayName}}
+                    </option>
+                </select>
+                <input class="submitButton" type="button" value="Load module" (click)="onModalWindowSubmitClickedImportPackage(panelPackageFileSelect.value)">
+                
+            </form>
+        </div>
+        
+        <div id="NewModuleProperties" class="modal-content">
+            <form>
+                <label style="display: block;">New Module:</label>
+                <label for="panelMName">Name:</label>
+                <input #panelModuleName (keyup)="checkInputStateForNewModule(panelModuleName.value, panelInstanceName.value)" type="text" id="panelModuleName" name="panelModuleName" [(ngModel)]="name" placeholder="Name..">
+                <label for="panelInstanceName">Name instance</label>
+                <input #panelInstanceName (keyup)="checkInputStateForNewModule(panelModuleName.value, panelInstanceName.value)" type="text" id="panelInstanceName" name="panelInstanceName" [(ngModel)]="instance" placeholder="Instance name..">
+                <input class="submitButton" type="button" value="Submit" [disabled]="textCheckNewModule" (click)="onModalWindowSubmitClickedNewModule(panelModuleName.value, panelInstanceName.value)">
+            </form>
+        </div>
+
+        <div id="ExistingModuleProperties" class="modal-content">
+                <form>
+                    <label style="display: block;">Import existing module:</label>
+                    <label for="panelModuleInstanceInput">Instance name:</label>
+                    <input #panelModuleInstanceInput type="text" id="panelModuleInstanceInput" name="panelModuleInstanceInput" placeholder="Insert unique instance identifier">
+                    <label for="panelLoadSVSelect">Choose file</label>
+                    <select #panelLoadSVselect id="panelLoadSVselect" name="panelLoadSVselect">
+                        <option *ngFor="let reference of availableJSONFiles" [value]="reference.name">
+                          {{reference.displayName}}
+                        </option>
+                    </select>
+                    <input class="submitButton" type="button" value="Load module" (click)="onModalWindowSubmitClickedLoadModuleFromCode(panelLoadSVselect.value, panelModuleInstanceInput.value)">
+                    
+                </form>
+        </div>
+
+        <div id="NewPortProperties" class="modal-content">
+            <form>
+                <label for="panelPName">Name of your Port:</label>
+                <input #panelPName (keyup)="checkInputStateFowNewPort(panelPName.value, panelInnerPBandwidthInput.value)" type="text" id="panelPName" name="panelPortName" [(ngModel)]="name" placeholder="Port's name..">
+                <label for="panelPBandwidth">Select Port's width:  </label>
+                <label class="radio-inline">
+                    <input #panelInnerPBitRadio id="panelInnerPBitRadio" type="radio" name="optradio" checked (click)="bitPortModulePropertiesChecked()"> Bit
+                </label>
+                <label class="radio-inline">
+                    <input #panelInnerPVectorRadio id ="panelInnerPVectorRadio" type="radio" name="optradio" (click)="vectorPortModulePropertiesChecked()"> Vector
+                </label>
+                <label class="radio-inline">
+                    <input #panelStructRadio id ="panelInnerPStructRadio" type="radio" name="optradio" (click)="customPortModulePropertiesChecked()"> User defined
+                </label>
+                <label id="panelInnerPBandwidthInputLabel" class="insideFormLab" for="panelInnerPBandwidthInput">Width of vector:</label>
+                <input #panelInnerPBandwidthInput (keyup)="checkInputStateFowNewPort(panelPName.value, panelInnerPBandwidthInput.value)" type="text" id="panelInnerPBandwidthInput" name="panelPortBandwidth" placeholder="Port's width.." value="2">
+                <label id="panelInnerPPackageLabel" class="insideFormLab" for="panelInnerPPackage">Choose package file:</label>
+                <select #panelInnerPPackage id="panelInnerPPackage" name="panelInnerPortPackage" (change)="onPackageSelectChanged($event.target.value)">
+                    <option value="" disabled selected hidden>Select an option</option>
+                    <option *ngFor="let reference of availablePackageFiles" [value]="reference.name">
+                        {{reference.displayName}}
+                    </option>
+                </select>
+                <label id="panelInnerPStructLabel" class="insideFormLab" for="panelInnerPStruct">Choose custom struct:</label>
+                <select #panelInnerPStruct id="panelInnerPStruct" name="portStructure" (change)="onDatatypeSelectChanged($event.target.value)">
+                    <option *ngFor="let data of packageDefines" [value]="data.dataName">
+                        {{data.dataType + ": " + data.dataName}}
+                    </option>
+                </select>
+                <!--<label id="panelInnerPStructPartsLabel" class="insideFormLab" for="panelInnerPStructParts">Choose part of the datatype:</label>
+                <select #panelInnerPStructParts id="panelInnerPStructParts" name="portStructure">
+                    <option *ngFor="let data of packageDatatypeSubtypes" [value]="data">
+                        {{data}}
+                    </option>
+                </select>-->
+                <br>
+                <label class="insideFormLab">Choose port direction:</label>
+                <select #panelPortDirection name="panelPortDirection">
+                      <option value="in">Input</option>
+                      <option value="out">Output</option>
+                </select>
+                <input class="submitButton" type="button" value="Submit" [disabled]="textCheckNewPort" (click)="addPortToModule(panelPName.value, panelPortDirection.value, panelInnerPBandwidthInput.value, 'guiCall', panelInnerPPackage.value, panelInnerPStruct.value, 'All parts')">
+            </form>
+        </div>
+            
+
+    </div>
+</div>
+
+<div id="diagram-paper-placement">
+</div>

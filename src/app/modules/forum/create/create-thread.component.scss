@@ -1,0 +1,133 @@
+.forum {
+  &-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 30px;
+  }
+
+  &-header {
+    flex: 0 0 100%;
+    text-align: center;
+  }
+
+  &-buttons {
+    margin-bottom: 10px;
+  }
+
+  &-loadingcard {
+    opacity: 0.5;
+    transition: ease opacity 0.5s;
+  }
+
+  &-card {
+    opacity: 1;
+    transition: ease opacity 0.5s;
+  }
+}
+
+.form-control {
+  border-radius: 7px;
+  background-color: #eee;
+  border-color: #eee;
+
+  &.is-invalid {
+    border-color: #dc3545;
+  }
+
+  &:focus {
+    background-color: #eee;
+  }
+}
+
+.form-label {
+  color: #666;
+  font-weight: bold;
+  margin-bottom: 0.2rem;
+}
+
+.page-title {
+  font-weight: bold;
+  color: #333;
+}
+
+quill-editor {
+  .ql-toolbar {
+    border-top-right-radius: 7px;
+    border-top-left-radius: 7px;
+    background-color: #3f51b5;
+  }
+
+  .ql-container {
+    border-bottom-right-radius: 7px;
+    border-bottom-left-radius: 7px;
+  }
+
+  .ql-formats {
+    background-color: white;
+    border-radius: 3px;
+
+    button {
+      border-right: 1px solid #aaa;
+    }
+
+    button:last-child {
+      border-right: none;
+    }
+  }
+}
+
+.thread {
+  &-card,
+  &-reply {
+    width: 100%;
+    border-radius: 20px;
+    background-color: #f4f4f4;
+    color: #555;
+    padding: 1rem 2rem;
+  }
+
+  &-card {
+    margin-bottom: 3rem;
+  }
+
+  &-reply {
+    margin-bottom: 2rem;
+  }
+
+  &-autor {
+    font-size: 1.15rem;
+    font-weight: bold;
+  }
+
+  &-username {
+    font-size: 1rem;
+  }
+
+  &-title {
+    font-weight: bold;
+    width: fit-content;
+    transform-origin: 0% 50%;
+    margin-top: 16px;
+  }
+
+  &-message {
+    width: 100%;
+    color: #666;
+    font-size: 0.85rem;
+    line-height: 1.1rem;
+
+    pre {
+      border: 1px solid #aaa;
+      background-color: white;
+      padding: 0.25rem 0.5rem;
+    }
+  }
+}
+
+button[mat-flat-button]:hover {
+  background-color: #3949a1;
+}
+
+.pointer-events-none {
+  pointer-events: none;
+}

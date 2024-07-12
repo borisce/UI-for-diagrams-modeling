@@ -1,0 +1,21 @@
+<div
+  id="code-review-popup"
+  [ngClass]="visible ? 'visible' : 'hidden'"
+  [ngStyle]="{
+    top: position.y + 15 + 'px',
+    left: position.x + 15 + 'px'
+  }"
+>
+  <form [formGroup]="codeReviewForm" (ngSubmit)="onSubmit()">
+    <label>Enter your review comment:</label>
+    <textarea formControlName="comment" class="form-control" placeholder="Your comment" spellcheck="false">{{
+      comment
+    }}</textarea>
+    <div class="button-wrapper">
+      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="button" class="btn btn-secondary" (click)="onClose()">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,64 @@
+<div *ngIf="core == null; else loaded">
+  <mat-spinner></mat-spinner>
+</div>
+<ng-template #loaded>
+  <div>
+    <h4>New IP Core version</h4>
+
+    <div style="margin: 10px 0;">
+      New version will be created from current files in IP core repository.
+    </div>
+
+    <form (ngSubmit)="onSubmit()" [formGroup]="form">
+
+      <mat-error *ngIf="this.error != null">
+        {{this.error}}
+      </mat-error>
+      <mat-label>Version</mat-label>
+      Latest version is {{this.core.latest_version.version_number}}.
+      <div class="version-input">
+        <label class="mr-4">Number</label>
+        <mat-form-field><input formControlName="major" matInput min="1" step="1" type="number"></mat-form-field>
+        <span>.</span>
+        <mat-form-field><input formControlName="minor" matInput min="0" step="1" type="number"></mat-form-field>
+        <span>.</span>
+        <mat-form-field><input formControlName="patch" matInput min="0" step="1" type="number"></mat-form-field>
+      </div>
+      <mat-error *ngIf="form.controls['major'].hasError('required')
+     || form.controls['minor'].hasError('required')
+     || form.controls['patch'].hasError('required'); else otherErrorCheck">
+        Version number is required
+      </mat-error>
+      <ng-template #otherErrorCheck>
+        <mat-error *ngIf="!isVersionGreater()">Version number must be greater
+          than {{core.latest_version.version_number}}</mat-error>
+      </ng-template>
+
+      <mat-form-field style="width: 100%;">
+        <mat-label>Changelog</mat-label>
+        <textarea #autosize="cdkTextareaAutosize" cdkAutosizeMaxRows="5"
+                  cdkAutosizeMinRows="1"
+                  cdkTextareaAutosize
+                  formControlName="changelog"
+                  matInput></textarea>
+        <mat-error *ngIf="form.controls['changelog'].hasError('required')">Changelog is required</mat-error>
+      </mat-form-field>
+
+      <br>
+      <br>
+      <mat-slide-toggle color="primary" formControlName="active">
+        Visibility
+      </mat-slide-toggle>
+
+      <div class="actions">
+        <button (click)="closeDialog($event)" class="mr-2" mat-flat-button>
+          Cancel
+        </button>
+        <button [disabled]="form.invalid || !isVersionGreater() || loadingState" color="primary" mat-flat-button>
+          Create
+        </button>
+      </div>
+    </form>
+  </div>
+
+</ng-template>

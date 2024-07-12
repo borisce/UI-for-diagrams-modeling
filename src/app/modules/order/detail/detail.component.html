@@ -1,0 +1,141 @@
+<mat-progress-bar *ngIf="this.loadingState; else ordersBlock" mode="indeterminate"></mat-progress-bar>
+<ng-template #ordersBlock>
+  <div class="container pb-3">
+    <h2 class="pt-3 mb-3 d-flex">
+      <button [routerLink]="['/orders']" mat-icon-button routerLinkActive="active">
+        <mat-icon>navigate_before</mat-icon>
+      </button>
+      Order detail
+    </h2>
+    <div>
+      <div class="row">
+        <div class="col-6">
+          <table class="w-100 info">
+            <tr>
+              <td>Name</td>
+              <td>{{ order.first_name }} {{ order.last_name }}</td>
+            </tr>
+            <tr>
+              <td>E-mail</td>
+              <td>{{ order.email }}</td>
+            </tr>
+            <tr>
+              <td class="align-top">Address</td>
+              <td>
+                {{ order.address }}<br>
+                {{ order.city }} {{ order.zip_code }}<br>
+                {{ getCountryName(order.country) }}
+              </td>
+            </tr>
+            <tr>
+              <td class="align-top">Status</td>
+              <td [ngSwitch]="order.state.state">
+                <span *ngSwitchCase="'CREATED'" class="badge badge-success">Created</span>
+                <span *ngSwitchCase="'COMPLETED'" class="badge badge-success">Completed</span>
+                <span *ngSwitchCase="'PENDING_PAYMENT'" class="badge badge-warning">Pending payment</span>
+                <span *ngSwitchCase="'CANCELLED'" class="badge badge-warning">Cancelled</span>
+                <span *ngSwitchCase="'REFUNDED'" class="badge badge-info">Refunded</span>
+                <span *ngSwitchCase="'FAILED'" class="badge badge-danger">Failed</span>
+                <span *ngSwitchCase="'PAYMENT_FAILED'" class="badge badge-danger">Failed</span>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="col-6">
+
+          <div *ngIf="paymentLoadingState; else paymentsBlock" class="d-flex justify-content-center">
+            <mat-spinner></mat-spinner>
+          </div>
+          <ng-template #paymentsBlock>
+            <h3 class="d-flex align-items-center justify-content-between pb-2">
+              Payment's
+              <button (click)="createNewPayment()" *ngIf="order.state.state === 'PAYMENT_FAILED'" color="primary"
+                      mat-raised-button>
+                Create new payment
+              </button>
+            </h3>
+            <mat-table [dataSource]="order.payments" class="mat-elevation-z3">
+              <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef mat-header-cell> Payment method</mat-header-cell>
+                <mat-cell *matCellDef="let payment" [ngSwitch]="payment.payment_method" mat-cell>
+                  <span *ngSwitchCase="'stripe'">Stripe</span>
+                  <span *ngSwitchCase="'paypal'">PayPal</span>
+                </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="state">
+                <mat-header-cell *matHeaderCellDef mat-header-cell> Status</mat-header-cell>
+                <mat-cell *matCellDef="let payment" [ngSwitch]="payment.state.state" mat-cell>
+                  <span *ngSwitchCase="'PAID'" class="badge badge-success">Paid</span>
+                  <span *ngSwitchCase="'UNPAID'" class="badge badge-warning">Unpaid</span>
+                  <span *ngSwitchCase="'EXPIRED'" class="badge badge-danger">Expired</span>
+                  <span *ngSwitchCase="'FAILED'" class="badge badge-danger">Failed</span>
+                </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="actions">
+                <mat-header-cell *matHeaderCellDef mat-header-cell></mat-header-cell>
+                <mat-cell *matCellDef="let payment" mat-cell>
+                  <a *ngIf="payment.state.state == 'UNPAID' && payment.payment_method_url.length > 0"
+                     [href]="payment.payment_method_url">Go to payment
+                    page</a>
+                </mat-cell>
+              </ng-container>
+
+              <mat-header-row *matHeaderRowDef="['name', 'state', 'actions']"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: ['name', 'state', 'actions'];"></mat-row>
+            </mat-table>
+          </ng-template>
+        </div>
+        <div class="col-12 mt-4">
+          <h3 class="d-flex align-items-center justify-content-between pb-2">Order item's <span
+            *ngIf="order.state.state === 'COMPLETED'">
+            <button [routerLink]="['/cores/purchased']" color="primary" mat-raised-button>Assign to repository</button>
+          </span></h3>
+          <mat-table [dataSource]="order.items" class="mat-elevation-z3">
+            <ng-container matColumnDef="name">
+              <mat-header-cell *matHeaderCellDef mat-header-cell> Item name</mat-header-cell>
+              <mat-cell *matCellDef="let item" mat-cell>
+                <span *ngIf="item.core">
+                  {{ item.core?.name || 'Unknown IP core' }}
+                </span>
+                <span *ngIf="item.package_id">
+                  {{ item.package_id?.name || 'Unknown package' }}
+                </span>
+              </mat-cell>
+              <mat-footer-cell *matFooterCellDef mat-footer-cell><b>Total price</b></mat-footer-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="variation">
+              <mat-header-cell *matHeaderCellDef mat-header-cell> Core variation</mat-header-cell>
+              <mat-cell *matCellDef="let item" [ngSwitch]="item.variation" mat-cell>
+                <span *ngSwitchCase="'WITH_UPDATES'">With updates</span>
+                <span *ngSwitchCase="'WITHOUT_UPDATES'">Without updates</span>
+                <span *ngSwitchCase="'UPGRADE'">Upgrade</span>
+              </mat-cell>
+              <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="price">
+              <mat-header-cell *matHeaderCellDef mat-header-cell> Price without VAT</mat-header-cell>
+              <mat-cell *matCellDef="let item" mat-cell> {{ item.price | priceFormat }}</mat-cell>
+              <mat-footer-cell *matFooterCellDef>{{ order.total_price | priceFormat }}</mat-footer-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="tax_price">
+              <mat-header-cell *matHeaderCellDef mat-header-cell> Price</mat-header-cell>
+              <mat-cell *matCellDef="let item" mat-cell> {{ item.tax_price | priceFormat }}</mat-cell>
+              <mat-footer-cell *matFooterCellDef>{{ order.total_tax_price | priceFormat }}</mat-footer-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="['name', 'variation', 'price', 'tax_price']"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: ['name', 'variation', 'price', 'tax_price'];"></mat-row>
+            <mat-footer-row *matFooterRowDef="['name', 'variation', 'price', 'tax_price']"></mat-footer-row>
+          </mat-table>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</ng-template>

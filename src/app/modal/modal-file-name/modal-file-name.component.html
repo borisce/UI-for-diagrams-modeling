@@ -1,0 +1,25 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h3>{{ data.title }}</h3>
+            <p>{{ data.message }}</p>
+            <form (ngSubmit)="onSubmit()" [formGroup]="fileNameForm">
+                <div class="d-block flex-row">
+                    <mat-form-field appearance="outline" class="d-block">
+                        <mat-label><label for="name">{{ data.path }}{{ f.name.value }}{{ extension(f.name.value) }}</label></mat-label>
+                        <input formControlName="name" id="name" matInput type="text" />
+                        <mat-error *ngIf="f.name.hasError('required')">Name is required</mat-error>
+                        <mat-error *ngIf="f.name.hasError('alreadyExists')">Name already exists</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="form-group">
+                    <button [disabled]="loading" class="btn btn-primary">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Save
+          </button>
+                    <a (click)="onNoClick()" class="btn btn-link">Close</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

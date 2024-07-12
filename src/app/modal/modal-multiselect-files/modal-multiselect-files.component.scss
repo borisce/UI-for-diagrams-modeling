@@ -1,0 +1,82 @@
+* {
+  color: white;
+}
+
+::ng-deep .select-file-dialog-checkbox .mat-checkbox-frame {
+  border-color: white !important;
+}
+
+.select-file {
+  &-horizontal-flex {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+hr {
+  background-color: darkgray;
+}
+
+h1 {
+  margin: 0;
+}
+
+#closeButton {
+  background-color: transparent;
+  box-shadow: none;
+  transition: background-color ease 0.3s;
+}
+
+#closeButton:hover {
+  background-color: darkgray;
+}
+
+.example-tree-invisible {
+  display: none;
+}
+
+.example-tree ul,
+.example-tree li {
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style-type: none;
+}
+
+/*
+ * This padding sets alignment of the nested nodes.
+ */
+.example-tree .mat-nested-tree-node div[role=group] {
+  padding-left: 20px;
+}
+
+/*
+ * Padding for leaf nodes.
+ * Leaf nodes need to have padding so as to align with other non-leaf nodes
+ * under the same parent.
+ */
+.example-tree div[role=group] > .mat-tree-node {
+  padding-left: 20px;
+}
+
+.file-list {
+  max-height: 40vh;
+  overflow-y: auto;
+
+  //mat-checkbox {
+  //  .mat-checkbox-layout {
+  //    width: 100%;
+  //
+  //    .mat-checkbox-label {
+  //      width: 100%;
+  //    }
+  //  }
+  //}
+
+}
+
+.mat-tree {
+  background: #1e1e1e;
+}

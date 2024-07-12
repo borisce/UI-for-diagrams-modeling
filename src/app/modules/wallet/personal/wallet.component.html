@@ -1,0 +1,45 @@
+<mat-progress-bar *ngIf="loadingState; else walletBlock" mode="indeterminate"></mat-progress-bar>
+<ng-template #walletBlock>
+
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center pt-3 pb-3">
+      <h1>My wallet</h1>
+      <b>Current balance is: {{authenticationService.currentUser.balance | priceFormat}}</b>
+    </div>
+    <mat-table [dataSource]="balanceChanges.content">
+
+      <ng-container matColumnDef="amount">
+        <mat-header-cell *matHeaderCellDef mat-header-cell>Amount</mat-header-cell>
+        <mat-cell *matCellDef="let core" mat-cell> {{core.amount | priceFormat}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="created">
+        <mat-header-cell *matHeaderCellDef mat-header-cell>Created</mat-header-cell>
+        <mat-cell *matCellDef="let core" mat-cell> {{core.created | date: "dd/MM/yyyy, HH:mm:ss"}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="created_by">
+        <mat-header-cell *matHeaderCellDef mat-header-cell>Created by</mat-header-cell>
+        <mat-cell *matCellDef="let core" mat-cell> {{core.created_by}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="description">
+        <mat-header-cell *matHeaderCellDef mat-header-cell>Description</mat-header-cell>
+        <mat-cell *matCellDef="let core" mat-cell> {{core.description}} </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <mat-paginator (page)="pageChange($event)"
+                   [length]="balanceChanges.totalElements"
+                   [pageIndex]="pageIndex"
+                   [pageSizeOptions]="pageSizeOptions"
+                   [pageSize]="pageSize"
+                   aria-label="Select page">
+    </mat-paginator>
+
+  </div>
+</ng-template>
+

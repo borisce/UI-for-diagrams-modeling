@@ -1,0 +1,61 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~bootstrap/dist/css/bootstrap.min.css";
+@import "../node_modules/@syncfusion/ej2-base/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-angular-navigations/styles/material.css";
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+
+.mat-tooltip.tooltip {
+  font-size: 13px; // current default is 10px :-/
+  //color: yellow;
+}
+
+.darkmode-dialog > mat-dialog-container {
+  background-color: #1e1e1e !important;
+}
+
+lib-ng-pane.ng-star-inserted lib-ng-pane-header.ng-star-inserted,
+lib-ng-pane.ng-star-inserted lib-ng-pane-tab-row.ng-star-inserted,
+lib-ng-pane.ng-star-inserted
+  lib-ng-pane-tab-row.ng-star-inserted
+  lib-ng-pane-tab.ng-star-inserted {
+  height: 35px;
+}
+
+lib-ng-pane-header.ng-star-inserted
+  img.lib-ng-pane-header-icon.ng-star-inserted,
+lib-ng-pane-tab-row.ng-star-inserted
+  lib-ng-pane-tab.lib-ng-pane-tab-active.ng-star-inserted
+  img.lib-ng-pane-tab-icon.ng-star-inserted,
+lib-ng-pane-tab-row.ng-star-inserted
+  lib-ng-pane-tab.ng-star-inserted
+  img.lib-ng-pane-tab-icon.ng-star-inserted {
+  filter: invert(1);
+  height: 13px;
+}
+
+.snackbar {
+  color: white;
+
+  .mat-simple-snackbar-action {
+    color: white;
+  }
+}
+
+.success-snackbar {
+  border: 3px solid green;
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.warning-snackbar {
+  border: 3px solid orange;
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.error-snackbar {
+  border: 3px solid red;
+  color: #ffffff;
+  font-weight: 500;
+}

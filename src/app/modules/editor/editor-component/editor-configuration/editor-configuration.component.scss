@@ -1,0 +1,129 @@
+.configuration {
+  &-container {
+    background-color: #26282b;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    // padding: 20px;
+    height: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  &-module {
+    padding: 20px 10px;
+    margin-left: 25px;
+
+    &-container {
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    &-content {
+      display: flex;
+      flex-direction: row;
+      /*flex-wrap: wrap;*/
+      justify-content: space-between;
+      margin-left: 15px;
+      align-items: stretch;
+      margin: 5px 10px;
+    }
+
+    &-content > mat-form-field {
+      flex-grow: 1;
+      padding-right: 20px;
+    }
+
+    &-content button {
+      margin-right: 20px;
+      margin-top: 5px;
+      margin-bottom: 5px;
+      width: 200px;
+    }
+  }
+
+  &-topbar {
+    background-color: #35393d;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
+
+    button {
+      padding: 8px 16px;
+      transition: filter 0.2s ease;
+      width: 36px;
+      padding: 0;
+      min-width: 0px;
+    }
+
+    mat-icon {
+      font-size: 13px;
+      padding: 3px 0px;
+      margin: 0px;
+    }
+  }
+}
+
+mat-icon {
+  margin: 0px 15px;
+}
+
+button:hover {
+  filter: brightness(50%);
+}
+
+hr {
+  background-color: #797979;
+  width: 100%;
+}
+
+:host ::ng-deep .mat-select-value-text {
+  color: white !important;
+}
+
+:host ::ng-deep .not-empty-select.mat-selected {
+  color: white !important;
+}
+
+:host ::ng-deep .mat-select-arrow {
+  display: white !important;
+}
+
+
+:host ::ng-deep .mat-focused .mat-form-field-label {
+  /*change color of label*/
+  color: white !important;
+}
+
+:host ::ng-deep.mat-form-field-underline {
+  /*change color of underline*/
+  background-color: white !important;
+}
+
+:host ::ng-deep.mat-form-field-ripple {
+  /*change color of underline when focused*/
+  background-color: white !important;
+}
+
+:host ::ng-deep .mat-select-content {
+  background-color: white !important;
+}
+
+h4 {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+
+form.configuration-module-content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+}

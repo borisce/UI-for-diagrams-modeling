@@ -1,0 +1,188 @@
+<div class="dialog">
+  <div class="dialog-header">
+    <h1 mat-dialog-title>Organization overview</h1>
+    <button [mat-dialog-close]="false" mat-button>
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <hr>
+  <mat-dialog-content>
+    <h3>Information</h3>
+    <mat-list #overview id="overviewList" role="list">
+      <mat-list-item role="list-item">
+        <div class="name">UUID</div>
+        <div class="from">{{org.uuid}}</div>
+      </mat-list-item>
+      <mat-list-item role="list-item">
+        <div class="name">Name</div>
+        <div class="from">{{org.name}}</div>
+      </mat-list-item>
+      <mat-list-item role="list-item">
+        <div class="name">Owner</div>
+        <div class="from">{{org.owner}}</div>
+      </mat-list-item>
+      <mat-list-item role="list-item">
+        <div class="name">Created By</div>
+        <div class="from">{{org.createdBy}}</div>
+      </mat-list-item>
+      <mat-list-item role="list-item">
+        <div class="name">Created</div>
+        <div class="from">{{((org.created).replace('T', ' ')).slice(0, -9)}}</div>
+      </mat-list-item>
+      <mat-list-item role="list-item">
+        <div class="name">Last Modified By</div>
+        <div class="from">{{org.lastModifiedBy}}</div>
+      </mat-list-item>
+      <mat-list-item role="list-item">
+        <div class="name">Last Modified</div>
+        <div class="from">{{((org.lastModified).replace('T', ' ')).slice(0, -9)}}</div>
+      </mat-list-item>
+    </mat-list>
+    <hr>
+    <h3>Activity</h3>
+    <mat-list #activity id="activityList" role="list">
+      <mat-accordion multi>
+        <mat-expansion-panel *ngIf="org.teams.length > 0; else noTeams">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Teams
+            </mat-panel-title>
+            <mat-panel-description>
+              {{org.teams.length}}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <mat-list class="expansionList teamListParent">
+            <div *ngFor="let team of org.teams" class="teamList">
+              <mat-list-item class="topItem">
+                <div class="name">Name</div>
+                <div class="from">{{team.name}}</div>
+              </mat-list-item>
+              <mat-list-item>
+                <div class="name">UUID</div>
+                <div class="from">{{team.uuid}}</div>
+              </mat-list-item>
+              <mat-list-item>
+                <div class="name">Members</div>
+                <div *ngIf="team.memberships.length > 0; else noTeamMembers" class="from">
+                  <span *ngFor="let member of team.memberships">[{{member.user.username}}] </span>
+                </div>
+                <ng-template #noTeamMembers>
+                  This team has no members
+                </ng-template>
+              </mat-list-item>
+              <mat-list-item>
+                <div class="name">Repository</div>
+                <div class="from">{{team.repo.name}}</div>
+              </mat-list-item>
+              <mat-list-item>
+                <div class="name">Created By</div>
+                <div class="from">{{team.createdBy}}</div>
+              </mat-list-item>
+              <mat-list-item>
+                <div class="name">Created</div>
+                <div class="from">{{((team.created).replace('T', ' ')).slice(0, -9)}}</div>
+              </mat-list-item>
+              <mat-list-item>
+                <div class="name">Last Modified By</div>
+                <div class="from">{{team.lastModifiedBy}}</div>
+              </mat-list-item>
+              <mat-list-item>
+                <div class="name">Last Modified</div>
+                <div class="from">{{((team.lastModified).replace('T', ' ')).slice(0, -9)}}</div>
+              </mat-list-item>
+            </div>
+          </mat-list>
+        </mat-expansion-panel>
+        <ng-template #noTeams>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Teams
+              </mat-panel-title>
+              <mat-panel-description>
+                0
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <mat-list class="expansionList">
+              <mat-list-item>
+                This organization has no teams
+              </mat-list-item>
+            </mat-list>
+          </mat-expansion-panel>
+        </ng-template>
+
+        <mat-expansion-panel *ngIf="org.invites.length > 0; else noInvites">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Invitations
+            </mat-panel-title>
+            <mat-panel-description>
+              {{org.invites.length}}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <mat-list class="expansionList invListParent">
+            <div *ngFor="let inv of org.invites" class="invList">
+              <mat-list-item class="topItem">
+                <div class="name">Invitation</div>
+                <div class="from"></div>
+              </mat-list-item>
+              <mat-list-item>
+                <div class="name">Invited User</div>
+                <div class="from">{{inv.email}}</div>
+              </mat-list-item>
+              <mat-list-item>
+                <div class="name">UUID</div>
+                <div class="from">{{inv.uuid}}</div>
+              </mat-list-item>
+              <mat-list-item>
+                <div class="name">Sent By</div>
+                <div class="from">{{inv.createdBy}}</div>
+              </mat-list-item>
+              <mat-list-item>
+                <div class="name">Date of Invitation</div>
+                <div class="from">{{((inv.created).replace('T', ' ')).slice(0, -9)}}</div>
+              </mat-list-item>
+              <mat-list-item>
+                <div class="name">Invitation Status</div>
+                <div class="from">{{inv.organizationInviteStatus}}</div>
+              </mat-list-item>
+            </div>
+          </mat-list>
+        </mat-expansion-panel>
+        <ng-template #noInvites>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Invitations
+              </mat-panel-title>
+              <mat-panel-description>
+                0
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <mat-list class="expansionList">
+              <mat-list-item>
+                This organization has no invitations
+              </mat-list-item>
+            </mat-list>
+          </mat-expansion-panel>
+        </ng-template>
+      </mat-accordion>
+    </mat-list>
+    <hr>
+    <h3>Critical section</h3>
+    <mat-list #reset id="criticalList" role="list">
+      <mat-list-item role="list-item">
+        <div class="name">Delete organization</div>
+        <div class="from">
+          <button (click)="onDelete(org)" class="action" color="warn" mat-flat-button>Delete</button>
+        </div>
+      </mat-list-item>
+      <mat-list-item role="list-item">
+        <div class="name">Transfer ownership</div>
+        <div class="from">
+          <button class="action" color="warn" mat-flat-button>Transfer</button>
+        </div>
+      </mat-list-item>
+    </mat-list>
+  </mat-dialog-content>
+</div>

@@ -1,0 +1,13 @@
+<h1 class="mat-h1">Invite user to organization</h1>
+<form [formGroup]="inviteForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email">
+        <mat-error>Email is required!</mat-error>
+    </mat-form-field>
+
+    <div class="form-controls">
+        <button mat-button [mat-dialog-close]="false">Cancel</button>
+        <button mat-flat-button color="primary" type="submit">Invite</button>
+    </div>
+</form>

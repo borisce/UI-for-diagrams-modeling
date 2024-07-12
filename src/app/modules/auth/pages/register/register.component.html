@@ -1,0 +1,64 @@
+<div class="registerForm-container">
+
+  <div class="registerForm-title">
+    <h2>Register</h2>
+  </div>
+
+  <div class="statusMessages">
+    <p *ngIf="error" class="error">{{ error }}</p>
+  </div>
+
+  <form (keyup.enter)="onSubmit(registerForm.value)" (ngSubmit)="onSubmit(registerForm.value)"
+    [formGroup]="registerForm">
+    <table class="full-width">
+      <tr>
+        <td>
+          <mat-form-field appearance="fill">
+            <mat-label>First name</mat-label>
+            <input autocomplete="given-name" formControlName="firstName" matInput>
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Last Name</mat-label>
+            <input autocomplete="family-name" formControlName="lastName" matInput>
+          </mat-form-field>
+        </td>
+      </tr>
+    </table>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Email</mat-label>
+      <input autocomplete="email" formControlName="email" matInput type="email">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Username</mat-label>
+      <input autocomplete="off" formControlName="username" matInput type="text">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Password</mat-label>
+      <input [type]="hidePass ? 'password' : 'text'" autocomplete="new-password" formControlName="password" matInput
+        placeholder="Password">
+      <mat-icon (click)="hidePass = !hidePass" matSuffix style="cursor: pointer">{{ hidePass ? 'visibility_off' :
+        'visibility' }}</mat-icon>
+    </mat-form-field>
+
+    <div class="error-wrapper">
+      <mat-error *ngIf="registerForm.controls.password.errors?.minlength">Password must contain at least 8 characters!
+      </mat-error>
+      <mat-error *ngIf="registerForm.controls.password.errors?.maxlength">Password can`t contain more than 50
+        characters!
+      </mat-error>
+      <mat-error *ngIf="registerForm.controls.password.errors?.pattern">Password must contain at least 1 number and 1
+        special character!
+      </mat-error>
+    </div>
+
+    <div class="registerForm-button-container pt-3">
+      <button color="primary" mat-flat-button type="submit">Register</button>
+      <button (click)="redirect('login')" mat-stroked-button>Back to login</button>
+    </div>
+  </form>
+</div>

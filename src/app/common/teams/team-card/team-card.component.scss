@@ -1,0 +1,42 @@
+.teamcard {
+  display: inline-block;
+  border-radius: 5px;
+  border: 1px solid lightgray;
+  padding: 20px;
+  width: 100%;
+  transition: ease 0.3s background-color;
+  user-select: none;
+
+  &-header > h1 {
+    display: inline-block;
+    padding: 0px 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #3f51b5;
+    margin-top: -8px;
+  }
+
+  &-header {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+  }
+
+  &-footer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+
+    mat-icon {
+      color: #3f51b5;
+    }
+  }
+}
+
+.teamcard:hover {
+  background-color: #eee;
+  box-shadow: 5px 5px 15px 0px lightgray;
+  cursor: pointer;
+  border: 1px solid lightgray;
+}

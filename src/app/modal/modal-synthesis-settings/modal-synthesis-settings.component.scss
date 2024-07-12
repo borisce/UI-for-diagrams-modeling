@@ -1,0 +1,43 @@
+mat-slider {
+    width: 100%;
+}
+
+mat-select {
+    border-bottom: 2px solid #aaaaaa;
+    padding-block: 0.25rem;
+}
+
+::ng-deep {
+
+    .mat-slider.mat-accent .mat-slider-track-fill,
+    .mat-slider.mat-accent .mat-slider-thumb,
+    .mat-slider.mat-accent .mat-slider-thumb-label {
+        background-color: #3F51B5;
+    }
+
+    .mat-slider.mat-accent .mat-slider-focus-ring {
+        background-color: #3F51B533;
+    }
+}
+
+input[matSliderThumb] {
+    color: #3F51B5;
+}
+
+.slider-label {
+    padding-top: 1rem;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    &-item {
+        line-height: 0.5rem;
+        margin-bottom: 0;
+    }
+}
+
+.button-group {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}

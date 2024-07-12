@@ -1,0 +1,119 @@
+<div class="code-review-wrapper">
+  <h4>Code review</h4>
+  <div class="initial-load" *ngIf="initialLoading">
+    <mat-spinner diameter="30"></mat-spinner>
+    <p>Loading reviews...</p>
+  </div>
+  <div
+    class="code-review-list"
+    *ngIf="codeReviewService.reviews.length !== 0 && !initialLoading"
+  >
+    <div class="code-review-buttons">
+      <button
+        matTooltip="Refresh reviews"
+        class="refresh-btn"
+        (click)="$event.stopPropagation(); getCodeReviews()"
+      >
+        <mat-icon>refresh</mat-icon>
+      </button>
+    </div>
+    <div
+      *ngFor="let file of codeReviewService.reviews"
+      class="code-review-list-file"
+    >
+      <div
+        class="file-info"
+        (click)="openFile(file.id)"
+        [ngClass]="{ active: codeReviewService.openedFile?.id === file.id }"
+      >
+        <span class="name">{{ file.fileName }}</span>
+        <span class="reviews"
+          >{{ (file.reviews | keyvalue).length }}
+          {{ (file.reviews | keyvalue).length === 1 ? "review" : "reviews" }}
+          <span
+            class="unopened"
+            *ngIf="file.unopened"
+            matTooltip="{{ file.unopened }} new changes"
+            >{{ file.unopened }}</span
+          >
+        </span>
+      </div>
+      <div
+        class="code-review-list-reviews"
+        [ngClass]="{ opened: codeReviewService.openedFile?.id === file.id }"
+      >
+        <div
+          *ngFor="let review of file.reviews | keyvalue"
+          class="code-review-list-item"
+          [ngClass]="{
+            selected: codeReviewService.openedReview?.id === review.value.id
+          }"
+          (click)="openReview(review.value.id)"
+        >
+          <div class="review-header">
+            <span class="author">{{ review.value.author_name }}</span>
+            <span class="date">{{
+              review.value.created_at | date : "d.M.y H:mm:ss"
+            }}</span>
+          </div>
+          <span class="message">{{ review.value.message }}</span>
+          <div class="review-comments">
+            <span class="comments-count"
+              >{{ review.value.comments.length
+              }}{{
+                review.value.comments.length === 1 ? " comment" : " comments"
+              }}</span
+            >
+            <div
+              class="review-comments-list"
+              [ngClass]="{
+                opened: codeReviewService.openedReview?.id === review.value.id
+              }"
+            >
+              <div
+                *ngFor="let comment of review.value.comments | keyvalue"
+                class="review-comments-item"
+              >
+                <div class="review-comments-item-header">
+                  <span class="author">{{ comment.value.author_name }}</span>
+                  <span class="date">{{
+                    comment.value.created_at | date : "d.M.y H:mm:ss"
+                  }}</span>
+                </div>
+                <div class="review-comments-item-content">
+                  <span class="message">{{ comment.value.content }}</span>
+                </div>
+              </div>
+              <div class="review-comments-item-input">
+                <form [formGroup]="commentForm" (ngSubmit)="onSubmit()">
+                  <label>New comment</label>
+                  <textarea
+                    formControlName="content"
+                    class="form-control"
+                    placeholder="Your comment"
+                    spellcheck="false"
+                  >{{comment}}</textarea>
+                  <button type="submit" class="btn btn-primary">
+                    Add comment
+                  </button>
+                  <button class="btn btn-primary" (click)="resolveReview(review.value.id)" style="margin-left: 0.5rem">
+                    Resolve
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="code-review-help" *ngIf="codeReviewService.reviews.length === 0 && !initialLoading">
+    <p>No code reviews found</p>
+    <span>To begin a code review</span>
+    <ul>
+      <li>Select the block of code you want to review in the editor.</li>
+      <li>Right-click on the selection.</li>
+      <li>Choose "Add code review comment" from the context menu.</li>
+    </ul>
+  </div>
+</div>

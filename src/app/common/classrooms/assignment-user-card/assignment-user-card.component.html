@@ -1,0 +1,60 @@
+<table
+  *ngIf="!loading"
+  mat-table
+  [dataSource]="tableData"
+  class="assignment-user-card"
+>
+  <!--- Note that these columns can be defined in any order.
+The actual rendered columns are set as a property on the row definition" -->
+
+  <!-- Position Column -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef>name</th>
+    <td mat-cell *matCellDef="let element">
+      <h6
+        class="assignment-user-card-title"
+        (click)="onAssignmentInfoSelected(findAssignmentByName(element.name))"
+      >
+        {{ element.name }}
+      </h6>
+    </td>
+  </ng-container>
+
+  <!-- Position Column -->
+  <ng-container matColumnDef="submitted">
+    <th mat-header-cell *matHeaderCellDef>submitted</th>
+    <td mat-cell *matCellDef="let element">
+      <mat-icon
+        [style.color]="element.submitted ? 'green' : 'lightgrey'"
+        [matTooltip]="element.submitted | date : 'd MMMM y - HH:mm:ss'"
+        >check_circle</mat-icon
+      >
+    </td>
+  </ng-container>
+
+  <!-- Position Column -->
+  <ng-container matColumnDef="graded">
+    <th mat-header-cell *matHeaderCellDef>graded</th>
+    <td mat-cell *matCellDef="let element">
+      <mat-icon
+        [style.color]="element.graded ? 'green' : 'lightgrey'"
+        [matTooltip]="element.graded | date : 'd MMMM y - HH:mm:ss'"
+        >check_circle</mat-icon
+      >
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="testComplete">
+    <th mat-header-cell *matHeaderCellDef>testComplete</th>
+    <td mat-cell *matCellDef="let element">
+      <mat-icon
+        *ngIf="element.testComplete !== null"
+        [style.color]="element.testComplete ? 'green' : 'lightgrey'"
+        >check_circle</mat-icon
+      >
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>

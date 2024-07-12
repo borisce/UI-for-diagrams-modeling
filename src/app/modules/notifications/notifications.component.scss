@@ -1,0 +1,186 @@
+.notifications {
+    &-header {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        padding: 0px 10px 15px 10px;
+
+        h1 {
+            margin: 5px 0px 0px 10px !important;
+        }
+    }
+    &-wrapper {
+        display: flex;
+        flex-direction: row;
+        .notifications-menu {
+            width: 20%;
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+
+            .notifications-filter {
+                font-size: 0.8rem;
+                margin: 15px;
+            }
+
+            button {
+                margin-bottom: 5px !important;
+                text-align: left !important;
+
+                mat-icon {
+                    font-size: 18px;
+                    height: 20px;
+                    width: 24px;
+                }
+
+                .badgeMenu {
+                    float: right;
+                    color: #a1a0a0;
+                }
+                
+            }
+
+            button.active {
+                background-color: #3f50b5; 
+                color: white;
+
+                .badgeMenu {
+                    color: #d2d2d2;
+                }
+            }
+        }
+        .notifications-content {
+            padding: 15px;
+            width: 80%;
+
+            ::ng-deep .mat-list-base {
+                padding-top: 0 !important;
+            }
+            
+            mat-list-item {
+                ::ng-deep .mat-list-item-content {
+                    color: black;
+                    flex-wrap: wrap;
+                    justify-content: flex-start;
+                }
+
+                ::ng-deep .mat-list-text {
+                    display: none;
+                }
+
+            }
+            .contentList {
+                font-size: 14px;
+                height: 40px;
+                border: 1px solid lightgrey;
+                border-top: 0px;
+
+                .type {
+                    text-align: left;
+                    width: 5%;
+                }
+
+                .fromOrg {
+                    width: 25%;
+                    font-weight: 400;
+                    color: #3f51b5;
+                }
+
+                .fromName {
+                    width: 45%;
+                    font-weight: 300;
+                }
+
+                .status {
+                    width: 15%;
+                    font-weight: 400;
+                    span.pending {
+                        background-color: #3f51b5;
+                        color: white;
+                        border-radius: 25px;
+                        width: auto;
+                        padding: 5px 10px;
+                        font-size: 12px;
+                    }
+                    span.accepted {
+                        background-color: green;
+                        color: white;
+                        border-radius: 25px;
+                        width: auto;
+                        padding: 5px 10px;
+                        font-size: 12px;
+                    }
+                    span.rejected {
+                        background-color: red;
+                        color: white;
+                        border-radius: 25px;
+                        width: auto;
+                        padding: 5px 10px;
+                        font-size: 12px;
+                    }
+                }
+
+                .date {
+                    width: 10%;
+                    font-weight: 300;
+                }
+
+                ::ng-deep .mat-list-item-content:hover {
+                    // border-left: 0px;
+                    // border-right: 0px;
+                    // border-bottom: 0px;
+                    // -webkit-box-shadow: inset 10px 0px 0px -5px #3f51b5;
+                    // -moz-box-shadow: inset 10px 0px 0px -5px #3f51b5;
+                    // box-shadow: inset 10px 0px 0px -5px #3f51b5;
+                    background-color: #c0caff;
+                    color: black;
+                    cursor: pointer;
+                    
+                    .fromOrg {
+                        color: black;
+                        font-weight: 400;
+                    }
+                }
+            }
+
+            .headerList {
+                background-color: #3f51b5;
+                height: 40px;
+                border-top-left-radius: 5px;
+                border-top-right-radius: 5px;
+
+                .type {
+                    width: 5%;
+                }
+
+                .fromOrg {
+                    width: 25%;
+                }
+
+                .type, .fromOrg, .date, .status, .fromName {
+                    color: white;
+                    font-size: small;
+                    font-weight: 500;
+                }
+
+                .fromName {
+                    width: 45%;
+                }
+
+                .status {
+                    width: 15%;
+                }
+
+                .date {
+                    width: 10%;
+                }
+            }
+
+            .noMsg {
+                padding: 20px 45px;
+                color: grey;
+            }
+        }
+    }
+    
+}

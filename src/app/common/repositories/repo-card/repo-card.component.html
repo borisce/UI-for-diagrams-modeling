@@ -1,0 +1,53 @@
+<div (click)="onRepoSelected(repository)" class="repocard">
+  <!-- Container for wrapping inside a flexbox -->
+  <div>
+    <div class="repocard-header">
+      <!-- Select repository by clicking onto its name -->
+      <span>
+        <h1>{{ repository.name }}</h1>
+        <span [ngClass]="repository.archived ? 'repocard-chiparchived' : 'repocard-chipactive'">{{ repository.archived ?
+          'archived' : 'active' }}</span>
+        <span *ngIf="repository.isPublic === false && currentUser.username === repository.createdBy"
+              class="repocard-chiporgrepo">private</span>
+        <span *ngIf="repository.isPublic === true && currentUser.username === repository.createdBy"
+              class="repocard-chiporgrepo">public</span>
+        <span *ngIf="repository.isPublic === null" class="repocard-chipteamrepo">team</span>
+      </span>
+      <span (click)="$event.stopPropagation()" class="repocard-menu">
+        <button (click)="onRepoFavorited(repository)" mat-icon-button matTooltip="Favorite">
+          <mat-icon>{{
+            repository.favorite ? "star" : "star_border"
+            }}</mat-icon>
+        </button>
+        <div *ngIf="optionsEnabled">
+          <button [matMenuTriggerFor]="menu" mat-icon-button matTooltip="More options">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button (click)="onRepoSettings(repository)" mat-menu-item>
+              <mat-icon>settings</mat-icon>Settings
+            </button>
+            <button (click)="onRepoDeleted(repository)" mat-menu-item>
+              <mat-icon>delete</mat-icon>Delete
+            </button>
+            <button (click)="onRepoArchived(repository)" mat-menu-item>
+              <mat-icon>archive</mat-icon>
+              {{ repository.archived ? "Restore" : "Archive" }}
+            </button>
+            <button (click)="onCreateIPCore(repository)" mat-menu-item>
+              <mat-icon>memory</mat-icon>
+              New IP core
+            </button>
+          </mat-menu>
+        </div>
+      </span>
+    </div>
+    <div class="repocard-content">
+      <p>{{ repository.description }}</p>
+    </div>
+    <div *ngIf="repository.uri.trim().length" class="repocard-footer">
+      <mat-icon>code</mat-icon>
+      <a (click)="$event.stopPropagation()" href="{{ repository.uri }}" target="_blank">{{ repository.uri }}</a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,349 @@
+<div id="home" class="landing-background">
+  <div class="landing-jumbotron-wrapper">
+    <div class="landing-jumbotron">
+      <div class="left-container">
+        <div class="w-100 h-100 d-flex justify-content-center align-items-center">
+          <img alt="image" class="main-landing-image" src="assets/images/landing/SV_cpu_purp.png">
+        </div>
+      </div>
+      <div class="right-container">
+        <div>
+          <div class="title">
+            <h1 class="mat-display-3">Your IDE of choice for</h1>
+            <h2 class="mat-display-3 mb-2">SystemVerilog</h2>
+          </div>
+          <div *ngIf="!authenticationService.loggedIn; else welcomeTitle">
+            <h5 class="mat-display-6">Try in now for free!</h5>
+          </div>
+          <ng-template #welcomeTitle>
+            <div class="subtitle">
+              <h1 class="mat-display-1">Welcome, {{ authenticationService.currentUser.firstName }}!</h1>
+            </div>
+          </ng-template>
+          <div *ngIf="!authenticationService.loggedIn; else authenticated" class="buttons">
+            <button (click)="redirect('login')" class="custom-primary-button mt-3">Login</button>
+          </div>
+          <ng-template #authenticated>
+            <div class="buttons">
+              <button (click)="redirect('my-repos')" class="custom-primary-button">
+                Enter workspace
+              </button>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex justify-content-center align-items-center">
+    <div class="circle-mouse">
+      <div class="scroll-mouse"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <h2 id="about-us" class="text-center mt-2 font-size-3 mt-5 mb-5">About <b>ASICDE</b></h2>
+  <div class="info-box mb-3">
+    <h3>First web ASIC development environment</h3>
+    <p>
+      The work efficiency of digital system developers depends to some extent on the effectiveness of the support tools
+      that these developers use.
+      While software engineers have a relatively large number of comprehensive tools to support software development,
+      digital system developers do not have many options.
+      This application provides a development environment for developing digital systems from the convenience of a web
+      browser without the need for other tools.
+    </p>
+  </div>
+  <div class="info-box mb-3">
+    <h3>Third feature</h3>
+    <p>
+      This development environment has the basic functionality of an editor with SystemVerilog language support in terms
+      of autocompletion, syntax-highlight and syntax check.
+      In addition, the application includes user management, grouping into teams and organizations, and Git repository
+      management (repository creation, editing, deleting, viewing).
+      The application also includes a module for working with block and state diagrams, which the user can view and
+      edit, and it is also possible to do an automatic conversion
+      between SystemVerilog code and the diagram.
+    </p>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="info-box h-100 w-100">
+        <h3>What we offer</h3>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="d-flex justify-content-start align-items-center">
+              <img src="./assets/images/check.svg" alt="Check">
+              <p class="ml-1 mb-0">SystemVerilog editor</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="d-flex justify-content-start align-items-center">
+              <img src="./assets/images/check.svg" alt="Check">
+              <p class="ml-1 mb-0">SystemVerilog editor</p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="d-flex justify-content-start align-items-center">
+              <img src="./assets/images/check.svg" alt="Check">
+              <p class="ml-1 mb-0">SystemVerilog editor</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="d-flex justify-content-start align-items-center">
+              <img src="./assets/images/check.svg" alt="Check">
+              <p class="ml-1 mb-0">SystemVerilog editor</p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="d-flex justify-content-center align-items-center">
+              <img src="./assets/images/check.svg" alt="Check">
+              <p class="ml-1 mb-0">SystemVerilog editor</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div
+        class="info-box info-box-gradient d-flex justify-content-center align-items-center flex-column h-100 w-100 mb-0">
+        <h3 class="text-white">Interested?</h3>
+        <div *ngIf="!authenticationService.loggedIn; else authenticated" class="buttons">
+          <button (click)="redirect('login')" class="custom-primary-button">Login</button>
+        </div>
+        <ng-template #authenticated>
+          <div class="buttons">
+            <button (click)="redirect('my-repos')" class="custom-primary-button">
+              Enter workspace
+            </button>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  <div class="info-box mb-3">
+    <h3>Worked on ASICDE</h3>
+    <div class="row">
+      <div class="col-md-3">
+        <p class="m-0">Lukáš Kohútka</p>
+        <p class="m-0">Lukáš Kohútka</p>
+        <p class="m-0">Lukáš Kohútka</p>
+      </div>
+      <div class="col-md-3">
+        <p class="m-0">Lukáš Kohútka</p>
+        <p class="m-0">Lukáš Kohútka</p>
+        <p class="m-0">Lukáš Kohútka</p>
+      </div>
+      <div class="col-md-3">
+        <p class="m-0">Lukáš Kohútka</p>
+        <p class="m-0">Lukáš Kohútka</p>
+        <p class="m-0">Lukáš Kohútka</p>
+      </div>
+      <div class="col-md-3">
+        <p class="m-0">Lukáš Kohútka</p>
+        <p class="m-0">Lukáš Kohútka</p>
+        <p class="m-0">Lukáš Kohútka</p>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex justify-content-center align-items-center">
+    <form id="contact-us" class="info-box text-center mb-3 w-50">
+      <h3>Contact Us</h3>
+      <p>
+        If you have any questions, feel free to contact us through this form.
+      </p>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-12">
+              <label for="contact-email" class="text-left w-100">Your Email</label>
+            </div>
+            <div class="col-md-12">
+              <input type="text" id="contact-email" name="email">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-12">
+              <label for="" class="text-left w-100 mt-2">Your message</label>
+            </div>
+            <div class="col-md-12">
+              <textarea id=""></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <h2 id="features" class="text-center mt-2 font-size-3 mt-5 mb-5"><b>ASICDE</b> Features</h2>
+  <div class="info-box mb-3">
+    <div class="row">
+      <div class="col-md-6">
+        <h3>Feature 1</h3>
+        <p class="m-0">
+          This development environment has the basic functionality of an editor with SystemVerilog language support in
+          terms
+          of autocompletion, syntax-highlight and syntax check. Highlight and syntax check. Highlight and syntax check.
+          Highlight and syntax check.
+        </p>
+      </div>
+      <div class="col-md-6">
+        <img src="./assets/images/landing/cpu_pins.svg" class="feature-image" alt="CPU pins">
+      </div>
+    </div>
+  </div>
+  <div class="info-box mb-3">
+    <div class="row">
+      <div class="col-md-6">
+        <img src="./assets/images/landing/cpu.svg" class="feature-image" alt="CPU">
+      </div>
+      <div class="col-md-6">
+        <h3>Feature 2</h3>
+        <p class="m-0">
+          This development environment has the basic functionality of an editor with SystemVerilog language support in
+          terms
+          of autocompletion, syntax-highlight and syntax check. Highlight and syntax check. Highlight and syntax check.
+          Highlight and syntax check.
+        </p>
+      </div>
+    </div>
+  </div>
+  <h2 id="pricing" class="text-center mt-2 font-size-3 mt-5">
+    <b>ASICDE</b> Pricing
+  </h2>
+  <h4 class="text-center">
+    Choose a plan that fits you
+  </h4>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="packages-links d-flex justify-content-center align-items-center">
+        <span [ngClass]="{'mr-4': true, 'active': this.selectedPackageType == '1'}"
+              (click)="changePackageType('1')">Individual</span>
+        <span [ngClass]="{'active': this.selectedPackageType == '2'}"
+              (click)="changePackageType('2')">Business</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-md-12">
+      <p class="text-center mb-0 mt-3">
+        You will receive a <b>10%</b> discount for yearly subscription
+      </p>
+      <div class="packages-links packages-time d-flex justify-content-center align-items-center">
+        <span [ngClass]="{'mr-4': true, 'active': this.packageTimeRange == 30}"
+              (click)="changePackageTimeRange(30)">Monthly</span>
+        <span href="#" [ngClass]="{'active': this.packageTimeRange == 365}"
+              (click)="changePackageTimeRange(365)">Yearly</span>
+      </div>
+    </div>
+  </div>
+  <div class="packages-holder">
+    <div *ngFor="let packageForm of this.currentPackages, let i = index">
+      <div *ngIf="packageForm.id > 1 && packageForm.id !== 6"
+           [ngClass]="{'price-package-gradient': this.selectedPackages.indexOf(packageForm.id) !== -1}"
+           class="price-package info-box text-center" (click)="currentSelectedPackages(packageForm.id)">
+        <div class="package-head">
+          <h5 class="m-0 py-2">{{ packageForm.name }}</h5>
+        </div>
+        <div class="price-package-body h-80">
+          <h3
+            class="pt-3">{{
+              this.packageTimeRange === 30 ?
+                packageForm.price * this.numbersOfMembersMatrix[packageForm.id] :
+                (packageForm.price - (packageForm.price * 0.1)) * this.numbersOfMembersMatrix[packageForm.id]
+            }} €</h3>
+          <p
+            class="m-0 font-13">{{ this.packageTimeRange === 30 ? packageForm.price : (12) * ((packageForm.price - (packageForm.price * 0.1)) * this.numbersOfMembersMatrix[packageForm.id]) }}
+            €/per {{ this.packageTimeRange === 30 ? 'month' : 'year' }}</p>
+          <div class="d-flex justify-content-between
+        flex-column h-80">
+            <div>
+              <div *ngFor="let item of packagesFeatures[i - 1]">
+                <div class="d-flex justify-content-center align-items-center">
+                  <img src="./assets/images/check.svg" alt="Check">
+                  <p class="ml-1 mb-0 pt-1">{{ item }}</p>
+                </div>
+              </div>
+              <div *ngIf="this.selectedPackageType == '2'">
+                <p class="mt-3 mb-0 font-13">Select number of members</p>
+                <div class="d-flex justify-content-center align-items-center flex-wrap">
+                  <div [ngClass]="{'active': this.numbersOfMembersMatrix[packageForm.id] == 5}"
+                       (click)="changeNumberOfMembers(5, packageForm.id)"
+                       class="business-numbers">5
+                  </div>
+                  <div [ngClass]="{'active': this.numbersOfMembersMatrix[packageForm.id] == 10}"
+                       (click)="changeNumberOfMembers(10, packageForm.id)"
+                       class="business-numbers">10
+                  </div>
+                  <div [ngClass]="{'active': this.numbersOfMembersMatrix[packageForm.id]  == 20}"
+                       (click)="changeNumberOfMembers(20, packageForm.id)"
+                       class="business-numbers">20
+                  </div>
+                  <div [ngClass]="{'active': this.numbersOfMembersMatrix[packageForm.id] == 30}"
+                       (click)="changeNumberOfMembers(30, packageForm.id)"
+                       class="business-numbers">30
+                  </div>
+                  <div [ngClass]="{'active': this.numbersOfMembersMatrix[packageForm.id] == 40}"
+                       (click)="changeNumberOfMembers(40, packageForm.id)"
+                       class="business-numbers">40
+                  </div>
+                  <div [ngClass]="{'active': this.numbersOfMembersMatrix[packageForm.id] == 50}"
+                       (click)="changeNumberOfMembers(50, packageForm.id)"
+                       class="business-numbers">50
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-5">
+    <div class="col-md-12">
+      <div class="d-flex justify-content-center align-items-center">
+        <div *ngIf="!authenticationService.loggedIn" class="buttons">
+          <button (click)="redirect('login')" class="custom-primary-button">Login to buy packages</button>
+        </div>
+        <div *ngIf="authenticationService.loggedIn">
+          <div class="buttons">
+            <button (click)="buyPackages()" class="custom-primary-button">Buy packages</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="white-footer d-flex justify-content-center align-items-center">
+    <div class="social-links d-flex justify-content center align-items-center">
+      <a href="#">
+        <img src="./assets/images/footer/Instagram.svg" alt="Instagram">
+      </a>
+      <a href="#">
+        <img src="./assets/images/footer/LikedIn.svg" alt="LinkedIn">
+      </a>
+      <a href="#">
+        <img src="./assets/images/footer/Dribbble.svg" alt="Dribbble">
+      </a>
+    </div>
+  </div>
+  <div class="d-flex justify-content-center align-items-center black-footer">
+    <p class="m-0">Copyright</p>
+    <a (click)="authenticationService.loggedIn ? redirect('my-repos') : redirect('')"
+       class="d-flex justify-content-center align-items-center logo cursor-pointer">
+      <img src="./assets/images/logo-small.svg" class="mr-1" alt="Logo">
+      <p class="m-0 text-white font-weight-bold">ASICDE</p>
+    </a>
+    <p class="m-0">{{ currentDate() }}</p>
+  </div>
+</footer>

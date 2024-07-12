@@ -1,0 +1,39 @@
+<div class="ip-cores-sidebar">
+  <h3>IP cores</h3>
+  <!--  <div class="subheader">-->
+  <!--    used by synthesis and simulation-->
+  <!--  </div>-->
+  <div class="ip-cores-sidebar__list">
+    <div *ngFor="let attached_core of attached_cores" class="ip-cores-sidebar__list__item">
+      <div>
+        <a
+          [routerLink]="['/cores/' + attached_core.core?.uuid]"
+          target="_blank">
+          {{attached_core.core.name}}
+        </a>
+      </div>
+      <div>
+        <mat-slide-toggle (change)="toggleActive(attached_core.uuid, attached_core.active)"
+                          [checked]="attached_core.active"
+                          labelPosition='before'
+                          style="width: 100%;"
+        >
+          Use in simulation
+        </mat-slide-toggle>
+      </div>
+      <div style="display:flex;   justify-content: space-between; margin: 10px 0;">
+        <div>Active version</div>
+        <select #val (change)='changeVersion(attached_core.uuid, val.value)'
+                *ngIf="attached_core_versions.hasOwnProperty(attached_core.uuid)">
+          <option [selected]="attached_core.active_core_version == null" disabled value="null">Select version</option>
+          <option *ngFor="let core_version of attached_core_versions[attached_core.uuid]"
+                  [disabled]="!core_version.owned"
+                  [selected]="attached_core.active_core_version.uuid == core_version.uuid"
+                  [value]="core_version.uuid">
+            {{ core_version.version_number }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>

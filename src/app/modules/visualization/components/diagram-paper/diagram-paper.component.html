@@ -1,0 +1,90 @@
+<app-subdiagram-paper-component matRipple></app-subdiagram-paper-component>
+<div id="contextMenu" class="menu">
+  <ul class="menu-options">
+    <li id="add-port-menu-option" class="menu-option" (click)=onAddPortToModuleClicked($event)>addPort</li>
+    <li class="menu-option" (click)=onShowPropertiesClicked($event)>showProperties</li>
+    <!--<li class="menu-option" (click)=onShowSubDiagramClicked($event)>showDiagram</li>-->
+    <li class="menu-option" (click)=onRemoveModuleClicked($event)>remove</li>
+  </ul>
+</div>
+
+<div id="modalNewPort" class="modal">
+    <div class="modal-content">
+        <form>
+            <label for="pName">Name of your Port:</label>
+            <input #pName (keyup)="checkInputStateFowNewPort(pName.value, innerPBandwidthInput.value)" type="text" id="pName" name="portName" [(ngModel)]="name" placeholder="Port's name..">
+            <label for="pBandwidth">Select Port's width:  </label>
+            <label class="radio-inline">
+                <input #innerPBitRadio id="innerPBitRadio" type="radio" name="optradio" checked (click)="bitPortChecked()"> Bit
+            </label>
+            <label class="radio-inline">
+                <input #innerPVectorRadio id ="innerPVectorRadio" type="radio" name="optradio" (click)="vectorPortChecked()"> Vector
+            </label>
+            <label class="radio-inline">
+                <input #structRadio id ="innerPStructRadio" type="radio" name="optradio" (click)="customPortChecked()"> User defined
+            </label>
+            <label id="innerPBandwidthInputLabel" class="insideFormLab" for="innerPBandwidthInput">Width of vector:</label>
+            <input #innerPBandwidthInput (keyup)="checkInputStateFowNewPort(pName.value, innerPBandwidthInput.value)" type="text" id="innerPBandwidthInput" name="portBandwidth" placeholder="Port's width.." value="2">
+            <label id="innerPPackageLabel" class="insideFormLab" for="innerPPackage">Choose package file:</label>
+            <select id="innerPPackage" name="innerPortPackage" (change)="onInnerPortSelectChanged($event.target.value)">
+                <option *ngFor="let package of availablePackages.items" [value]="package.package.name">
+                    {{package.package.name}}
+                </option>
+            </select>
+            <label id="innerPStructLabel" class="insideFormLab" for="innerPStruct">Choose custom struct:</label>
+            <select #innerPStruct id="innerPStruct" name="portStructure">
+                <option *ngFor="let data of packageDefines" [value]="data.dataName">
+                    {{data.dataType + ": " + data.dataName}}
+                </option>
+            </select>
+            <br>
+            <label class="insideFormLab">Choose port direction:</label>
+            <select #portDirection name="portDirection">
+                  <option value="in">Input</option>
+                  <option value="out">Output</option>
+            </select>
+            <input class="submitButton" type="button" value="Submit" [disabled]="textCheckNewPort" (click)="addPortToModule(pName.value, portDirection.value, innerPBandwidthInput.value, 'guiCall', innerPStruct.value)">
+            <input class="cancelButton" type="button" value="Cancel" (click)="onModalWindowCancelClicked()">
+        </form>
+    </div>
+</div>
+
+
+<div id="modalShowProperties" class="modalShowProperties">
+    <div class="modal-contentShowProperties">
+        <form>
+            
+            <label class="label-class">Name:</label>
+            <label>{{propName}}</label>
+            <br>
+            <label class="label-class">Type:</label>
+            <label>{{propType}}</label>
+            <br>
+            <label class="label-class">{{propBandwidthLabel}}</label>
+            <label>{{propBandwidth}}</label>
+            <br>
+            <input class="cancelButton" type="button" value="Close" (click)="onPropModalCancelClicked()">
+        </form>
+    </div>
+</div>
+<div id="buttonsContainer" [ngStyle]="{'z-index': 1}">
+    <button mat-mini-fab (click)="zoomIn()" style="margin-bottom: 10px;">
+        <mat-icon matBadge="+"
+              matBadgeColor="black"
+              matBadgeSize="small" >add
+        </mat-icon>
+    </button>
+    <button mat-mini-fab (click)="zoomOut()"  style="margin-bottom: 10px;">
+        <mat-icon matBadge="+"
+              matBadgeColor="black"
+              matBadgeSize="small" >remove
+        </mat-icon>
+    </button>
+    <button mat-mini-fab (click)="clearGraph()">
+      <mat-icon matBadge="+"
+            matBadgeColor="black"
+            matBadgeSize="small" >clear
+      </mat-icon>
+  </button>
+</div>
+<app-collaborators-list [collaborators]="collaborators" zIndex="1" multipleConnectionsWord="sessions"></app-collaborators-list>

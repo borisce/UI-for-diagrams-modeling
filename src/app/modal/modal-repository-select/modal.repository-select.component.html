@@ -1,0 +1,22 @@
+<h3>Select a repository</h3>
+<p>{{ message }}</p>
+<mat-selection-list #repositories [multiple]="false">
+  <mat-list-option
+    *ngFor="let repository of repos"
+    (click)="selectRepo(repository)"
+  >
+    {{ repository.name }}
+  </mat-list-option>
+</mat-selection-list>
+
+<div class="modal-actions">
+  <button mat-raised-button color="link" (click)="cancel()">Cancel</button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="confirmSelection()"
+    [disabled]="!selectedRepo"
+  >
+    Confirm
+  </button>
+</div>

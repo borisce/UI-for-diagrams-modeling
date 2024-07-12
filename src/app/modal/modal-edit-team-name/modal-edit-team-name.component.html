@@ -1,0 +1,13 @@
+<h1 class="mat-h1">Rename team</h1>
+<form [formGroup]="teamRenameForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+        <mat-label>Team name</mat-label>
+        <input matInput formControlName="teamName">
+        <mat-error>Team name is required</mat-error>
+    </mat-form-field>
+
+    <div class="controls">
+        <button mat-button [mat-dialog-close]="false">Cancel</button>
+        <button mat-flat-button type="submit" color="primary">Rename</button>
+    </div>
+</form>

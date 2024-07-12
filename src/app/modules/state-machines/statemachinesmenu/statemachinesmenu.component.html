@@ -1,0 +1,204 @@
+<app-forms
+  (areAnyWindowsOpen)="changeWindowsOpenStatus($event)"
+  (diagramKey)="onGivenDiagramKey($event)"
+  (modifiedStateOutputValues)="onModifiedStateOutputs($event)"
+  (modifiedStateSignalValues)="onModifiedStateSignals($event)"
+  (modifiedTransitionOutputValues)="onModifiedTransitionOutputs($event)"
+  (modifiedTransitionSignalValues)="onModifiedTransitionSignals($event)"
+  (newCondition)="onModifiedCondition($event)"
+  (newSaveDiagramAs)="onConfirmedSaveOfDiagram($event)"
+  (newStateAdded)="onSubmittedNewState($event)"
+  (newStateName)="onModifiedStateName($event)"
+  (sourceCodeFileKey)="onGivenSourceCodeFileKey($event)"
+  (stateName)="onFilledStateNameValue($event)"
+  [dataInputSource]="dataSourceInputs"
+  [dataOutputSource]="dataSourceOutputs"
+  [dataParameterSource]="dataSourceParameters"
+  [dataSignalSource]="dataSourceSignals"
+  [isThisStateUnique]="isStateUnique"
+  [isLanguageVHDL]="isCodeToBeGeneratedVHDL">
+</app-forms>
+<app-inputandoutputtables
+  (areAnyWindowsOpen)="changeWindowsOpenStatus($event)"
+  (modifiedOutputSource)="onModifiedOutputSource($event)"
+  (modifiedSignalSource)="onModifiedSignalSource($event)"
+  (modifiedTableSources)="onModifiedTableSources($event)"
+  [dataInputSource]="dataSourceInputs"
+  [dataOutputSource]="dataSourceOutputs"
+  [dataParameterSource]="dataSourceParameters"
+  [dataSignalSource]="dataSourceSignals">
+</app-inputandoutputtables>
+<app-diagram-paper
+  (activeTransition)="showTransitionPropertiesWindow($event)"
+  (currentStateName)="showStatePropertiesWindow($event)"
+  (loadedDrawingMode)="loadDrawingMode($event)"
+  (loadedInputs)="loadInputs($event)"
+  (loadedLanguage)="loadLanguage($event)"
+  (loadedMachineType)="loadMachineType($event)"
+  (loadedOutputs)="loadOutputs($event)"
+  (loadedParameters)="loadParameters($event)"
+  (loadedSignals)="loadSignals($event)"
+  (xmlFileContent)="saveXmlFile($event)"
+  [areAnyWindowsOpen]="isAnyWindowOpen"
+  [dataInputSource]="dataSourceInputs"
+  [dataOutputSource]="dataSourceOutputs"
+  [dataParameterSource]="dataSourceParameters"
+  [dataSignalSource]="dataSourceSignals"
+  [isDrawingModeEnabled]="drawingMode">
+</app-diagram-paper>
+<app-systemverilog-code-generator
+  (systemVerilogCodeGenerated)="displayGeneratedCode($event)">
+</app-systemverilog-code-generator>
+<app-vhdl-code-generator
+  (vhdlCodeGenerated)="displayGeneratedCode($event)">
+</app-vhdl-code-generator>
+<app-generate-code-forms
+  (areAnyWindowsOpen)="changeWindowsOpenStatus($event)"
+  (systemVerilogDataPrepared)="onSystemVerilogCodeFormSubmitted($event)"
+  (vhdlDataPrepared)="onVhdlCodeFormSubmitted($event)">
+</app-generate-code-forms>
+<app-load-xml-file
+  (schema)="generateDiagramBasedOnDataGatheredFromXML($event)">
+</app-load-xml-file>
+<app-generate-diagram-from-systemverilog></app-generate-diagram-from-systemverilog>
+<app-generate-diagram-from-vhdl></app-generate-diagram-from-vhdl>
+<app-generate-diagram-from-verilog></app-generate-diagram-from-verilog>
+<app-generate-state-positions></app-generate-state-positions>
+<div class="wrapper">
+<div class="sidebar-tools">
+  <div (click)="redirect('editor')" class="sidebar-button" matTooltip="Editor">
+    <mat-icon aria-hidden="false" aria-label="Project explorer">folder</mat-icon>
+  </div>
+  <div (click)="redirect('visualization')" class="sidebar-button" matTooltip="Visualization">
+    <mat-icon aria-hidden="false" aria-label="Visualization">blur_linear</mat-icon>
+  </div>
+  <div (click)="redirect('activitydiagrams')" class="sidebar-button" matTooltip="Activity Diagrams">
+    <mat-icon aria-hidden="false" aria-label="Activity Diagrams">multiline_chart</mat-icon>
+  </div>
+</div>
+</div>
+<mat-card style="margin-left: 2.75%;">
+  <div class="save-load-section">
+    <h6>Save/Load</h6>
+    <div class="save-load-section-buttons">
+      <button (click)="onDisplaySaveWindowClicked()" mat-icon-button matTooltip="Save Diagram as XML">
+        <mat-icon style="color: #26282b;">save</mat-icon>
+      </button>
+      <button (click)="onDisplayLoadWindowClicked()" mat-icon-button matTooltip="Import Diagram from XML">
+        <img src="assets/fsm_icons/folder_xml.svg" alt="xml" width="30px" height="30px">
+      </button>
+      <button (click)="onDisplayGenerateDiagramClicked()" mat-icon-button matTooltip="Import Diagram from Code">
+        <img src="assets/fsm_icons/folder_code.svg" alt="code" width="30px" height="30px">
+      </button>
+    </div>
+  </div>
+  <div class="boards">
+    <h6>Boards</h6>
+    <div *ngIf="availableBoards.length > 0" class="board-selection">
+      <button (click)="renameBoard()" [disabled]=true mat-icon-button>
+        <mat-icon style="transform: scale(1.0);">edit</mat-icon>
+      </button>
+      <button (click)="removeBoard()" [disabled]="boardControl.value === 'default'" mat-icon-button>
+        <mat-icon style="transform: scale(1.0);">delete</mat-icon>
+      </button>
+      <button (click)="addNewBoard()" mat-icon-button>
+        <mat-icon style="transform: scale(1.0);">add</mat-icon>
+      </button>
+      <form [formGroup]="boardSelection">
+        <mat-form-field appearance="fill" class="w-100 p-0" style="height:auto">
+          <mat-label>Board selection</mat-label>
+          <mat-select (ngModelChange)="onBoardSelected($event)" [formControl]="boardControl" style="font-size: small;">
+            <mat-option *ngFor="let board of availableBoards" [value]="board.id">{{board.title}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
+    </div>
+  </div>
+  <div class="button-section">
+    <h6>Insertable Elements</h6>
+    <button (click)="onAddNewStateClicked()" class="menu-button" mat-stroked-button style="overflow: hidden; text-overflow: ellipsis">
+      <img src="assets/fsm_icons/circle.svg" alt="circle" width="25px" height="25px">
+      State
+    </button>
+    <button (click)="onAddNewInitialStateClicked()" class="menu-button" mat-stroked-button style="overflow: hidden; text-overflow: ellipsis">
+      <img src="assets/fsm_icons/double_circle.svg" alt="double_circle" width="25px" height="25px">
+      Initial State
+    </button>
+  </div>
+  <div class="button-section">
+    <h6>Interfaces</h6>
+    <button (click)="onDisplayInputTableClicked()" class="menu-button" mat-stroked-button style="overflow: hidden; text-overflow: ellipsis">
+      <img src="assets/fsm_icons/input.svg" alt="input" width="25px" height="25px">
+      Inputs
+    </button>
+    <button (click)="onDisplayOutputTableClicked()" class="menu-button" mat-stroked-button style="overflow: hidden; text-overflow: ellipsis" >
+      <img src="assets/fsm_icons/output.svg" alt="output" width="25px" height="25px">
+      Outputs
+    </button>
+  </div>
+  <div class="button-section">
+    <h6>Other</h6>
+    <button (click)="onDisplaySignalsTableClicked()" class="menu-button" mat-stroked-button style="overflow: hidden; text-overflow: ellipsis">
+      <img src="assets/fsm_icons/table.svg" alt="table" width="25px" height="25px">
+      Internal Signals
+    </button>
+    <button (click)="onDisplayParametersTableClicked()" class="menu-button" mat-stroked-button style="overflow: hidden; text-overflow: ellipsis">
+      <img src="assets/fsm_icons/table.svg" alt="table" width="25px" height="25px">
+      Parameters
+    </button>
+  </div>
+  <div class="actions">
+    <h6>Actions</h6>
+    <div class="source_code_generation-section" style="overflow: hidden; text-overflow: ellipsis; height: auto">
+      <h6>Generate Code</h6>
+      <div class="switch">
+        <div id="VorSV">
+          <span >SystemVerilog</span>
+        </div>
+        <mat-slide-toggle (change)="onChangedCodeGenerateType($event)" [(ngModel)]="isCodeToBeGeneratedVHDL"
+                          color="primary"></mat-slide-toggle>
+        <div id="VHDL">
+          <span>VHDL</span>
+        </div>
+      </div>
+      <button *ngIf="isCodeToBeGeneratedVHDL==false" (click)="onGenerateSystemVerilogCodeClicked()" class="action-button" mat-stroked-button>
+        <mat-icon>code</mat-icon>
+        SystemVerilog
+      </button>
+      <button *ngIf="isCodeToBeGeneratedVHDL==true" (click)="onGenerateVhdlCodeClicked()" class="action-button" mat-stroked-button>
+        <mat-icon>code</mat-icon>
+        VHDL
+      </button>
+      <button *ngIf="isCodeToBeGeneratedVHDL==false" (click)="onGenerateVerilogCodeClicked()" class="action-button" mat-stroked-button>
+        <mat-icon>code</mat-icon>
+        Verilog
+      </button>
+    </div>
+    <div class="switch-section" style="overflow-x: hidden; text-overflow: ellipsis">
+      <h6>State Machine Type</h6>
+      <div class="switch">
+        <div id="mealy">
+          <span style="overflow-x: hidden; text-overflow: ellipsis">Mealy</span>
+        </div>
+        <mat-slide-toggle (change)="onChangedMachineType($event)" [(ngModel)]="isMachineTypeMoore"
+                          color="primary"></mat-slide-toggle>
+        <div id="moore">
+          <span>Moore</span>
+        </div>
+      </div>
+    </div>
+    <div class="switch-section" style="overflow-x: hidden; text-overflow: ellipsis" >
+      <h6>Mode Selection</h6>
+      <div class="switch">
+        <div id="moving-mode">
+          <mat-icon id="moving-mode-icon" matTooltip="Moving Mode">pan_tool</mat-icon>
+        </div>
+        <mat-slide-toggle (change)="onModeChange($event)" [(ngModel)]="drawingMode" color="primary"></mat-slide-toggle>
+        <div id="drawing-mode" style="display: block;">
+          <mat-icon id="drawing-mode-icon" matTooltip="Drawing Mode">create</mat-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-card>
+<div id="diagram-paper-contents"></div>

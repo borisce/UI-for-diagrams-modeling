@@ -1,0 +1,19 @@
+mat-form-field {
+    display: block;
+}
+
+.username > mat-form-field{
+    display: inline-block;
+}
+
+mat-radio-button {
+    padding: 5px 10px;
+}
+
+.form-controls {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    align-items: center;
+}

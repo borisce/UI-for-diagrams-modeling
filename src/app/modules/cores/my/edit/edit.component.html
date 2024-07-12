@@ -1,0 +1,142 @@
+<div class="container pt-4 pb-4">
+  <h2 class="mt-3 mb-3 d-flex">
+    <button [routerLink]="['/cores/my']" mat-icon-button routerLinkActive="active">
+      <mat-icon>navigate_before</mat-icon>
+    </button>
+    Edit IP core
+  </h2>
+  <form (ngSubmit)="updateCore($event)" [formGroup]="coreForm">
+    <div class="row">
+      <div class="col-6">
+        <div>
+          <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input formControlName="name" matInput>
+            <mat-error *ngIf="coreForm.controls['name'].hasError('required')">Name is required</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="mt-3">
+          <mat-form-field appearance="outline">
+            <mat-label>Category</mat-label>
+            <mat-select formControlName="category_uuid">
+              <mat-option *ngFor="let category of categories" [value]="category.uuid">
+                {{ category.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="coreForm.controls['category_uuid'].invalid">{{coreForm.controls['category_uuid'].errors?.required ? 'Category is required' : ''}}</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="mt-3">
+          <mat-label>PDF Documentation</mat-label>
+          <div>
+            <div *ngIf="coreForm.controls['have_pdf_documentation'].value === true; else noDocBlock">
+              <a *ngIf="core.have_pdf_documentation" href="/api/v2/cores/{{uuid}}/documentation.pdf"
+                 mat-raised-button
+                 target="_blank">documentation.pdf</a>
+            </div>
+            <ng-template #noDocBlock>
+              <input (change)="pdfDocFileChanged($event)" accept="application/pdf" formControlName="pdf_documentation"
+                     type="file">
+              <mat-error *ngIf="coreForm.controls['pdf_documentation'].hasError('invalidFileType')">Invalid file type
+              </mat-error>
+            </ng-template>
+
+            <button (click)="clearPdfDocFile()"
+                    [disabled]="!(coreForm.controls['have_pdf_documentation'].value === true) && coreForm.controls['pdf_documentation'].value === ''"
+                    color="primary"
+                    mat-raised-button>
+              Clear
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <mat-form-field class="mr-3">
+          <mat-label>Price without updates</mat-label>
+          <input formControlName="price_without_updates" matInput min="0" step="0.01" type="number">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Price with updates</mat-label>
+          <input formControlName="price_with_updates" matInput min="0" step="0.01" type="number">
+        </mat-form-field>
+        <mat-error
+          *ngIf="coreForm.hasError('one_price_required')">
+          One of prices must be greater than 0
+        </mat-error>
+        <div
+          *ngIf="
+          this.coreForm.controls['price_without_updates'].value > 0
+          &&
+          this.coreForm.controls['price_with_updates'].value > 0
+      ">
+          <mat-form-field>
+            <mat-label>Upgrade Price</mat-label>
+            <input formControlName="upgrade_price" matInput min="0.01" step="0.01">
+            <mat-error *ngIf="coreForm.controls['upgrade_price'].hasError('required')">Upgrade price is required
+            </mat-error>
+            <mat-error *ngIf="coreForm.controls['upgrade_price'].hasError('min')">Upgrade price cannot be zero
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="fill" class="w-100 mt-3">
+          <mat-label>Short Description</mat-label>
+          <textarea formControlName="short_description" matInput maxlength="255"></textarea>
+          <mat-error *ngIf="coreForm.controls['short_description'].hasError('required')">Short description is required
+          </mat-error>
+          <mat-hint align="end">{{coreForm.controls['short_description'].value?.length || 0}}/255</mat-hint>
+        </mat-form-field>
+
+
+        <div>
+          <mat-slide-toggle color="primary" formControlName="active">
+            Visibility
+          </mat-slide-toggle>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <label class="form-label mt-3">Description</label>
+        <quill-editor [styles]="{height: '180px'}" formControlName="description">
+          <div quill-editor-toolbar>
+							<span class="ql-formats">
+								<button [title]="'Bold'" class="ql-bold"></button>
+								<button [title]="'Italic'" class="ql-italic"></button>
+								<button [title]="'Underline'" class="ql-underline"></button>
+								<button [title]="'Strike'" class="ql-strike"></button>
+							</span>
+            <span class="ql-formats">
+								<button [title]="'Link'" class="ql-link"></button>
+								<button [title]="'Image'" class="ql-image"></button>
+							</span>
+            <span class="ql-formats">
+								<button [title]="'Ordered list'" class="ql-list" value="ordered"></button>
+								<button [title]="'Bullet list'" class="ql-list" value="bullet"></button>
+								<button [title]="'Code block'" class="ql-code-block"></button>
+								<button [title]="'Blockqoute'" class="ql-blockquote"></button>
+							</span>
+          </div>
+        </quill-editor>
+      </div>
+      <div class="col-12 d-flex justify-content-end">
+        <button (click)="updateCoreAndGoBack()" [disabled]="isFormInvalid()"
+                class="mt-3 mx-2"
+                color="primary"
+                mat-button
+                type="button">
+          Save changes and go back
+        </button>
+        <button [disabled]="isFormInvalid()" class="mt-3"
+                color="primary"
+                mat-raised-button
+                type="submit">
+          Save changes
+        </button>
+      </div>
+    </div>
+
+  </form>
+</div>

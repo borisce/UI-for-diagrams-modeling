@@ -1,0 +1,23 @@
+<div matRipple class="student-card">
+  <div>
+    <div class="student-card-grid">
+      <div class="student-card-header">
+        <mat-icon>person</mat-icon>
+        <h1 class="mat-h1">{{ student.firstName }} {{ student.lastName }}</h1>
+      </div>
+      <div class="student-card-moremenu">
+        <button *ngIf="isTeacher" mat-icon-button [matMenuTriggerFor]="menu" matTooltip="More options">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="confirmStudentsRemove(student)">
+            <mat-icon>delete</mat-icon>Remove from the classroom
+          </button>
+        </mat-menu>
+      </div>
+      <div class="student-card-content">
+        <p>Nickname: {{ student.username }}<br>Email: {{ student.email }}</p>
+      </div>
+    </div>
+  </div>
+</div>

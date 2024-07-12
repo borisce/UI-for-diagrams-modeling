@@ -1,0 +1,41 @@
+.container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.settings-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.danger-group {
+  display: flex;
+  gap: 8px;
+}
+
+button {
+  width: fit-content;
+}
+
+.danger-button {
+  width: 200px;
+}
+
+form {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+mat-form-field {
+  width: 350px;
+}
+
+span {
+  font-size: 16px;
+  color: #666;
+  font-weight: 500;
+}

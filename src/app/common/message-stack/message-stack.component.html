@@ -1,0 +1,9 @@
+<div class="error-stack">
+  <div (mouseover)="resetClearTimeout(error)" *ngFor="let error of statusMessageService.messages"
+       [class.hide]="error.hiding"
+       [class.success]="error.type === 'success'"
+       class="error">
+    <span [innerHTML]="error.message"></span>
+    <button (click)="dismiss(error)" [disabled]="error.hiding" mat-button>Dismiss</button>
+  </div>
+</div>

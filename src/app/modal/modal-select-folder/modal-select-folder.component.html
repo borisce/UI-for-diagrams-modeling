@@ -1,0 +1,19 @@
+<div class="select-folder-container">
+    <div class="select-folder-horizontal-flex">
+        <h1 class="mat-h1">Select folder</h1>
+        <button id="closeButton" mat-mini-fab color="transparent" matTooltip="Close" [mat-dialog-close]>
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <hr>
+    <div id="dialog-tree"></div>
+    <hr>
+    <div class="select-folder-horizontal-flex">
+        <span>{{ getSelectedFolderName }}</span>
+        <div>
+            <button mat-button [mat-dialog-close]>Cancel</button>
+            <button mat-flat-button color="primary" [disabled]="getSelectFolderButtonDisabled" (click)="submit()">Select
+                folder</button>
+        </div>
+    </div>
+</div>

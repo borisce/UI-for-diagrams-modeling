@@ -1,0 +1,119 @@
+.assignments {
+  &-wrapper {
+    padding: 30px;
+  }
+
+  &-header {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    text-align: right;
+    span {
+      font-weight: 600;
+    }
+  }
+
+  &-header > h1 {
+    margin: 0px;
+  }
+
+  &-header > button {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    color: black;
+    transition: ease 0.5s background-color;
+  }
+
+  &-header > button:hover {
+    background-color: #eee;
+  }
+
+  &-calendar {
+    padding: 40px;
+  }
+
+  &-content {
+    display: flex;
+    width: 100%;
+  }
+
+  &-controls {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+
+    .mat-h2 {
+      margin: 0 !important;
+      float: left;
+    }
+
+    .controls-bottom {
+      width: 100%;
+      mat-paginator {
+        width: 100%;
+        background: none;
+
+        ::ng-deep .mat-paginator-container {
+          justify-content: space-between;
+        }
+      }
+    }
+  }
+
+  &-controls > h2 {
+    margin: 0px;
+  }
+
+  &-controls button {
+    float: right;
+    background-color: transparent;
+    color: black;
+    border: transparent;
+    box-shadow: none;
+    transition: ease 0.5s background-color;
+  }
+
+  &-controls button:hover {
+    background-color: #eee;
+  }
+
+  &-grid {
+    max-height: 543px;
+    overflow-y: auto;
+    width: 100%;
+  }
+
+  &-grid > mat-spinner {
+    margin: 10px auto;
+  }
+
+  &-charts {
+    margin-top: -18px;
+    width: 500px; /* Specify the width of the canvas */
+    height: 500px; /* Specify the height of the canvas */
+    display: flex;
+    justify-content: center;
+    padding-bottom: 50px;
+  }
+
+  &-full-width {
+    width: 100%;
+  }
+
+  &-center {
+    text-align: center;
+  }
+}
+
+mat-paginator {
+  display: inline-block;
+}
+
+.mat-column-title {
+  text-decoration: underline;
+  cursor: pointer;
+}

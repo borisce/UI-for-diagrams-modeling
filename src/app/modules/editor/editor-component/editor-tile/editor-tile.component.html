@@ -1,0 +1,41 @@
+<div>
+  <div class="editor">
+    <ngx-monaco-editor
+      *ngIf="!diffActive"
+      [(ngModel)]="actualCode"
+      (ngModelChange)="createCode($event)"
+      [options]="editorOptions"
+      id="monacoEditor"
+      (onInit)="onMonacoInit($event); onStandAloneMonacoInit($event)"
+      style="height: 100%"
+    ></ngx-monaco-editor>
+    <ngx-monaco-diff-editor
+      *ngIf="diffActive"
+      [options]="editorOptions"
+      [originalModel]="originalModel"
+      [modifiedModel]="modifiedModel"
+      style="height: 100%"
+      id="monacoEditor"
+    ></ngx-monaco-diff-editor>
+    <app-code-review-popup
+      [visible]="isCodeReviewPopupVisible"
+      [position]="codeReviewPopupPosition"
+      [selection]="codeReviewSelection"
+      (onCancel)="onCloseCodeReviewPopup()"
+    ></app-code-review-popup>
+  </div>
+  <div *ngIf="isPopupOpen">
+    <app-editor-settings-pop-up
+      [isOpen]="isPopupOpen"
+      [minLen]="minLengthSuggestionList"
+      [maxNumberPredictions]="maxNumberPredictionsPerSuggestion"
+      [showSnippets]="showSnippetsInSuggestionList"
+      (onClose)="handleClose()"
+      (onSave)="handleSave($event)"
+    ></app-editor-settings-pop-up>
+  </div>
+
+  <app-collaborators-list
+    [collaborators]="collaborators"
+  ></app-collaborators-list>
+</div>

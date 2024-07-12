@@ -1,0 +1,215 @@
+<form (ngSubmit)="onSaveClick()" (reset)="onFormReset()" [formGroup]="configForm" class="configuration-container">
+  <div class="configuration-topbar">
+    <div class="configuration-topbar-left">
+      <!--      <button mat-button matTooltip="Clear configuration" type="reset">-->
+      <!--        <mat-icon>delete</mat-icon>-->
+      <!--      </button>-->
+      <button (click)="refreshFileListClicked($event)" mat-button matTooltip="Refresh files">
+        <mat-icon>refresh</mat-icon>
+      </button>
+
+    </div>
+    <div class="configuration-topbar-right">
+      <button mat-button matTooltip="Save configuration" type="submit">
+        <mat-icon>save</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <!--  <div style="overflow-y: scroll;">-->
+  <div class="configuration-module-container">
+    <div class="configuration-module">
+      <h3>
+        <mat-icon>offline_bolt</mat-icon>
+        Simulator
+      </h3>
+      <div class="configuration-module-content">
+        <mat-form-field appearance="legacy" style="min-width: 250px;">
+          <mat-label style="color: white;">Select prefered simulator</mat-label>
+          <mat-select (selectionChange)="onSimulatorChange()" [(value)]="this.configForm.value['simulator']"
+                      formControlName="selectedSimulator" style="color: white;">
+            <mat-option value="IVERILOG">Icarus Verilog</mat-option>
+            <mat-option value="VERILATOR_T">Verilator with transpilation</mat-option>
+            <mat-option value="VERILATOR_N">Verilator without transpilation</mat-option>
+          </mat-select>
+          <mat-error>Simulator is required</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <hr>
+    <div class="configuration-module">
+      <h3>
+        <mat-icon>file_copy</mat-icon>
+        Source files locations
+      </h3>
+      <!--      <button (click)="refreshFileListClicked($event)" mat-button matTooltip="Refresh files">-->
+      <!--        <mat-icon>refresh</mat-icon>-->
+      <!--      </button>-->
+      <!--      <div class="configuration-module-content">-->
+      <!--        <mat-checkbox color="primary" formControlName="moduleFiles">Use all design files</mat-checkbox>-->
+      <!--      </div>-->
+      <div class="configuration-module-content">
+
+        <!--              <mat-form-field>-->
+        <!--                <mat-label style="color: white;">Top module file</mat-label>-->
+        <!--                <mat-select (selectionChange)="updateFileSelectionFields()" formControlName="topModuleFile"-->
+        <!--                            style="color: white;">-->
+        <!--                  <mat-option *ngFor="let file of topmoduleAvailableFiles" [value]="file">-->
+        <!--                    {{ file }}-->
+        <!--                  </mat-option>-->
+        <!--                </mat-select>-->
+        <!--                <mat-error *ngIf="this.configForm.controls['topModuleFile'].invalid">Top module is required</mat-error>-->
+        <!--              </mat-form-field>-->
+
+        <mat-form-field appearance="legacy">
+          <mat-label style="color: white;">Top module file:</mat-label>
+          <input [readonly]="true" formControlName="topModuleFile" matInput placeholder="Top module file:">
+          <!--          <mat-hint>Choose topmodule file, which has to be run against the whole project</mat-hint>-->
+          <mat-error>Topmodule has to be chosen!</mat-error>
+        </mat-form-field>
+        <button (click)="selectTopModuleFile()" color="primary" mat-flat-button type="button">
+          <mat-icon>folder_open</mat-icon>
+          Select file
+        </button>
+      </div>
+      <div class="configuration-module-content">
+
+        <!--        <mat-form-field>-->
+        <!--          <mat-label style="color: white;">Testbench file</mat-label>-->
+        <!--          <mat-select (selectionChange)="updateFileSelectionFields()" formControlName="testbenchFile"-->
+        <!--                      style="color: white;">-->
+        <!--            <mat-option *ngFor="let file of testbenchAvailableFiles" [value]="file">-->
+        <!--              {{ file }}-->
+        <!--            </mat-option>-->
+        <!--          </mat-select>-->
+        <!--          <mat-error *ngIf="this.configForm.controls['testbenchFile'].invalid">Testbench file is required</mat-error>-->
+        <!--        </mat-form-field>-->
+        <mat-form-field appearance="legacy">
+          <mat-label style="color: white;">Testbench file:</mat-label>
+          <input [readonly]="true" formControlName="testbenchFile" matInput placeholder="Testbench file:">
+          <!--          <mat-hint>Choose testbench file, which has to be run against the top module file</mat-hint>-->
+          <mat-error>Testbench has to be chosen!</mat-error>
+        </mat-form-field>
+        <button (click)="selectTestbenchFile()" color="primary" mat-flat-button type="button">
+          <mat-icon>folder_open</mat-icon>
+          Select file
+        </button>
+      </div>
+      <div class="configuration-module-content">
+        <!--        <mat-button-toggle-group formControlName="moduleFiles">-->
+        <!--          <mat-button-toggle value="include">Include</mat-button-toggle>-->
+        <!--          <mat-button-toggle value="exclude">Exclude</mat-button-toggle>-->
+        <!--        </mat-button-toggle-group>-->
+
+        <mat-radio-group formControlName="selectedFilesAction">
+          <div>
+            <mat-radio-button value="exclude">Include all modules, except selected</mat-radio-button>
+          </div>
+          <div>
+            <mat-radio-button value="include">Include only selected modules</mat-radio-button>
+          </div>
+        </mat-radio-group>
+      </div>
+
+      <div class="configuration-module-content">
+
+        <mat-form-field appearance="legacy">
+          <mat-label style="color: white;">
+            <span *ngIf="this.configForm.controls['selectedFilesAction'].value === 'exclude'">
+                        Excluded modules
+                      </span>
+            <span *ngIf="this.configForm.controls['selectedFilesAction'].value === 'include'">
+                        Included modules
+                      </span>
+          </mat-label>
+          <input [readonly]="true" formControlName="modulesArray" matInput placeholder="Modules:">
+        </mat-form-field>
+        <button (click)="selectModulesFiles()" color="primary" mat-flat-button type="button">
+          <mat-icon>folder_open</mat-icon>
+          Select files
+        </button>
+      </div>
+
+      <!--      <div class="configuration-module-content">-->
+      <!--        <mat-form-field>-->
+      <!--          <mat-label style="color: white;">-->
+      <!--          <span *ngIf="this.configForm.controls['moduleFiles'].value === 'exclude'">-->
+      <!--            Excluded modules-->
+      <!--          </span>-->
+      <!--            <span *ngIf="this.configForm.controls['moduleFiles'].value === 'include'">-->
+      <!--            Included modules-->
+      <!--          </span>-->
+      <!--          </mat-label>-->
+      <!--          <mat-select (selectionChange)="updateFileSelectionFields()" formControlName="modulesArray" multiple-->
+      <!--                      style="color: white;">-->
+      <!--            <mat-option *ngFor="let file of otherAvailableFiles" [value]="file">-->
+      <!--              {{ file }}-->
+      <!--            </mat-option>-->
+      <!--          </mat-select>-->
+      <!--          &lt;!&ndash;        <mat-error *ngIf="this.configForm.controls['testbenchFile'].invalid">Testbench file is required</mat-error>&ndash;&gt;-->
+      <!--        </mat-form-field>-->
+      <!--      </div>-->
+
+      <!--      <mat-form-field appearance="legacy">-->
+      <!--        <mat-label style="color: white;">Modules:</mat-label>-->
+      <!--        <input formControlName="modulesArray" matInput placeholder="Modules">-->
+      <!--        <mat-hint>Modules to be included in the waveform, separated by comma</mat-hint>-->
+      <!--        <mat-error>{{ modulesArrayErrorMessage }}</mat-error>-->
+      <!--      </mat-form-field>-->
+
+      <!--      <div class="configuration-module-content">-->
+      <!--        <mat-form-field appearance="legacy">-->
+      <!--          <mat-label style="color: white;">Output folder:</mat-label>-->
+      <!--          <input [readonly]="true" formControlName="outputFolder" matInput placeholder="Output folder">-->
+      <!--          <mat-hint>Choose output folder for waveform files</mat-hint>-->
+      <!--          <mat-error>Output folder has to be chosen!</mat-error>-->
+      <!--        </mat-form-field>-->
+      <!--        <button (click)="selectOutputFolder()" color="primary" mat-flat-button type="button">-->
+      <!--          <mat-icon>folder_open</mat-icon>-->
+      <!--          Select folder-->
+      <!--        </button>-->
+      <!--      </div>-->
+      <!--      <div class="configuration-module-content">-->
+      <!--        <mat-form-field appearance="legacy">-->
+      <!--          <mat-label style="color: white;">Output filename:</mat-label>-->
+      <!--          <input formControlName="outputFile" matInput placeholder="Filename">-->
+      <!--          <mat-hint>Choose filename for the output simulation file</mat-hint>-->
+      <!--          <mat-error>Output filename has to be chosen!</mat-error>-->
+      <!--        </mat-form-field>-->
+      <!--      </div>-->
+
+    </div>
+    <hr>
+    <div class="configuration-module">
+      <h3>
+        <mat-icon>graphic_eq</mat-icon>
+        Waveform
+      </h3>
+      <div class="configuration-module-content">
+        <mat-checkbox (change)="onCheckedDumpWaveform()" color="primary" formControlName="dumpWaveform">Dump
+          waveform file
+        </mat-checkbox>
+      </div>
+      <!--      <div class="configuration-module-content">-->
+      <!--        <mat-form-field appearance="legacy">-->
+      <!--          <mat-label style="color: white;">Waveform filename:</mat-label>-->
+      <!--          <input formControlName="waveformOutputFile" matInput placeholder="Waveform filename">-->
+      <!--          <mat-hint>Choose filename for the output waveform file</mat-hint>-->
+      <!--          <mat-error>{{ waveformOutputFileErrorMessage }}</mat-error>-->
+      <!--        </mat-form-field>-->
+      <!--      </div>-->
+      <div class="configuration-module-content">
+        <!--        <mat-form-field appearance="legacy">-->
+        <!--          <mat-label style="color: white;">Dump level:</mat-label>-->
+        <!--          <input (input)="onLevelChange()" formControlName="dumpLevel" matInput placeholder="Dump level">-->
+        <!--          <mat-hint>Level of depth from the top module to be convered in the waveform</mat-hint>-->
+        <!--          <mat-error>{{ levelDepthErrorMessage }}</mat-error>-->
+        <!--        </mat-form-field>-->
+
+
+      </div>
+    </div>
+  </div>
+
+</form>

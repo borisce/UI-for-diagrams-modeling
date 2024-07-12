@@ -1,0 +1,11 @@
+mat-selection-list {
+  max-height: 18rem;
+  overflow-x: hidden;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}

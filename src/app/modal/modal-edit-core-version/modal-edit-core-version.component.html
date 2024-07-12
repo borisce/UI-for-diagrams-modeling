@@ -1,0 +1,66 @@
+<div>
+  <form (ngSubmit)="onSubmit()" [formGroup]="form">
+
+    <div *ngIf="coreVersions === null; else loaded">
+      <mat-spinner></mat-spinner>
+    </div>
+    <ng-template #loaded>
+      <h4>Edit IP Core version</h4>
+      <mat-error *ngIf="this.error != null">
+        {{this.error}}
+      </mat-error>
+      <mat-label>Version</mat-label>
+      <div *ngIf="coreVersions.length == 1 ||
+      coreVersions[0].uuid !== this.data.coreVersion.uuid; else higherVersionBlock">
+        {{this.data.coreVersion.version_number}}
+      </div>
+      <ng-template #higherVersionBlock>
+        Previous version was {{coreVersions[1].version_number}}.
+        <div class="version-input">
+          <label class="mr-4">Number</label>
+          <mat-form-field><input formControlName="major" matInput min="1" step="1" type="number"></mat-form-field>
+          <span>.</span>
+          <mat-form-field><input formControlName="minor" matInput min="0" step="1" type="number"></mat-form-field>
+          <span>.</span>
+          <mat-form-field><input formControlName="patch" matInput min="0" step="1" type="number"></mat-form-field>
+        </div>
+        <mat-error *ngIf="form.controls['major'].hasError('required')
+     || form.controls['minor'].hasError('required')
+     || form.controls['patch'].hasError('required'); else otherErrorCheck">
+          Version number is required
+        </mat-error>
+        <ng-template #otherErrorCheck>
+          <mat-error *ngIf="!isVersionGreater()">Version number must be greater than
+            {{this.coreVersions[1].version_number}}</mat-error>
+        </ng-template>
+      </ng-template>
+
+      <mat-form-field style="width: 100%;">
+        <mat-label>Changelog</mat-label>
+        <textarea #autosize="cdkTextareaAutosize" cdkAutosizeMaxRows="5"
+                  cdkAutosizeMinRows="1"
+                  cdkTextareaAutosize
+                  formControlName="changelog"
+                  matInput></textarea>
+        <mat-error *ngIf="form.controls['changelog'].hasError('required')">Changelog is required</mat-error>
+      </mat-form-field>
+
+      <br>
+      <br>
+      <mat-slide-toggle color="primary" formControlName="active">
+        Visibility
+      </mat-slide-toggle>
+
+      <div class="actions">
+        <button (click)="closeDialog($event)" mat-flat-button>
+          Cancel
+        </button>
+        <button
+          [disabled]="form.invalid || (this.data.coreVersion.version_number !== '1.0.0' && !this.isVersionGreater()) || loadingState"
+          color="primary" mat-flat-button>
+          Save
+        </button>
+      </div>
+    </ng-template>
+  </form>
+</div>

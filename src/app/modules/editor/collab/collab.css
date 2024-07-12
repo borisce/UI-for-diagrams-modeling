@@ -1,0 +1,7 @@
+.monaco-remote-cursor .monaco-remote-cursor-tooltip {
+  visibility: hidden;
+}
+
+.monaco-remote-cursor:hover .monaco-remote-cursor-tooltip {
+  visibility: visible;
+}

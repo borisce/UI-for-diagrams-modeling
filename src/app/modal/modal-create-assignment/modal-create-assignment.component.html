@@ -1,0 +1,174 @@
+<div class="modal-create-assignment-wrapper">
+  <div style="display: flex; justify-content: space-between">
+    <h4>Create new assignment</h4>
+    <div class="col-sm-2 close">
+      <button mat-button [mat-dialog-close]="false">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <form [formGroup]="createAssignment" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <div class="card-container">
+        <div style="width: 380px">
+          <h6>Assignment info</h6>
+
+          <div class="modal-create-assignment-spacer"></div>
+
+          <mat-form-field class="modal-create-assignment-form-field">
+            <mat-label for="name">Name:</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="name"
+              id="name"
+              placeholder="Assignment's name"
+            />
+            <mat-error>Assignment name is required!</mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="modal-create-assignment-form-field">
+            <input
+              matInput
+              [matDatepicker]="picker"
+              formControlName="dueDate"
+              placeholder="Due date"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error>Due date is required</mat-error>
+          </mat-form-field>
+
+          <div class="file-upload-container">
+            <input
+              type="file"
+              class="file-upload-input"
+              (change)="onFilePicked($event)"
+            />
+            <div class="file-upload-button">
+              <mat-form-field class="modal-create-assignment-form-field">
+                <mat-label for="uri">Description PDF:</mat-label>
+                <input
+                  formControlName="description"
+                  matInput
+                  type="text"
+                  placeholder="Write description..."
+                />
+                <mat-icon matSuffix class="modal-create-assignment-input-icon"
+                  >file_open</mat-icon
+                >
+                <mat-error>Uri is required!</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-create-assignment-points-card">
+          <h6>Points</h6>
+
+          <div class="modal-create-assignment-spacer"></div>
+
+          <mat-form-field>
+            <mat-label for="uri">Description:</mat-label>
+            <input
+              matInput
+              type="number"
+              formControlName="descriptionPoints"
+              id="descriptionPoints"
+              placeholder="select number points..."
+              [value]="1"
+            />
+            <mat-error>Uri is required!</mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label for="uri">Simulation:</mat-label>
+            <input
+              matInput
+              type="number"
+              formControlName="simulation"
+              id="simulation"
+              placeholder="select number points..."
+              [value]="1"
+            />
+            <mat-error>Uri is required!</mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label for="uri">Code:</mat-label>
+            <input
+              matInput
+              type="number"
+              formControlName="code"
+              id="code"
+              placeholder="select number points..."
+              [value]="1"
+            />
+            <mat-error>Uri is required!</mat-error>
+          </mat-form-field>
+          <br />
+        </div>
+      </div>
+
+      <div *ngIf="f.filesCheckbox.value">
+        <h6>Simlation test files</h6>
+
+        <div class="modal-create-assignment-icon-tray">
+          <mat-form-field
+            class="modal-create-assignment-form-field"
+            style="width: 180px"
+          >
+            <mat-label for="uri">Top module file name</mat-label>
+            <input
+              formControlName="topModuleFile"
+              matInput
+              type="text"
+              placeholder="without .sv"
+            />
+            <mat-error>Uri is required!</mat-error>
+          </mat-form-field>
+
+          <div style="width: 160px">
+            <button mat-button (click)="addTest()">
+              <mat-icon class="modal-create-assignment-icon">add</mat-icon>
+            </button>
+
+            <button mat-button (click)="removeTest()">
+              <mat-icon class="modal-create-assignment-icon">remove</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="card-container" style="width: 655; overflow-x: auto">
+          <app-simulation-files-card
+            *ngFor="let i of [1, 2, 3]"
+            [repositories]="repositories"
+            [testNumber]="i"
+            [parentForm]="createAssignment"
+          >
+          </app-simulation-files-card>
+        </div>
+      </div>
+
+      <div class="card-container">
+        <div class="modal-create-assignment-card-content">
+          <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+
+        <div class="modal-create-assignment-card-content">
+          <mat-checkbox color="primary" formControlName="filesCheckbox"
+            >Simulation Files</mat-checkbox
+          >
+        </div>
+
+        <div class="modal-create-assignment-card-content">
+          <p>Total: {{ total }} points</p>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,30 @@
+<div class="container">
+    <div class="row">
+        <div class="w-100">
+            <h3>Run synthesis</h3>
+            <div class="px-3">
+                <mat-label>Choose the end step of the process</mat-label>
+            </div>
+            <div class="slider-label">
+                <label *ngFor="let step of steps" class="slider-label-item" for="">{{ step.text }}</label>
+            </div>
+            <div class="px-3">
+                <mat-slider min="0" max="4" step="1" (change)="setEndStep($event.value)"></mat-slider>
+            </div>
+            <div class="p-3">
+                <mat-label>Technology</mat-label>
+                <mat-select [value]="technology">
+                    <mat-option value="osu018">osu018</mat-option>
+                    <mat-option value="osu035">osu035</mat-option>
+                    <mat-option value="osu050">osu050</mat-option>
+                </mat-select>
+            </div>
+            <div class="button-group">
+                <a (click)="onNoClick()" class="btn btn-link">Close</a>
+                <a (click)="onClickRun()" class="btn btn-primary">
+                    Run
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

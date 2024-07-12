@@ -1,0 +1,85 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+.wrapper table {
+  width: 100%;
+  flex-grow: 1;
+}
+
+.mat-column-avatar {
+  padding: 10px 25px;
+  width: 50px;
+}
+
+.mat-column-first_name span {
+  font-weight: 900;
+  background: #3f51b5;
+  color: white;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  border-radius: 50%;
+  padding: 10px;
+  margin: 10px;
+}
+
+.mat-column-selector {
+  width: 75px;
+}
+
+.mat-column-selector mat-checkbox {
+  margin-top: 10px;
+  display: flex;
+}
+
+.members-controls {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 10px;
+  border-bottom: 1px solid #dbdbdb;
+  margin-bottom: 10px;
+
+  &btn > button {
+    background-color: transparent;
+    color: #666;
+    box-shadow: 0px 0px transparent;
+  }
+
+  &btn > mat-paginator {
+    display: inline-block;
+  }
+
+  &btn > button:hover {
+    background-color: #ddd;
+  }
+}
+
+.members-controlsbtn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 15px 20px;
+}
+
+mat-spinner {
+  align-self: center;
+  padding: 3rem;
+}
+
+mat-paginator {
+  border-radius: 8px;
+}
+
+.mat-elevation-z8 {
+  box-shadow: none !important;
+  border: 1px solid lightgray;
+  border-radius: 10px;
+}
+
+h1 {
+  margin: 0px;
+}

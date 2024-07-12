@@ -1,0 +1,36 @@
+<div class="loginForm-container">
+
+  <div class="loginForm-title">
+    <h2>Welcome to ASICDE</h2>
+    <p>Web IDE for ASIC development and collaboration</p>
+  </div>
+
+  <div class="statusMessages">
+    <p *ngIf="error" class="error">{{ error }}</p>
+    <p *ngIf="success" class="success">{{ success }}</p>
+  </div>
+
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)" (keyup.enter)="onSubmit(loginForm.value)">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Username or Email</mat-label>
+      <input type="text" formControlName="username" matInput autocomplete="email">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Password</mat-label>
+      <input matInput placeholder="Password" [type]="hidePass ? 'password' : 'text'" autocomplete="password" formControlName="password"
+        required>
+      <mat-icon style="cursor: pointer" matSuffix (click)="hidePass = !hidePass">{{ hidePass ? 'visibility_off' :
+        'visibility' }}</mat-icon>
+    </mat-form-field>
+
+    <div class="loginForm-options">
+      <mat-checkbox class="example-margin">Keep me logged in</mat-checkbox>
+      <a class="forgot-pwd-btn" (click)="redirect('reset-password')">Forgot password?</a>
+    </div>
+
+    <div class="loginForm-button-container">
+      <button mat-flat-button color="primary" type="submit">Login</button>
+      <button mat-stroked-button (click)="redirect('register')">Register</button>
+    </div>
+  </form>

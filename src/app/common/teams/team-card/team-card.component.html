@@ -1,0 +1,20 @@
+<div class="teamcard" (click)="onTeamClick()">
+  <div class="teamcard-header">
+    <mat-checkbox color="primary" [(checked)]="checked" disabled></mat-checkbox>
+    <h1 class="mat-h1">{{ name }}</h1>
+  </div>
+  <div class="teamcard-content">
+    <div>
+      <strong>Last modified by: </strong>
+      {{ lastModifiedBy }}
+    </div>
+    <div>
+      <strong>Owned by: </strong>
+      {{ ownedBy }}
+    </div>
+  </div>
+  <hr />
+  <div class="teamcard-footer">
+    <mat-icon>update</mat-icon>&nbsp;{{ lastModified }}
+  </div>
+</div>

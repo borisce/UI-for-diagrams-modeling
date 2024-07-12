@@ -1,0 +1,11 @@
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+
+  button {
+    width: 70%;
+    border-radius: 50px;
+    height: 45px;
+  }
+}

@@ -1,0 +1,34 @@
+<div>
+    <mat-stepper [linear]="true" #stepper>
+        <mat-step>
+            <ng-template matStepLabel>Choose language</ng-template>
+            <mat-form-field>
+                <mat-label>Language</mat-label>
+                <mat-select matNativeControl [(value)]="language">
+                    <mat-option value="System Verilog">System Verilog</mat-option>
+                    <mat-option value="VHDL">VHDL</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <br />
+            <button mat-flat-button color="primary" (click)="generateCode(); stepper.next()">Next</button>
+        </mat-step>
+
+        <mat-step>
+            <ng-template matStepLabel>Review the code</ng-template>
+            <textarea style="width: 100%;" rows="20" [(ngModel)]="generatedCode"></textarea>
+            <br />
+            <button mat-flat-button color="primary" (click)="stepper.next()">Next</button>
+        </mat-step>
+
+        <mat-step>
+            <ng-template matStepLabel>Save</ng-template>
+            <mat-form-field>
+                <mat-label>File name</mat-label>
+                <input matInput [(ngModel)]="fileName" />
+            </mat-form-field>
+            <br />
+            <button mat-flat-button color="primary"
+                [mat-dialog-close]="{fileName, generatedCode, language}">Save</button>
+        </mat-step>
+    </mat-stepper>
+</div>

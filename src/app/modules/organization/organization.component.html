@@ -1,0 +1,45 @@
+<div class="wrapper">
+  <div class="organization-headerbar">
+    <div class="organization-dashheader">
+      <h2>{{ organizationName }}</h2>
+    </div>
+    <mat-tab-group>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div class="tab-label">
+            <mat-icon>book</mat-icon>
+            Repositories
+          </div>
+        </ng-template>
+        <app-org-repos></app-org-repos>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div class="tab-label">
+            <mat-icon>people</mat-icon>
+            Teams
+          </div>
+        </ng-template>
+        <app-org-teams></app-org-teams>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div class="tab-label">
+            <mat-icon>people</mat-icon>
+            Members
+          </div>
+        </ng-template>
+        <app-org-members></app-org-members>
+      </mat-tab>
+      <mat-tab [disabled]="!authenticationService.haveOwnerPermission">
+        <ng-template mat-tab-label>
+          <div class="tab-label">
+            <mat-icon>account_balance_wallet</mat-icon>
+            Wallet
+          </div>
+        </ng-template>
+        <app-organization-wallet></app-organization-wallet>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

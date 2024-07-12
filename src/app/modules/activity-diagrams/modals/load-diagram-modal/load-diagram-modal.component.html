@@ -1,0 +1,14 @@
+<div>
+    <h3 mat-dialog-title>Load diagram</h3>
+    <div mat-dialog-content>
+        <p>Pick a file</p>
+        <mat-form-field>
+            <mat-label>File</mat-label>
+            <mat-select matNativeControl [(value)]="selectedFile">
+                <mat-option *ngFor="let file of data.files" [value]="file">{{file.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <br />
+        <button mat-flat-button color="primary" [mat-dialog-close]="selectedFile">Load</button>
+    </div>
+</div>

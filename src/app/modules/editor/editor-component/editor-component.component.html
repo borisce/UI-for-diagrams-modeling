@@ -1,0 +1,171 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<meta charset="utf-8" />
+<link href="//cdn.syncfusion.com/ej2/ej2-base/styles/material.css" rel="stylesheet" />
+<link href="//cdn.syncfusion.com/ej2/ej2-buttons/styles/material.css" rel="stylesheet" />
+<link href="//cdn.syncfusion.com/ej2/ej2-navigations/styles/material.css" rel="stylesheet" />
+
+<div class="wrapper">
+  <!-- toto wrapuje celu stranku okrem hornej listy menu -->
+  <div class="breadcrumb-selector">
+    <!-- toto je ta lista, kde vidis kde sa nachadzas - breadcrumbs -->
+    <a (click)="redirect('my-repos')" class="breadcrumb-item"> {{ editorTitle }}</a>
+    <span class="breadcrumb-spacer">></span>
+    <a class="breadcrumb-item"> {{ repoName }} </a>
+  </div>
+  <div *ngIf="!editor" class="info-editor-package">
+    <p class="text-white mb-0">You don't have the purchased <a (click)="redirect('price-packages')">package</a> for the
+      editor. The editor does not contain syntax check and has limited code suggestions.</p>
+  </div>
+  <div class="content-area">
+    <!-- oblast kde sa uz nachadzaju samotne sucasti editora - bocna lista, strom dokumentov, editor, ... -->
+
+    <div class="sidebar-tools">
+      <!-- bocne menu kde su ikonky, ktore ti mozu otvorit rozlicne nastroje - file explorer, git explorer, vyhladavanie, obchod s IP cores, ... -->
+      <div (click)="changeWindow('project-explorer')" [matTooltipPosition]="tooltipPosition"
+        [ngClass]="{'selected': currentWindow == 'project-explorer'}" class="sidebar-button"
+        matTooltip="Project explorer">
+        <mat-icon aria-hidden="false" aria-label="Project explorer">folder</mat-icon>
+      </div>
+      <div (click)="redirect('visualization')" *ngIf="!readOnly && this.diagrams" [matTooltipPosition]="tooltipPosition"
+        [ngClass]="{'selected': currentWindow == 'visualization'}" class="sidebar-button" matTooltip="Block diagrams">
+        <!-- (click)="changeWindow('visualization')" -->
+        <mat-icon aria-hidden="false" aria-label="Block diagrams">blur_linear</mat-icon>
+      </div>
+      <div (click)="redirect('price-packages')" *ngIf="!readOnly && !this.diagrams" [matTooltipPosition]="tooltipPosition"
+        [ngClass]="{'selected': currentWindow == 'visualization'}" class="sidebar-button" matTooltip="Disabled Block diagrams">
+        <!-- (click)="changeWindow('visualization')" -->
+        <mat-icon aria-hidden="false" aria-label="Disabled Block diagrams" style="color: grey;">blur_linear</mat-icon>
+      </div>
+      <div (click)="redirect('state-machines')" *ngIf="!readOnly && this.diagrams" [matTooltipPosition]="tooltipPosition"
+        [ngClass]="{'selecter': currentWindow == 'statemachines'}" class="sidebar-button" matTooltip="State Machines">
+        <mat-icon aria-hidden="false" aria-label="State Machines">multiline_chart</mat-icon>
+      </div>
+      <div (click)="redirect('price-packages')" *ngIf="!readOnly && !this.diagrams" [matTooltipPosition]="tooltipPosition"
+        [ngClass]="{'selecter': currentWindow == 'statemachines'}" class="sidebar-button" matTooltip="Disabled State Machines">
+        <mat-icon aria-hidden="false" aria-label="Disabled State Machines" style="color: grey;">multiline_chart</mat-icon>
+      </div>
+      <div (click)="redirect('activitydiagrams')" *ngIf="!readOnly && this.diagrams" [matTooltipPosition]="tooltipPosition"
+        [ngClass]="{'selecter': currentWindow == 'activitydiagrams'}" class="sidebar-button"
+        matTooltip="Activity Diagrams">
+        <mat-icon aria-hidden="false" aria-label="Activity Diagrams">multiline_chart</mat-icon>
+      </div>
+      <div (click)="redirect('price-packages')" *ngIf="!readOnly && !this.diagrams" [matTooltipPosition]="tooltipPosition"
+        [ngClass]="{'selecter': currentWindow == 'activitydiagrams'}" class="sidebar-button" style="filter: invert(1);"
+        matTooltip="Disabled Activity Diagrams">
+        <mat-icon aria-hidden="false" aria-label="Disabled Activity Diagrams" style="color: grey;">multiline_chart</mat-icon>
+      </div>
+      <div (click)="redirect('design-hierarchy')" *ngIf="!readOnly && this.diagrams" [matTooltipPosition]="tooltipPosition"
+           [ngClass]="{'selected': currentWindow == 'design-hierarchy'}" class="sidebar-button"
+           matTooltip="Design hierarchy">
+        <mat-icon aria-hidden="false" aria-label="Design hierarchy">polyline</mat-icon>
+      </div>
+       <div (click)="redirect('price-packages')" *ngIf="!readOnly && !this.diagrams" [matTooltipPosition]="tooltipPosition"
+           [ngClass]="{'selected': currentWindow == 'design-hierarchy'}" class="sidebar-button"
+           matTooltip="Disabled Design hierarchy">
+        <mat-icon aria-hidden="false" aria-label="Disabled Design hierarchy" style="color: grey;">polyline</mat-icon>
+      </div>
+      <div (click)="changeWindow('search')" *ngIf="!readOnly" [matTooltipPosition]="tooltipPosition"
+        [ngClass]="{'selected': currentWindow == 'search'}" class="sidebar-button" matTooltip="Search">
+        <mat-icon aria-hidden="false" aria-label="Search">search</mat-icon>
+      </div>
+      <div (click)="changeWindow('source-control')" *ngIf="!readOnly" [matTooltipPosition]="tooltipPosition"
+        [ngClass]="{'selected': currentWindow == 'source-control'}" class="sidebar-button" matTooltip="Source control">
+        <mat-icon aria-hidden="false" aria-label="Source control">code</mat-icon>
+      </div>
+      <div (click)="changeWindow('code-review')" *ngIf="!readOnly" [matTooltipPosition]="tooltipPosition"
+        [ngClass]="{'selected': currentWindow == 'code-review'}" class="sidebar-button" matTooltip="Code review">
+        <mat-icon aria-hidden="false" aria-label="Source control">comment</mat-icon>
+      </div>
+      <div (click)="changeWindow('settings')" *ngIf="!readOnly" [matTooltipPosition]="tooltipPosition"
+        [ngClass]="{'selected': currentWindow == 'settings'}" class="sidebar-button" matTooltip="Editor settings">
+        <mat-icon aria-hidden="false" aria-label="Editor settings">settings</mat-icon>
+      </div>
+      <div (click)="changeWindow('simulation-results')" *ngIf="!readOnly" [matTooltipPosition]="tooltipPosition"
+        [ngClass]="{'selected': currentWindow == 'simulation-results'}" class="sidebar-button"
+        matTooltip="Simulation results">
+        <mat-icon aria-hidden="false" aria-label="Simulation results">offline_bolt</mat-icon>
+      </div>
+      <div class="sidebar-button" [ngClass]="{'selected': currentWindow == 'synthesis-results'}"
+        (click)="changeWindow('synthesis-results')" matTooltip="Synthesis results"
+        [matTooltipPosition]="tooltipPosition">
+        <mat-icon aria-hidden="false" aria-label="Simulation results">dynamic_form</mat-icon>
+      </div>
+      <div (click)="changeWindow('ip-cores')" *ngIf="!readOnly" [matTooltipPosition]="tooltipPosition"
+        [ngClass]="{'selected': currentWindow == 'ip-cores'}" class="sidebar-button" matTooltip="IP cores">
+        <mat-icon aria-hidden="false" aria-label="IP cores">memory</mat-icon>
+      </div>
+    </div>
+
+    <div class="editor-wrapper">
+      <!-- dalsi wrapper, v ktorom je spodna lista editora a editor -->
+
+      <div class="editor-area">
+        <!-- wrapper pre editor a nastroje -->
+
+        <div [ngClass]="{'hidden': currentWindow == 'visualization'}" class="sidebar-window-wrapper">
+          <!-- wrapper pre vsetky okna nastrojov -->
+
+          <div [ngClass]="{'selected': currentWindow == 'project-explorer'}" class="sidebar-window"
+            id="sidebar-file-explorer">
+            <div id='treeparent'>
+              <div id="tree"></div>
+              <ul id="contextmenu"></ul>
+            </div>
+          </div>
+
+          <div [ngClass]="{'selected': currentWindow == 'search'}" class="sidebar-window" id="sidebar-search">
+            Search
+          </div>
+
+          <div [ngClass]="{'selected': currentWindow == 'source-control'}" class="sidebar-window"
+            id="sidebar-source-control">
+            <source-control class="full-height"></source-control>
+          </div>
+
+          <div [ngClass]="{'selected': currentWindow == 'code-review'}" class="sidebar-window"
+            id="sidebar-code-review">
+            <code-review class="full-height"></code-review>
+          </div>
+
+          <div [ngClass]="{'selected': currentWindow == 'ip-cores'}" class="sidebar-window" id="sidebar-ip-cores">
+            <ip-cores></ip-cores>
+          </div>
+
+          <div [ngClass]="{'selected': currentWindow == 'settings'}" class="sidebar-window"
+            id="sidebar-editor-settings">Editor settings
+          </div>
+
+          <div [ngClass]="{'selected': currentWindow == 'simulation-results'}" class="sidebar-window"
+            id="simulation-results">
+            <simulation-results></simulation-results>
+          </div>
+
+          <div class="sidebar-window" [ngClass]="{'selected': currentWindow == 'synthesis-results'}"
+            id="synthesis-results">
+            <synthesis-results [context]="context"></synthesis-results>
+          </div>
+
+        </div>
+
+        <div [ngClass]="{'hidden': currentWindow == 'visualization'}" class="window editor-window">
+          <!-- samotny editor a otvorene karty so subormi -->
+          <app-editor-tabs #editorComponent [synthesis]="synthesis" [simulations]="simulations" (changeSidebarWindowEvent)="changeWindow($event)" [context]="context">
+          </app-editor-tabs>
+        </div>
+
+        <div [ngClass]="{'hidden': currentWindow != 'visualization'}" class="window visualization-window">
+          <!-- samotny visualization component -->
+          <!-- TODO: add visualization component -->
+        </div>
+      </div>
+
+      <div class="editor-bottom-toolbar"><mat-icon>fork_left</mat-icon>{{ myGit }}<div
+          class="editor-bottom-toolbar-right"></div>
+      </div>
+      <!-- spodna lista editora, kde sa ti zobrazuju nejake potrebne informacie - aktualny branch, pocet zmien, aktualna pozicia v editore, ... -->
+
+    </div>
+
+  </div>
+
+</div>

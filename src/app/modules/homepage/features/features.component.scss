@@ -1,0 +1,141 @@
+.features-background {
+    // background: #F9FFFF;
+    background: #c9d6ff;
+    background: -webkit-linear-gradient(to right, #e2e2e2, #c9d6ff);
+    background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+}
+
+.features-title {
+    text-align: center;
+    color: #3f51b5;
+    padding-top: 120px;
+    padding-bottom: 40px;  
+}
+
+.check-icon {
+    color: #3f51b5;
+}
+
+.feature-text {
+    padding-left: 30px;
+}
+
+.mat-card-subtitle {
+    padding-left: 10px;
+}
+
+.app-overview {
+    box-shadow: none;
+    background-color: #F9FFFF;
+    padding-bottom: 100;
+    width: 1250px;
+    margin-bottom: 100px;
+    margin: 0 auto;
+    width: 96%;
+    padding-left: 80px;
+    padding-top: 50px;
+
+    .mat-card-title {
+        font-size: 3rem;
+        padding-left: 20px;
+    }
+    .mat-list {
+        width: 500px;
+        padding-left: 60px;
+    }
+}
+
+
+.feature-card {
+    box-shadow: none;
+    background: #c9d6ff;
+    background: -webkit-linear-gradient(to right, #e2e2e2, #c9d6ff);
+    background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+    padding-bottom: 100;
+    width: 1250px;
+    margin-bottom: 100px;
+    margin: 0 auto;
+    width: 96%;
+    padding-left: 80px;
+    padding-top: 50px;
+  
+    .mat-card-title {
+        font-size: 2rem;
+    }
+    .mat-card-content {
+        width: 500px;
+        padding-left: 30px;
+    }
+    .mat-list {
+        font-size: 0.9rem;
+        width: 500px;
+        padding-left: 20px;
+    }
+}
+
+.feature2-card {
+    box-shadow: none;
+    background-color: #F9FFFF;
+    border: 0px;
+    padding-bottom: 100;
+    width: 1250px;
+    margin-bottom: 100px;
+    margin: 0 auto;
+    width: 96%;
+    padding-left: 80px;
+    padding-top: 50px;
+  
+    .child-2 {
+        padding-right: 50px;
+        padding-top: 30px;
+    }
+    .mat-card-content {
+        width: 500px;
+        padding-left: 30px;
+    }
+    .mat-card-title {
+        font-size: 2rem;
+    }
+    .mat-list {
+        width: 500px;
+        font-size: 0.9rem;
+        padding-left: 20px;
+    }
+}
+    
+
+
+
+
+.image {
+    width: 80%;
+    height: 90%;
+    object-fit: contain;
+    padding-right: 70px;
+    padding-top: 40px;
+    display: flex;
+    justify-content: center;
+    
+}
+
+.image2 {
+    width: 80%;
+    height: 90%;
+    object-fit: contain;
+    // padding-right: 70px;
+    padding-top: 40px;
+    display: flex;
+    justify-content: center;
+    
+}
+
+.image0 {
+    width: 80%;
+    height: 90%;
+    object-fit: contain;
+    // justify-content: center;
+    display: flex;
+    padding-top: 40px;
+    padding-right: 70px;
+    
+}

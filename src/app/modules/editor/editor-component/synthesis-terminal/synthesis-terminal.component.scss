@@ -1,0 +1,89 @@
+.horizontal-flex {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    background-color: #35393d;
+    padding: 5px 10px;
+    height: 36px;
+    align-items: center;
+}
+
+.terminal {
+    &-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: stretch;
+        height: 100%;
+        width: 100%;
+        padding: 0;
+        background-color: black;
+    }
+
+    &-topbar {
+        width: 100%;
+        display: flex;
+        justify-items: center;
+        justify-content: space-between;
+
+        & .terminal-connected-status {
+            flex-shrink: 1;
+            display: flex;
+            justify-items: center;
+            gap: 0.25rem;
+            margin-top: 3px;
+
+            &.connected {
+                color: lightgreen;
+            }
+        }
+    }
+
+    &-tabs {
+        max-width: 300px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
+            "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        font-weight: 400;
+        color: white;
+        font-size: 13px;
+    }
+
+    &-controls {
+        flex-shrink: 0;
+        font-size: 0.5em;
+
+        button {
+            padding: 8px 16px;
+            transition: filter 0.2s ease;
+            width: 36px;
+            padding: 0;
+            min-width: 0px;
+        }
+
+        mat-icon {
+            font-size: 13px;
+            padding: 3px 0px;
+            margin: 0px;
+        }
+    }
+}
+
+#synthesis-terminal {
+    width: 100%;
+    flex-grow: 1;
+    max-height: 100%;
+    height: 0%;
+}
+
+lib-ng-pane.ng-star-inserted lib-ng-pane-leaf.ng-star-inserted {
+    overflow: hidden;
+}
+
+.disabled {
+    opacity: 50%;
+    pointer-events: none;
+    cursor: not-allowed;
+}

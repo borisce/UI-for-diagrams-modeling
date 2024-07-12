@@ -1,0 +1,19 @@
+.mat-row:hover {
+  cursor: pointer;
+  background-color: #f5f5f5;
+}
+
+.badge {
+  padding: 5px 10px;
+  font-size: 15px;
+}
+
+.table-actions {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+
+  button {
+    margin: 5px 0 5px 10px;
+  }
+}

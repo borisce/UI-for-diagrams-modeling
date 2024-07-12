@@ -1,0 +1,14 @@
+<form class="example-form">
+  <div style="font-size: 12px;">
+    <mat-form-field appearance="outline">
+      <mat-label>Search repositories</mat-label>
+      <input [formControl]="myControl" matInput onchange="onValueChange()" type="text">
+      <mat-icon matSuffix>search</mat-icon>
+      <mat-autocomplete
+        #auto="matAutocomplete"
+        *ngFor="let option of filteredOptions | async" autoActiveFirstOption
+      >
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+</form>

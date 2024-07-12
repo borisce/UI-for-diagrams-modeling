@@ -1,0 +1,76 @@
+<div class="assignments-wrapper">
+  <div class="assignments-header">
+    <div style="display: flex; align-items: center">
+      <mat-icon [style.color]="'gray'">assignment</mat-icon>
+      <h4 style="margin: 0 0 0 10px">{{ assignemtName }}</h4>
+    </div>
+
+    <button
+      style="display: flex; align-items: center; padding: 0"
+      (click)="backToClassroom()"
+    >
+      <mat-icon [style.color]="'gray'">class</mat-icon>
+      <h4 style="margin: 0 0 0 10px" *ngIf="!loadingState">
+        {{ classroom.name }}
+      </h4>
+    </button>
+  </div>
+
+  <hr />
+
+  <div class="assignments-content">
+    <div class="assignments-full-width">
+      <div class="assignments-controls">
+        <div style="display: flex; align-items: center">
+          <mat-icon [style.color]="'gray'">group</mat-icon>
+          <h4 style="margin: 0 0 0 10px">Studnets</h4>
+        </div>
+      </div>
+
+      <br />
+
+      <div class="assignments-grid">
+        <mat-spinner [hidden]="!loadingState"></mat-spinner>
+        <app-assignment-user-card
+          *ngIf="!loadingState"
+          [assignmentUsers]="assignmentUsers"
+          [classroom_id]="uuid"
+          [isTeacher]="isTeacher"
+        >
+        </app-assignment-user-card>
+      </div>
+
+      <app-placeholder-text
+        *ngIf="!loadingState && assignmentUsers.length == 0"
+      >
+        No assignments were found!
+      </app-placeholder-text>
+    </div>
+
+    <div class="assignments-center">
+      <div class="assignments-charts">
+        <canvas id="submittedChart">{{ submittedChart }}</canvas>
+      </div>
+      <div *ngIf="!loadingState">
+        <div>
+          <label>Assignment created: </label>
+          <span>
+            {{
+              assignmentUsers[0].assignment.created
+                | date : "d MMMM y - HH:mm:ss"
+            }}</span
+          >
+        </div>
+        <div>
+          <label>Assignment due date: </label>
+          <span>
+            {{
+              assignmentUsers[0].assignment.dueDate
+                | date : "d MMMM y - HH:mm:ss"
+            }}</span
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

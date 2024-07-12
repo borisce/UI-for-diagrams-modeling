@@ -1,0 +1,108 @@
+<div class="code-gen-form" id="vhdl-code-gen-form">
+  <div class="code-gen-form-content">
+    <div style="text-align: right;">
+      <button (click)="closeGenerateVhdlCodeForm()" aria-label="close dialog" mat-icon-button>
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <h3>VHDL Code Generation Form</h3>
+    <form (ngSubmit)="submitVhdlFormData()" *ngIf="vhdlSubmitForm" [formGroup]="vhdlSubmitForm">
+      <div class="form-group">
+        <label>Entity Name:</label>
+        <input [ngClass]="{'is-invalid': vhdlFormSubmitted && vhdlControls.entityName.errors}" class="form-control"
+               formControlName="entityName" type="search">
+        <div *ngIf="vhdlFormSubmitted && vhdlControls.entityName.errors" class="invalid-feedback">
+          <div *ngIf="vhdlControls.entityName.errors.required">Please provide a nonempty entity name</div>
+          <div *ngIf="vhdlControls.entityName.errors.forbiddenName">Entity's name format is incorrect</div>
+          <div *ngIf="vhdlControls.entityName.errors.keywordExistence">
+            Name of entity cannot be a reserved word from SystemVerilog, Verilog or VHDL
+          </div>
+        </div>
+        <label>Architecture Name:</label>
+        <input [ngClass]="{'is-invalid': vhdlFormSubmitted && vhdlControls.architectureName.errors}"
+               class="form-control" formControlName="architectureName"
+               type="search">
+        <div *ngIf="vhdlFormSubmitted && vhdlControls.architectureName.errors" class="invalid-feedback">
+          <div *ngIf="vhdlControls.architectureName.errors.required">Please provide a nonempty architecture name</div>
+          <div *ngIf="vhdlControls.architectureName.errors.forbiddenName">Architecture's name format is incorrect</div>
+          <div *ngIf="vhdlControls.architectureName.errors.keywordExistence">
+            Name of architecture cannot be a reserved word from SystemVerilog, Verilog or VHDL
+          </div>
+        </div>
+        <label>Number of processes:</label>
+        <select (change)="changeProcessesValue($event)" class="custom-select mb-3"
+                formControlName="processesNumber">
+          <option value="">Choose number of processes...</option>
+          <option *ngFor="let process of processes" [ngValue]="process">{{process}}</option>
+        </select>
+        <div *ngIf="vhdlFormSubmitted && processesNumber?.invalid" class="invalid-feedback">
+          <sup>*</sup>Please choose one of the available process options
+        </div>
+      </div>
+      <div class="form-group" style="height: 30px;">
+        <button class="submit-button" color="primary" mat-button mat-raised-button>Submit</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="code-gen-form" id="system-verilog-code-gen-form">
+  <div class="code-gen-form-content">
+    <div style="text-align: right;">
+      <button (click)="closeGenerateSystemVerilogCodeForm()" aria-label="close dialog" mat-icon-button>
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <h3>{{systemVerilogHeader}}</h3>
+    <form (ngSubmit)="submitSystemVerilogFormData()" *ngIf="systemVerilogSubmitForm"
+          [formGroup]="systemVerilogSubmitForm">
+      <div class="form-group">
+        <label>Module Name:</label>
+        <input [ngClass]="{'is-invalid': systemVerilogFormSubmitted && systemVerilogControls.moduleName.errors}"
+               class="form-control" formControlName="moduleName" type="search">
+        <div *ngIf="systemVerilogFormSubmitted && systemVerilogControls.moduleName.errors" class="invalid-feedback">
+          <div *ngIf="systemVerilogControls.moduleName.errors.required">Please provide a nonempty module name</div>
+          <div *ngIf="systemVerilogControls.moduleName.errors.forbiddenName">Module's name format is incorrect</div>
+          <div *ngIf="systemVerilogControls.moduleName.errors.keywordExistence">
+            Name of module cannot be a reserved word from SystemVerilog, Verilog or VHDL
+          </div>
+        </div>
+        <label>State Encoding:</label>
+        <select (change)="changeStateEncodingValue($event)" class="custom-select mb-3" formControlName="stateEncoding">
+          <option value="">Choose state encoding...</option>
+          <option *ngFor="let encoding of encodings" [ngValue]="encoding">{{encoding}}</option>
+        </select>
+        <div *ngIf="systemVerilogFormSubmitted && stateEncoding?.invalid" class="invalid-feedback">
+          <sup>*</sup>Please choose one of the available state encodings
+        </div>
+        <label *ngIf="chosenStateEncoding=='Hamming distance'">Hamming distance:</label>
+        <input *ngIf="chosenStateEncoding=='Hamming distance'"
+               [ngClass]="{'is-invalid': systemVerilogFormSubmitted && systemVerilogControls.hammingDistance.errors}"
+               class="form-control"
+               formControlName="hammingDistance"
+               type="search">
+        <div *ngIf="chosenStateEncoding=='Hamming distance' && systemVerilogFormSubmitted &&
+        systemVerilogControls.hammingDistance.errors" class="invalid-feedback">
+          <div *ngIf="systemVerilogControls.hammingDistance.errors.required">
+            Please provide an integer value between 1 and 4
+          </div>
+          <div *ngIf="systemVerilogControls.hammingDistance.errors.forbiddenDistance">
+            Value must be between 1 and 4
+          </div>
+        </div>
+        <label>Number of always blocks:</label>
+        <select (change)="changeAlwaysBlocksValue($event)" class="custom-select mb-3"
+                formControlName="alwaysBlocksNumber">
+          <option value="">Choose number of always blocks...</option>
+          <option *ngFor="let alwaysBlock of alwaysBlocks" [ngValue]="alwaysBlock">{{alwaysBlock}}</option>
+        </select>
+        <div *ngIf="systemVerilogFormSubmitted && alwaysBlocksNumber?.invalid" class="invalid-feedback">
+          <sup>*</sup>Please choose one of the available always block options
+        </div>
+      </div>
+      <div class="form-group" style="height: 30px;">
+        <button class="submit-button" color="primary" mat-button mat-raised-button>Submit</button>
+      </div>
+    </form>
+  </div>
+</div>

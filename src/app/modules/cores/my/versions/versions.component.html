@@ -1,0 +1,83 @@
+<mat-progress-bar *ngIf="loadingState || versionsLoadingState || coreVersions == undefined; else infoBlock"
+                  mode="indeterminate"></mat-progress-bar>
+<ng-template #infoBlock>
+  <div class="container">
+    <div style="
+    display: flex;
+    align-items: center;
+    justify-content: space-between;">
+      <h3 class="mt-3 mb-3 d-flex">
+        <button [routerLink]="['/cores/my']" mat-icon-button routerLinkActive="active">
+          <mat-icon>navigate_before</mat-icon>
+        </button>
+        IP core '{{core.name}}' versions
+      </h3>
+      <button (click)="openNewVersionDialog()"
+              [disabled]="core.organization != null && !authenticationService.haveOwnerPermission" aria-label="Create"
+              class="create-button" color="primary"
+              mat-flat-button>
+        <mat-icon>add</mat-icon>
+        Create new version
+      </button>
+    </div>
+    <mat-table [dataSource]="coreVersions.content">
+      <ng-container matColumnDef="active">
+        <mat-header-cell *matHeaderCellDef mat-header-cell>Visible</mat-header-cell>
+        <mat-cell *matCellDef="let coreVersion" mat-cell>
+          <mat-icon>{{coreVersion.active ? 'visibility' : 'visibility_off'}}</mat-icon>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="version_number">
+        <mat-header-cell *matHeaderCellDef mat-header-cell> Version number</mat-header-cell>
+        <mat-cell *matCellDef="let coreVersion" mat-cell> {{coreVersion.version_number}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="created">
+        <mat-header-cell *matHeaderCellDef mat-header-cell> Created at</mat-header-cell>
+        <mat-cell *matCellDef="let coreVersion"
+                  mat-cell> {{coreVersion.created | date: "dd/MM/yyyy, HH:mm:ss" }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="last_modified">
+        <mat-header-cell *matHeaderCellDef mat-header-cell> Last modified at</mat-header-cell>
+        <mat-cell *matCellDef="let coreVersion"
+                  mat-cell> {{coreVersion.last_modified | date: "dd/MM/yyyy, HH:mm:ss" }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="usage_count">
+        <mat-header-cell *matHeaderCellDef mat-header-cell> Usages</mat-header-cell>
+        <mat-cell *matCellDef="let coreVersion"
+                  mat-cell> {{coreVersion.usage_count}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef mat-header-cell></mat-header-cell>
+        <mat-cell *matCellDef="let coreVersion" class="table-actions" mat-cell>
+          <button (click)="openDeleteVersionDialog(coreVersion)"
+                  [disabled]="coreVersion.usage_count > 0 || (core.organization != null && !authenticationService.haveOwnerPermission)"
+                  color="primary"
+                  mat-raised-button>Delete
+          </button>
+          <button (click)="openEditVersionDialog(coreVersion)"
+                  [disabled]="core.organization != null && !authenticationService.haveOwnerPermission" color="primary"
+                  mat-raised-button>Edit
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <mat-paginator (page)="pageChange($event)"
+                   [length]="this.coreVersions.totalElements"
+                   [pageIndex]="pageIndex"
+                   [pageSizeOptions]="pageSizeOptions"
+                   [pageSize]="pageSize"
+                   aria-label="Select page">
+    </mat-paginator>
+
+  </div>
+
+</ng-template>

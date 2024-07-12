@@ -1,0 +1,22 @@
+<div id="collaboratorsList" [ngStyle]="{'z-index': zIndex, 'display': 'none'}">
+  <div class="list-container" [ngClass]="expanded ? 'shown' : 'hidden'">
+    <ul>
+      <li *ngFor="let collaborator of collaborators.values()">
+        <p [ngStyle]="{'border-left-color': collaborator.color}">
+          {{collaborator.name + ((collaborator.count > 1) ? " (" + collaborator.count.toString() + " " + multipleConnectionsWord + ")" : "")}}
+        </p>
+      </li>
+      <li class="empty" *ngIf="collaborators.size <= 0">
+        <p>There's no one here!</p>
+      </li>
+    </ul>
+  </div>
+
+
+  <button mat-mini-fab (click)="toggleVisibility()">
+    <mat-icon matBadge="{{collaborators.size}}"
+              matBadgeColor="warn" [matBadgeHidden]="collaborators.size <= 0"
+              matBadgeSize="small">group
+    </mat-icon>
+  </button>
+</div>

@@ -1,0 +1,50 @@
+<div class="wrapper">
+  <div class="header">
+    <h1 class="mat-h1">Classroom settings</h1>
+    <button [mat-dialog-close] class="icon-button" matTooltip="Close">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <hr>
+
+  <div class="content">
+    <div>
+      <span class="form-field-wrapper">
+        <mat-form-field>
+          <mat-label>Classroom name</mat-label>
+          <input #classnameInput="matInput" [value]="data.name" disabled matInput>
+        </mat-form-field>
+        <button #editNameButton (click)="editClassroomName()" class="icon-button">
+          <mat-icon>{{nameState}}</mat-icon>
+        </button>
+      </span>
+
+      <span class="form-field-wrapper">
+        <mat-form-field>
+          <mat-label>Classroom slug</mat-label>
+          <input #slugInput="matInput" [value]="data.slug" disabled matInput>
+        </mat-form-field>
+        <button #editSlugButton (click)="editClassroomSlug()" class="icon-button">
+          <mat-icon>{{slugState}}</mat-icon>
+        </button>
+      </span>
+    </div>
+
+    <div style="border-left: 1px solid #ccc"></div>
+
+    <div class="option-buttons">
+      <button (click)="changePassword()" color="primary" mat-flat-button>
+        <mat-icon>lock</mat-icon>
+        Change classroom password
+      </button>
+      <button (click)="openAddTeachersDialog()" color="primary" mat-flat-button>
+        <mat-icon>share</mat-icon>&nbsp;Share your classroom
+      </button>
+      <button (click)="lockClassroom()" *ngIf="!data.locked" color="primary" mat-flat-button>
+        <mat-icon>lock</mat-icon>&nbsp;Lock classroom
+      </button>
+    </div>
+  </div>
+
+</div>

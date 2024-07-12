@@ -1,0 +1,31 @@
+* {
+    color: white;
+}
+
+.select-file {
+    &-horizontal-flex {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
+hr {
+    background-color: darkgray;
+}
+
+h1 {
+    margin: 0;
+}
+
+#closeButton {
+    background-color: transparent;
+    box-shadow: none;
+    transition: background-color ease 0.3s;
+}
+
+#closeButton:hover {
+    background-color: darkgray;
+}

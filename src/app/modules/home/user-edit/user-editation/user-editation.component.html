@@ -1,0 +1,110 @@
+<div class="container">
+  <div class="row mb-3">
+    <div class="col-sm-8">
+      <h2>Account settings</h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+      <div *ngIf="success" class="alert alert-success">{{ success }}</div>
+      <div class="text-secondary mb-2">Your basic information</div>
+      <form [formGroup]="editForm" (ngSubmit)="onSubmit('basicInformation')">
+        <div class="form-group">
+          <label class="col-form-label-sm">First name</label>
+          <input type="text" formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submittedInformation && f.firstName.errors }" />
+          <div *ngIf="submittedInformation && f.firstName.errors" class="invalid-feedback">
+            <div *ngIf="f.firstName.errors.required">First name is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-form-label-sm">Last name</label>
+          <input type="text" formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submittedInformation && f.lastName.errors }" />
+          <div *ngIf="submittedInformation && f.lastName.errors" class="invalid-feedback">
+            <div *ngIf="f.lastName.errors.required">Last name is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-form-label-sm">Email</label>
+          <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submittedInformation && f.email.errors }" />
+          <div *ngIf="submittedInformation && f.email.errors" class="invalid-feedback">
+            <div *ngIf="f.email.errors.required">Email is required</div>
+            <div *ngIf="f.email.errors.invalidEmail">Wrong email format</div>
+          </div>
+        </div>
+        <div class="form-group button-container">
+          <button [disabled]="loading" class="btn btn-primary">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
+            Update information
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div class="col-md-4">
+      <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+      <div *ngIf="success" class="alert alert-success">{{ success }}</div>
+      <div class="text-secondary mb-2">Change your password</div>
+      <form [formGroup]="changePasswordForm" (ngSubmit)="onSubmit('changePassword')">
+        <div class="form-group">
+          <label class="col-form-label-sm">Old password</label>
+          <input type="password" formControlName="oldPassword" class="form-control" [ngClass]="{ 'is-invalid': submittedPassword && p.oldPassword.errors }" />
+          <div *ngIf="submittedPassword && p.oldPassword.errors" class="invalid-feedback">
+            <div *ngIf="p.oldPassword.errors.required">Password incorrect</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-form-label-sm">New password</label>
+          <input type="password" formControlName="newPassword" class="form-control" [ngClass]="{ 'is-invalid': submittedPassword && p.newPassword.errors }" />
+          <div *ngIf="submittedPassword && p.newPassword.errors" class="invalid-feedback">
+            <div *ngIf="p.newPassword.errors.required">Password incorrect</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-form-label-sm">New password again</label>
+          <input type="password" formControlName="newPasswordAgain" class="form-control" [ngClass]="{ 'is-invalid': submittedPassword && p.newPasswordAgain.errors }" />
+          <div *ngIf="submittedPassword && p.newPasswordAgain.errors" class="invalid-feedback">
+            <div *ngIf="p.newPasswordAgain.errors.required">Password incorrect</div>
+            <div *ngIf="p.newPasswordAgain.errors.no_match">Password not matching</div>
+          </div>
+        </div>
+        <div class="form-group button-container">
+          <button [disabled]="loading" class="btn btn-primary">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Change your password
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div class="col-md-4">
+      <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+      <div *ngIf="success" class="alert alert-success">{{ success }}</div>
+      <div class="text-secondary mb-2">Account operations</div>
+      <form [formGroup]="operationsForm">
+        <div class="form-group button-container">
+          <button [disabled]="loading" class="btn btn-outline-danger" (click)="onSubmit('deleteAccount')">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Delete your account
+          </button>
+        </div>
+        <div>
+          <div class="text-secondary mb-2">Organization operations</div>
+          <div class="form-group button-container">
+            <button [disabled]="loading" class="btn btn-outline-danger" (click)="onSubmit('leaveOrganization')">
+              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+              Leave your organization
+            </button>
+          </div>
+          <div class="form-group button-container">
+            <button [disabled]="loading" class="btn btn-outline-danger" (click)="onSubmit('deleteOrganization')">
+              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+              Delete your organization
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,142 @@
+.forum {
+  &-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 30px;
+  }
+
+  &-header {
+    flex: 0 0 100%;
+    text-align: center;
+  }
+
+  &-buttons {
+    margin-bottom: 10px;
+  }
+
+  &-loadingcard {
+    opacity: 0.5;
+    transition: ease opacity 0.5s;
+  }
+
+  &-card {
+    opacity: 1;
+    transition: ease opacity 0.5s;
+  }
+}
+
+quill-editor {
+  .ql-toolbar {
+    border-top-right-radius: 7px;
+    border-top-left-radius: 7px;
+    background-color: #3f51b5;
+  }
+
+  .ql-container {
+    border-bottom-right-radius: 7px;
+    border-bottom-left-radius: 7px;
+  }
+
+  .ql-formats {
+    background-color: white;
+    border-radius: 3px;
+
+    button {
+      border-right: 1px solid #aaa;
+    }
+
+    button:last-child {
+      border-right: none;
+    }
+  }
+}
+
+.thread {
+  &-card,
+  &-reply {
+    width: 100%;
+    border-radius: 20px;
+    background-color: #f4f4f4;
+    color: #555;
+    padding: 1rem 2rem;
+  }
+
+  &-card {
+    margin-bottom: 3rem;
+    position: relative;
+  }
+
+  &-edit-btn {
+    padding: 0.3rem;
+    color: white;
+    cursor: pointer;
+    width: 1.75rem;
+    height: 1.75rem;
+    position: absolute;
+    right: -1rem;
+    top: calc(50% + 2px);
+    border-radius: 100%;
+    background-color: rgb(235, 196, 0);
+
+    mat-icon {
+      transform-origin: 0 0;
+      transform: scale(0.75);
+    }
+  }
+
+  &-delete-btn {
+    padding: 0.3rem;
+    color: white;
+    cursor: pointer;
+    width: 1.75rem;
+    height: 1.75rem;
+    position: absolute;
+    right: -1rem;
+    top: calc(50% - (2rem + 2px));
+    border-radius: 100%;
+    background-color: rgb(225, 10, 10);
+
+    mat-icon {
+      transform-origin: 0 0;
+      transform: scale(0.75);
+    }
+  }
+
+  &-reply {
+    margin-bottom: 2rem;
+    position: relative;
+  }
+
+  &-autor {
+    font-size: 1.15rem;
+    font-weight: bold;
+  }
+
+  &-username {
+    font-size: 1rem;
+  }
+
+  &-title {
+    font-weight: bold;
+    width: fit-content;
+    transform-origin: 0% 50%;
+    margin-top: 16px;
+  }
+
+  &-message {
+    width: 100%;
+    color: #666;
+    font-size: 0.85rem;
+    line-height: 1.1rem;
+
+    pre {
+      border: 1px solid #aaa;
+      background-color: white;
+      padding: 0.25rem 0.5rem;
+    }
+  }
+}
+
+button[mat-flat-button]:hover {
+  background-color: #3949a1;
+}

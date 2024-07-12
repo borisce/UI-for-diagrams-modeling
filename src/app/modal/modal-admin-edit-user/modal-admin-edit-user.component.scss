@@ -1,0 +1,152 @@
+.dialog {
+    .switch-role {
+      cursor: pointer;
+      color: black;
+      font-weight: bold;
+    }
+
+  .rm-role {
+    cursor: pointer;
+  }
+    width: 700px;
+    height: auto;
+    &-header {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+
+        h1 {
+            margin: 5px 0px 0px 10px !important;
+        }
+    }
+    mat-list-option {
+        ::ng-deep .mat-list-text{
+            width: 100%;
+            display: -webkit-box;
+            padding-right: 0 !important;
+        }
+
+        .name {
+            text-align: left;
+            width: 50%;
+        }
+
+        .from {
+            color: #3f51b5;
+            text-align: right;
+            width: 50%;
+        }
+    }
+
+    mat-list-item {
+        padding-top: 10px;
+
+        ::ng-deep .mat-list-item-content {
+            width: 100%;
+            display: -webkit-box;
+        }
+
+        .name {
+            text-align: left;
+            width: 50%;
+        }
+
+        .status {
+            display: flex;
+            justify-content: end;
+
+            .desc {
+                margin-right: 10px;
+            }
+        }
+
+        .from {
+            color: #3f51b5;
+            text-align: right;
+            width: 50%;
+
+            .form-control {
+                color: #3f51b5;
+                text-align: right;
+            }
+        }
+
+        ::ng-deep .mat-form-field-infix {
+            padding: 0px !important;
+            width: 100px;
+            text-align: end;
+        }
+
+        ::ng-deep .mat-form-field-type-mat-native-select .mat-input-element {
+            padding-right: 20px !important;
+        }
+
+        ::ng-deep .mat-form-field-underline {
+            display: none;
+        }
+    }
+
+    .organizationList, .teamList, .repoList, .classroomList {
+        border-left: 4px solid #3f51b5;
+        background-color: #f9f9f9;
+
+        .topItem {
+            background-color: #3f51b5;
+            color: white;
+
+            .from {
+                color: white;
+            }
+        }
+    }
+
+    .organizationList, .teamListParent, .repoListParent, .classroomListParent {
+        padding-top: 0px !important;
+    }
+
+    .organizationList {
+        mat-list-item {
+            padding-top: 15px;
+        }
+    }
+
+    .teamList, .repoList, .classroomList {
+        margin-bottom: 15px;
+
+        mat-list-item {
+            padding-top: 15px;
+        }
+    }
+
+    mat-expansion-panel-header {
+        padding: 0 15px;
+    }
+
+    mat-panel-description {
+        justify-content: end;
+    }
+
+    mat-expansion-panel {
+        box-shadow: none;
+
+        mat-list-item {
+            ::ng-deep .mat-list-item-content {
+                justify-content: space-between;
+            }
+        }
+    }
+
+    mat-expansion-panel:last-child {
+        margin-bottom: 15px;
+    }
+
+    h3 {
+        font-size: 18px;
+        margin: 5px 0px 10px 10px !important;
+    }
+
+    .action {
+        width: 150px;
+    }
+
+}

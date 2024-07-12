@@ -1,0 +1,58 @@
+<div class="forum-wrapper">
+	<div class="w-100 d-flex justify-content-end">
+		<button mat-flat-button color="primary" (click)="redirect('forum/thread/create')">
+			<mat-icon>add</mat-icon> Create new thread
+		</button>
+	</div>
+	<div class="forum-header d-flex flex-wrap justify-content-center">
+		<h1 class="w-100 d-block forum-page-title">Forum</h1>
+		<div style="min-width: 380px;" class="w-50 d-flex">
+			<div class="mr-3 search-input-wrapper">
+				<mat-form-field>
+					<mat-label>Search</mat-label>
+					<input matInput type="text" autocomplete="off" fxFlex="100" />
+				</mat-form-field>
+			</div>
+			<div>
+				<mat-form-field>
+					<mat-label>Order by</mat-label>
+					<mat-select value="selected">
+						<mat-option value="empty">Date</mat-option>
+						<mat-option value="default">Votes</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="forum-left-bar">
+
+		</div>
+
+		<div class="forum-main-content">
+			<div class="forum-container mt-4">
+				<!-- Spinner for loading threads -->
+				<div *ngIf="loadingState" class="w-100 d-flex justify-content-center">
+					<mat-spinner></mat-spinner>
+				</div>
+
+				<!-- Individual threads -->
+				<div class="thread-card" *ngFor="let thread of threads">
+					<h5 class="thread-autor mb-0">{{thread.user.firstName}} {{thread.user.lastName}}</h5>
+					<p class="mb-0">@{{thread.user.username}}</p>
+					<h4 (click)="onThreadOpen(thread.uuid)" class="thread-title">{{thread.title}}</h4>
+					<p class="thread-message" [innerHTML]="thread.text"></p>
+				</div>
+				<!-- If no threads are available -->
+				<div class="w-100 d-flex justify-content-center" *ngIf="!loadingState && threads.length == 0">
+					<div class="my-repos-blank d-flex">
+						<mat-icon>error_outline</mat-icon>
+						<p class="ml-2">No threads were found!</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>

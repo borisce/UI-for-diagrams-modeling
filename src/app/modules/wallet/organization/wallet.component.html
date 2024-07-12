@@ -1,0 +1,50 @@
+<div class="wrapper">
+  <div class="members-controls">
+    <h1 class="mat-h1">Organization wallet
+      <span
+        *ngIf="!loadingState && organization != undefined && organization != null"
+        class="badge badge-light">
+        {{organization.balance | priceFormat}}
+      </span>
+    </h1>
+    <div class="members-controlsbtn">
+      <mat-paginator (page)="pageChange($event)" *ngIf="!loadingState"
+                     [length]="balanceChanges.totalElements"
+                     [pageIndex]="pageIndex"
+                     [pageSizeOptions]="pageSizeOptions"
+                     [pageSize]="pageSize"
+                     aria-label="Select page">
+      </mat-paginator>
+    </div>
+  </div>
+  <div *ngIf="authenticationService.haveOwnerPermission; else no_permissions" class="members-table">
+    <mat-table *ngIf="!loadingState" [dataSource]="balanceChanges.content">
+      <ng-container matColumnDef="amount">
+        <mat-header-cell *matHeaderCellDef mat-header-cell>Amount</mat-header-cell>
+        <mat-cell *matCellDef="let core" mat-cell> {{core.amount | priceFormat}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="created">
+        <mat-header-cell *matHeaderCellDef mat-header-cell>Created at</mat-header-cell>
+        <mat-cell *matCellDef="let core" mat-cell> {{core.created | date: "dd/MM/yyyy, HH:mm:ss"}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="created_by">
+        <mat-header-cell *matHeaderCellDef mat-header-cell>Created by</mat-header-cell>
+        <mat-cell *matCellDef="let core" mat-cell> {{core.created_by}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="description">
+        <mat-header-cell *matHeaderCellDef mat-header-cell>Description</mat-header-cell>
+        <mat-cell *matCellDef="let core" mat-cell> {{core.description}} </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </div>
+  <mat-spinner [hidden]="!loadingState || !authenticationService.haveOwnerPermission"></mat-spinner>
+  <ng-template #no_permissions>
+    You dont have permission to view this tab
+  </ng-template>
+</div>

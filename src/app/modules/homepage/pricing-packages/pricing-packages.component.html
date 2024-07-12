@@ -1,0 +1,133 @@
+<div class="container">
+  <h2 class="text-center mt-2 font-size-3 mt-5">
+    <b>ASICDE</b> Pricing
+  </h2>
+  <h4 class="text-center">
+    Choose a plan that fits you
+  </h4>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="packages-links d-flex justify-content-center align-items-center">
+        <span [ngClass]="{'mr-4': true, 'active': this.selectedPackageType == '1'}"
+              (click)="changePackageType('1')">Individual</span>
+        <span [ngClass]="{'active': this.selectedPackageType == '2'}"
+              (click)="changePackageType('2')">Business</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-md-12">
+      <p class="text-center mb-0 mt-3">
+        You will receive a <b>10%</b> discount for yearly subscription
+      </p>
+      <div class="packages-links packages-time d-flex justify-content-center align-items-center">
+        <span [ngClass]="{'mr-4': true, 'active': this.packageTimeRange == 30}"
+              (click)="changePackageTimeRange(30)">Monthly</span>
+        <span href="#" [ngClass]="{'active': this.packageTimeRange == 365}"
+              (click)="changePackageTimeRange(365)">Yearly</span>
+      </div>
+    </div>
+  </div>
+  <div class="packages-holder">
+    <div *ngFor="let packageForm of this.currentPackages, let i = index">
+      <div *ngIf="packageForm.id > 1 && packageForm.id !== 6"
+           [ngClass]="{'price-package-gradient': this.selectedPackages.indexOf(packageForm.id) !== -1}"
+           class="price-package info-box text-center" (click)="currentSelectedPackages(packageForm.id)">
+        <div class="package-head">
+          <h5 class="m-0 py-2">{{ packageForm.name }}</h5>
+        </div>
+        <div class="price-package-body h-80">
+          <h3
+            class="pt-3">{{
+              this.packageTimeRange === 30 ?
+                packageForm.price * this.numbersOfMembersMatrix[packageForm.id] :
+                (packageForm.price - (packageForm.price * 0.1)) * this.numbersOfMembersMatrix[packageForm.id]
+            }} €</h3>
+          <p
+            class="m-0 font-13">{{ this.packageTimeRange === 30 ? packageForm.price : (12) * ((packageForm.price - (packageForm.price * 0.1)) * this.numbersOfMembersMatrix[packageForm.id]) }}
+            €/per {{ this.packageTimeRange === 30 ? 'month' : 'year' }}</p>
+          <div class="d-flex justify-content-between
+        flex-column h-80">
+            <div>
+              <div *ngFor="let item of packagesFeatures[i - 1]">
+                <div class="d-flex justify-content-center align-items-center">
+                  <img src="./assets/images/check.svg" alt="Check">
+                  <p class="ml-1 mb-0 pt-1">{{ item }}</p>
+                </div>
+              </div>
+              <div *ngIf="this.selectedPackageType == '2'">
+                <p class="mt-3 mb-0 font-13">Select number of members</p>
+                <div class="d-flex justify-content-center align-items-center flex-wrap">
+                  <div [ngClass]="{'active': this.numbersOfMembersMatrix[packageForm.id] == 5}"
+                       (click)="changeNumberOfMembers(5, packageForm.id)"
+                       class="business-numbers">5
+                  </div>
+                  <div [ngClass]="{'active': this.numbersOfMembersMatrix[packageForm.id] == 10}"
+                       (click)="changeNumberOfMembers(10, packageForm.id)"
+                       class="business-numbers">10
+                  </div>
+                  <div [ngClass]="{'active': this.numbersOfMembersMatrix[packageForm.id]  == 20}"
+                       (click)="changeNumberOfMembers(20, packageForm.id)"
+                       class="business-numbers">20
+                  </div>
+                  <div [ngClass]="{'active': this.numbersOfMembersMatrix[packageForm.id] == 30}"
+                       (click)="changeNumberOfMembers(30, packageForm.id)"
+                       class="business-numbers">30
+                  </div>
+                  <div [ngClass]="{'active': this.numbersOfMembersMatrix[packageForm.id] == 40}"
+                       (click)="changeNumberOfMembers(40, packageForm.id)"
+                       class="business-numbers">40
+                  </div>
+                  <div [ngClass]="{'active': this.numbersOfMembersMatrix[packageForm.id] == 50}"
+                       (click)="changeNumberOfMembers(50, packageForm.id)"
+                       class="business-numbers">50
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-5">
+    <div class="col-md-12">
+      <div class="d-flex justify-content-center align-items-center">
+        <div *ngIf="!authenticationService.loggedIn" class="buttons">
+          <button (click)="redirect('login')" class="custom-primary-button">Login to buy packages</button>
+        </div>
+        <div *ngIf="authenticationService.loggedIn">
+          <div class="buttons">
+            <button (click)="buyPackages()" class="custom-primary-button">Buy packages</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="white-footer d-flex justify-content-center align-items-center">
+    <div class="social-links d-flex justify-content center align-items-center">
+      <a href="#">
+        <img src="./assets/images/footer/Instagram.svg" alt="Instagram">
+      </a>
+      <a href="#">
+        <img src="./assets/images/footer/LikedIn.svg" alt="LinkedIn">
+      </a>
+      <a href="#">
+        <img src="./assets/images/footer/Dribbble.svg" alt="Dribbble">
+      </a>
+    </div>
+  </div>
+  <div class="d-flex justify-content-center align-items-center black-footer">
+    <p class="m-0">Copyright</p>
+    <a (click)="authenticationService.loggedIn ? redirect('my-repos') : redirect('')"
+       class="d-flex justify-content-center align-items-center logo cursor-pointer">
+      <img src="./assets/images/logo-small.svg" class="mr-1" alt="Logo">
+      <p class="m-0 text-white font-weight-bold">ASICDE</p>
+    </a>
+    <p class="m-0">{{ currentDate() }}</p>
+  </div>
+</footer>

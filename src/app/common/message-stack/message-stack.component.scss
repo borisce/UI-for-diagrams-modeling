@@ -1,0 +1,38 @@
+.error-stack {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: auto;
+  z-index: 999999;
+
+  .error {
+    background: #f44336;
+    border-radius: 6px;
+    padding: 12px;
+    margin: 0 0 10px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition-duration: 1s;
+    position: relative;
+    left: 0;
+
+    span {
+      max-width: 400px;
+      padding-right: 12px;
+      font-family: Roboto, "Helvetica Neue", sans-serif;
+    }
+
+    button {
+      min-width: 90px;
+    }
+
+    &.hide {
+      left: -150%;
+    }
+
+    &.success {
+      background: #00ab00;
+    }
+  }
+}

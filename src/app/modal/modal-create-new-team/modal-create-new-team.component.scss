@@ -1,0 +1,11 @@
+mat-form-field {
+    display: block;
+    padding: 10px 0px;
+}
+
+.controls {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+}

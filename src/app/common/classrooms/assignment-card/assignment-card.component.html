@@ -1,0 +1,194 @@
+<div *ngIf="isTeacher; else student" matSort>
+  <table
+    *ngIf="!loading"
+    mat-table
+    [dataSource]="tableData"
+    class="assignment-card"
+  >
+    <!--- Note that these columns can be defined in any order.
+    The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Title</th>
+      <td mat-cell *matCellDef="let element">
+        <h6
+          class="assignment-card-title"
+          (click)="
+            onAssignmentInfoSelected(findAssignmentByName(element.title))
+          "
+        >
+          {{ element.title }}
+        </h6>
+      </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="created">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Created</th>
+      <td mat-cell *matCellDef="let element">
+        <div [matTooltip]="element.created | date : 'HH:mm:ss'">
+          {{ element.created | date : "d MMMM y" }}
+        </div>
+      </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="dueDate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Due date</th>
+      <td mat-cell *matCellDef="let element">
+        <div [matTooltip]="element.dueDate | date : 'HH:mm:ss'">
+          {{ element.dueDate | date : "d MMMM y" }}
+        </div>
+      </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="submitted">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Submitted</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.submitted }}
+      </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="graded">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Graded</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.graded }}
+      </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="testsDone">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>tests done</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.testsDone }}
+      </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="icon">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let element">
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="menu"
+          matTooltip="More options"
+        >
+          <mat-icon>{{ element.icon }}</mat-icon>
+        </button>
+
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="unpublish()">
+            <mat-icon>unpublished</mat-icon>Un-publish
+          </button>
+
+          <button mat-menu-item (click)="confirmAssignmentRemove(assignment)">
+            <mat-icon>delete</mat-icon>Delete
+          </button>
+        </mat-menu>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+  <mat-paginator
+    [pageSizeOptions]="[20, 40, 60]"
+    showFirstLastButtons
+    aria-label="Select page of periodic elements"
+  >
+  </mat-paginator>
+</div>
+<ng-template #student matSort>
+  <table
+    *ngIf="!loading"
+    mat-table
+    [dataSource]="tableData"
+    class="assignment-card"
+  >
+    <!--- Note that these columns can be defined in any order.
+  The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Title</th>
+      <td mat-cell *matCellDef="let element">
+        <h6
+          class="assignment-card-title"
+          (click)="onAssigmentSelected(findAssignmentByName(element.title))"
+        >
+          {{ element.title }}
+        </h6>
+      </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="created">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Created</th>
+      <td mat-cell *matCellDef="let element">
+        <div [matTooltip]="element.created | date : 'HH:mm:ss'">
+          {{ element.created | date : "d MMMM y" }}
+        </div>
+      </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="dueDate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Due date</th>
+      <td mat-cell *matCellDef="let element">
+        <div [matTooltip]="element.dueDate | date : 'HH:mm:ss'">
+          {{ element.dueDate | date : "d MMMM y" }}
+        </div>
+      </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="submitted">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Submitted</th>
+      <td mat-cell *matCellDef="let element">
+        <mat-icon
+          [style.color]="element.submitted ? 'green' : 'lightgray'"
+          [matTooltip]="element.submitted | date : 'd MMMM y - HH:mm:ss'"
+        >
+          check_circle</mat-icon
+        >
+      </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="graded">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Graded</th>
+      <td mat-cell *matCellDef="let element">
+        <mat-icon
+          [style.color]="element.graded ? 'green' : 'lightgray'"
+          [matTooltip]="element.graded | date : 'd MMMM y - HH:mm:ss'"
+        >
+          check_circle</mat-icon
+        >
+      </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="testsDone">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>tests done</th>
+      <td mat-cell *matCellDef="let element">
+        <mat-icon
+          *ngIf="element.testsDone !== null"
+          [style.color]="element.testsDone ? 'green' : 'lightgrey'"
+          >check_circle</mat-icon
+        >
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+  <mat-paginator
+    [pageSizeOptions]="[20, 40, 60]"
+    showFirstLastButtons
+    aria-label="Select page of periodic elements"
+  >
+  </mat-paginator>
+</ng-template>

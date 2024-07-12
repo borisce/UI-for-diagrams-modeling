@@ -1,0 +1,108 @@
+.about-us-background {
+  z-index: -2;
+  position: absolute;
+  top: 0;
+  right: 0;
+  //bottom: 0;
+  left: 0;
+  background: #c9d6ff;
+  background: -webkit-linear-gradient(to right, #e2e2e2, #c9d6ff);
+  background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+}
+
+.about-us-title {
+  margin-top: 8rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.contact-us-title {
+  margin-top: 4rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.about-us-card {
+  width: 85vw;
+  max-width: 800px;
+  padding: 30px;
+  margin: 0 auto 10px auto;
+  background-color: white;
+  border-radius: 10px;
+  min-height: 100px;
+  box-shadow: 0rem 0rem 3rem rgba(0, 0, 0, 0.05);
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.worked-on-project {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  background-color: transparent;
+  color: rgb(159, 179, 202);
+  font-family: Courier, monospace;
+  font-size: 20px;
+  text-align: justify;
+}
+
+.worked-on-project p {
+  flex: 1 1 50%;
+  margin: 0;
+  padding-right: 1rem;
+}
+
+.worked-on-project .title {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.button-start {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  font-size: 2rem;
+
+  button {
+    width: 200px;
+  }
+
+  // button {
+  //   border: 2px solid #2a9d8f;
+  //   background: #2a9d8f;
+  //   color: white;
+  //   border-radius: 5px;
+  //   width: 100%;
+  // }
+  // button:hover {
+  //   background: white;
+  //   color: #2a9d8f;
+  // }
+}
+
+ul {
+  list-style-type: none;
+}
+
+.check {
+  color: #3f51b5;
+  font-size: 1.25em;
+  transform: translate(0, 4px);
+  margin: 0;
+}
+
+.euro {
+  font-size: 1rem !important;
+}

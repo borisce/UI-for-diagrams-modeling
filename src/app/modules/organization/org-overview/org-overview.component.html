@@ -1,0 +1,34 @@
+<div class="wrapper">
+  <div class="overview-pane overview-leftpane">
+    <h1 class="mat-h1">Organization overview</h1>
+    <hr />
+    <div class="overview-teams">
+      <span>
+        <h4 class="mat-h4"><b>Organization name: </b>{{ organizationName }}</h4>
+      </span>
+      <span>
+        <h4 class="mat-h4"><b>Team members: </b>{{ teamMembers }}</h4>
+      </span>
+      <span>
+        <h4 class="mat-h4"><b>Available repositories: </b>{{ availableRepositories }}</h4>
+      </span>
+    </div>
+  </div>
+
+  <div class="overview-pane overview-rightpane">
+    <h1 class="mat-h1">Recent repositories</h1>
+    <hr />
+    <div class="overview-repos" *ngIf="repositories.length > 0; else noRepos">
+      <app-repo-card
+        *ngFor="let repo of repositories"
+        [repo]="repo"
+      ></app-repo-card>
+    </div>
+    <ng-template #noRepos>
+      <div class="overview-norepos">
+        <mat-icon>error_outline</mat-icon>
+        <div>No repositories found</div>
+      </div>
+    </ng-template>
+  </div>
+</div>

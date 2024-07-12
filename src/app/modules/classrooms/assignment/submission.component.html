@@ -1,0 +1,128 @@
+<div class="submission-wrapper">
+  <div class="submission-title">
+    <h3>
+      {{ assignment.name }}
+      <span>{{ assignment.created.substring(0, 10) }}</span>
+    </h3>
+    <button mat-button [mat-dialog-close]="false">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div>
+    <form [formGroup]="configureAssignment" (ngSubmit)="onSubmit()">
+      <div class="submission-body">
+        <div class="left">
+          <div *ngIf="simulationConfigurations.length">
+            <div style="display: flex; justify-content: space-between">
+              <label>Number of tests:</label>
+              <span>{{ simulationConfigurations.length }}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between">
+              <label>Test 1 answer: </label>
+              <span> {{ getTestOutput() }}</span>
+            </div>
+          </div>
+
+          <div>
+            <div style="display: flex; justify-content: space-between">
+              <label>Description:</label>
+            </div>
+
+            <hr *ngIf="simulationConfigurations.length" />
+            <div>
+              <pdf-viewer
+                *ngIf="!loadingState"
+                [src]="pdfSrc"
+                [render-text]="true"
+                [zoom]="0.53"
+                style="width: 100%; height: 400px"
+              ></pdf-viewer>
+            </div>
+
+            <ng-container *ngIf="loadingState">
+              <div style="width: 100%">No description submitted</div>
+            </ng-container>
+          </div>
+        </div>
+        <div class="submission-right">
+          <div class="submission-info">
+            <div style="display: flex; justify-content: space-between">
+              <label>Description points:</label>
+              <span> {{ points.descriptionPoints }} </span>
+            </div>
+            <div
+              style="display: flex; justify-content: space-between"
+              *ngIf="simulationConfigurations.length"
+            >
+              <label>Simulation points:</label>
+              <span> {{ points.simulationPoints }} </span>
+            </div>
+            <div style="display: flex; justify-content: space-between">
+              <label>Code points:</label>
+              <span> {{ points.codePoints }} </span>
+            </div>
+            <hr />
+
+            <div style="display: flex; justify-content: space-between">
+              <label>Total:</label>
+              <span> {{ points.total }} </span>
+            </div>
+            <div style="display: flex; justify-content: space-between">
+              <label>Deadline:</label>
+              <span>{{
+                assignment.dueDate.substring(0, 10) +
+                  ", " +
+                  assignment.dueDate.substring(11, 16)
+              }}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between">
+              <label>Teacher:</label>
+              <span>{{ assignment.createdBy }}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between">
+              <label>Edited:</label>
+              <span>{{
+                assignment.lastModified.substring(0, 10) +
+                  ", " +
+                  assignment.lastModified.substring(11, 16)
+              }}</span>
+            </div>
+          </div>
+          <div class="submission-actions-student">
+            <div class="file-upload-container">
+              <input
+                type="file"
+                class="file-upload-input"
+                (change)="onFilePicked($event)"
+              />
+              <div class="file-upload-button">
+                <mat-form-field class="submission-form-field">
+                  <mat-label for="uri">Upload description PDF:</mat-label>
+                  <input
+                    formControlName="description"
+                    matInput
+                    type="text"
+                    placeholder="Write description..."
+                  />
+                  <mat-icon matSuffix class="submission-input-icon"
+                    >file_open</mat-icon
+                  >
+                  <mat-error>Uri is required!</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <button
+              type="submit"
+              [disabled]="isOverdue()"
+              mat-flat-button
+              color="primary"
+              class="save"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

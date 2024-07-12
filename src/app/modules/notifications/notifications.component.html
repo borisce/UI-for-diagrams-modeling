@@ -1,0 +1,208 @@
+<div class="notifications">
+    <div class="notifications-wrapper">
+        <div class="notifications-menu">
+            <button mat-button [class.active]="section == 'inbox'" (click)="onChangeSection('inbox')">
+                <mat-icon>inbox</mat-icon>
+                Inbox
+                <span *ngIf="hasMsg" class="badgeMenu">{{all_invitations.length}}</span>
+            </button>
+            <button mat-button [class.active]="section == 'sent'" (click)="onChangeSection('sent')">
+                <mat-icon>send</mat-icon>
+                Sent
+                <span *ngIf="hasOutgoing" class="badgeMenu">{{outgoing_invitations.length}}</span>
+            </button>
+            <button mat-button [class.active]="section == 'deleted'" (click)="onChangeSection('deleted')">
+                <mat-icon>delete</mat-icon>
+                Deleted
+            </button>
+            <mat-divider></mat-divider>
+            <h4 class="notifications-filter">Filters</h4>
+            <button mat-button [class.active]="selectedFilter == 'pending'" (click)="onChangeFilter('pending')" 
+                style="font-size: 14px;font-weight: 400;">
+                <mat-icon style="color: rgb(255 161 2);">error</mat-icon>
+                Pending
+                <span *ngIf="hasPending" class="badgeMenu">{{pending_invitations.length}}</span>
+            </button>
+            <button mat-button [class.active]="selectedFilter == 'accepted'" (click)="onChangeFilter('accepted')" 
+                style="font-size: 14px;font-weight: 400;">
+                <mat-icon style="color: green;">check_circle</mat-icon>
+                Accepted
+                <span *ngIf="hasAccepted" class="badgeMenu">{{accepted_invitations.length}}</span>
+            </button>
+            <button mat-button [class.active]="selectedFilter == 'rejected'" (click)="onChangeFilter('rejected')" 
+                style="font-size: 14px;font-weight: 400;">
+                <mat-icon style="color: red;">cancel</mat-icon>
+                Rejected
+                <span *ngIf="hasRejected" class="badgeMenu">{{rejected_invitations.length}}</span>
+            </button>
+        </div>
+        <div class="notifications-content">
+            <!-- ALL MESSAGES -->
+            <div *ngIf="section == 'inbox'">
+                <mat-list *ngIf="hasMsg; else noMsg">
+                    <mat-list-item class="headerList">
+                        <div class="type"></div>
+                        <div class="fromOrg">Organization</div>
+                        <div class="fromName">From</div>
+                        <div class="status">Status</div>
+                        <div class="date">Date</div>
+                    </mat-list-item>
+                    <div *ngFor="let inv of all_invitations">
+                        <mat-list-item class="contentList" *ngIf="inv[1] === 'PENDING'"
+                            (click)="openSelectedInvitationDialog(inv, true, 'rec')">
+                            <div class="type">
+                                <!-- <mat-icon>business_center</mat-icon> -->
+                            </div>
+                            <div class="fromOrg">{{inv[6]}}</div>
+                            <div class="fromName">{{inv[5]}}</div>
+                            <div class="status"><span class="pending">{{inv[1]}}</span></div>
+                            <div class="date">{{inv[4]}}</div>
+                        </mat-list-item>
+                        <mat-list-item class="contentList" *ngIf="inv[1] === 'ACCEPTED'"
+                            (click)="openSelectedInvitationDialog(inv, false, 'rec')">
+                            <div class="type">
+                                <!-- <mat-icon>business_center</mat-icon> -->
+                            </div>
+                            <div class="fromOrg">{{inv[6]}}</div>
+                            <div class="fromName">{{inv[5]}}</div>
+                            <div class="status"><span class="accepted">{{inv[1]}}</span></div>
+                            <div class="date">{{inv[4]}}</div>
+                        </mat-list-item>
+                        <mat-list-item class="contentList" *ngIf="inv[1] === 'REJECTED'"
+                            (click)="openSelectedInvitationDialog(inv, false, 'rec')">
+                            <div class="type">
+                                <!-- <mat-icon>business_center</mat-icon> -->
+                            </div>
+                            <div class="fromOrg">{{inv[6]}}</div>
+                            <div class="fromName">{{inv[5]}}</div>
+                            <div class="status"><span class="rejected">{{inv[1]}}</span></div>
+                            <div class="date">{{inv[4]}}</div>
+                        </mat-list-item>
+                    </div>
+                </mat-list>
+                <ng-template #noMsg>
+                    <div class="noMsg">You have no notifications</div>
+                </ng-template>
+            </div>
+
+            <!-- SENT MESSAGES -->
+
+            <div *ngIf="section == 'sent'">
+                <mat-list *ngIf="hasOutgoing; else noOutgoing">
+                    <mat-list-item class="headerList">
+                        <div class="type"></div>
+                        <div class="fromOrg">Organization</div>
+                        <div class="fromName">To</div>
+                        <div class="status">Status</div>
+                        <div class="date">Date</div>
+                    </mat-list-item>
+                    <mat-list-item *ngFor="let inv of outgoing_invitations" class="contentList" 
+                        (click)="openSelectedInvitationDialog(inv, true, 'sent')">
+                        <div class="type">
+                            <!-- <mat-icon>business_center</mat-icon> -->
+                        </div>
+                        <div class="fromOrg">{{inv[6]}}</div>
+                        <div class="fromName">{{inv[0]}}</div>
+                        <div *ngIf="inv[1] === 'PENDING'" class="status"><span class="pending">{{inv[1]}}</span></div>
+                        <div *ngIf="inv[1] === 'ACCEPTED'" class="status"><span class="accepted">{{inv[1]}}</span></div>
+                        <div *ngIf="inv[1] === 'REJECTED'" class="status"><span class="rejected">{{inv[1]}}</span></div>
+                        <div class="date">{{inv[4]}}</div>
+                    </mat-list-item>
+                </mat-list>
+                <ng-template #noOutgoing>
+                    <div class="noMsg">You have no sent invitations</div>
+                </ng-template>
+            </div>
+
+            <!-- DELETED MESSAGES -->
+
+            <div *ngIf="section == 'deleted'">
+                <div class="noMsg">You have no deleted notifications</div>
+            </div>
+
+            <!-- PENDING MESSAGES - FILTER -->
+
+            <div *ngIf="selectedFilter == 'pending'">
+                <mat-list *ngIf="hasPending; else noPending">
+                    <mat-list-item class="headerList">
+                        <div class="type"></div>
+                        <div class="fromOrg">Organization</div>
+                        <div class="fromName">From</div>
+                        <div class="status">Status</div>
+                        <div class="date">Date</div>
+                    </mat-list-item>
+                    <div *ngFor="let inv of pending_invitations">
+                        <mat-list-item class="contentList" (click)="openSelectedInvitationDialog(inv, true, 'rec')">
+                            <div class="type">
+                                <!-- <mat-icon>business_center</mat-icon> -->
+                            </div>
+                            <div class="fromOrg">{{inv[6]}}</div>
+                            <div class="fromName">{{inv[5]}}</div>
+                            <div class="status"><span class="pending">{{inv[1]}}</span></div>
+                            <div class="date">{{inv[4]}}</div>
+                        </mat-list-item>
+                    </div>
+                </mat-list>
+                <ng-template #noPending>
+                    <div class="noMsg">You have no pending invitations</div>
+                </ng-template>
+            </div>
+
+            <!-- ACCEPTED MESSAGES - FILTER -->
+
+            <div *ngIf="selectedFilter == 'accepted'">
+                <mat-list *ngIf="hasAccepted; else noAccepted">
+                    <mat-list-item class="headerList">
+                        <div class="type"></div>
+                        <div class="fromOrg">Organization</div>
+                        <div class="fromName">From</div>
+                        <div class="status">Status</div>
+                        <div class="date">Date</div>
+                    </mat-list-item>
+                    <div *ngFor="let inv of accepted_invitations">
+                        <mat-list-item class="contentList" (click)="openSelectedInvitationDialog(inv, false, 'rec')">
+                            <div class="type">
+                                <!-- <mat-icon>business_center</mat-icon> -->
+                            </div>
+                            <div class="fromOrg">{{inv[6]}}</div>
+                            <div class="fromName">{{inv[5]}}</div>
+                            <div class="status"><span class="accepted">{{inv[1]}}</span></div>
+                            <div class="date">{{inv[4]}}</div>
+                        </mat-list-item>
+                    </div>
+                </mat-list>
+                <ng-template #noAccepted>
+                    <div class="noMsg">You have no accepted invitations</div>
+                </ng-template>
+            </div>
+
+            <!-- REJECTED MESSAGES - FILTER -->
+
+            <div *ngIf="selectedFilter == 'rejected'">
+                <mat-list *ngIf="hasRejected; else noRejected">
+                    <mat-list-item class="headerList">
+                        <div class="type"></div>
+                        <div class="fromOrg">Organization</div>
+                        <div class="fromName">From</div>
+                        <div class="status">Status</div>
+                        <div class="date">Date</div>
+                    </mat-list-item>
+                    <div *ngFor="let inv of rejected_invitations">
+                        <mat-list-item class="contentList" (click)="openSelectedInvitationDialog(inv, false, 'rec')">
+                            <div class="type">
+                                <!-- <mat-icon>business_center</mat-icon> -->
+                            </div>
+                            <div class="fromOrg">{{inv[6]}}</div>
+                            <div class="fromName">{{inv[5]}}</div>
+                            <div class="status"><span class="rejected">{{inv[1]}}</span></div>
+                            <div class="date">{{inv[4]}}</div>
+                        </mat-list-item>
+                    </div>
+                </mat-list>
+                <ng-template #noRejected>
+                    <div class="noMsg">You have no rejected invitations</div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>

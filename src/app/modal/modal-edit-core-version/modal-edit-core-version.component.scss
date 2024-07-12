@@ -1,0 +1,22 @@
+
+.version-input {
+  display: flex;
+  align-items: center;
+  width: 300px;
+
+  mat-form-field {
+    width: 50px !important;
+    text-align: center;
+  }
+
+  span {
+    margin: 0 10px;
+  }
+}
+
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0;
+}

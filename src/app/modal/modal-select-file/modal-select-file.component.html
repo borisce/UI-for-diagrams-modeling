@@ -1,0 +1,19 @@
+<div class="select-file-container">
+    <div class="select-file-horizontal-flex">
+        <h1 class="mat-h1">Select file</h1>
+        <button id="closeButton" mat-mini-fab color="transparent" matTooltip="Close" [mat-dialog-close]>
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <hr>
+    <div id="dialog-tree" style="max-height: 400px; overflow-y: scroll"></div>
+    <hr>
+    <div class="select-file-horizontal-flex">
+        <span>{{ getSelectedFile === null ? '' : getSelectedFileName }}</span>
+        <div>
+            <button mat-button [mat-dialog-close]>Cancel</button>
+            <button mat-flat-button color="primary" [disabled]="getSelectFileButtonDisabled" (click)="submit()">Select
+                file</button>
+        </div>
+    </div>
+</div>

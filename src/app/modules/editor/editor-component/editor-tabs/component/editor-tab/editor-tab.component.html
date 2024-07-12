@@ -1,0 +1,16 @@
+<div id="tab" [class.editor-panel-border-button-background]="tab.isCodeOpen()" cdkDrag>
+  <button *ngIf="tab" (click)="codeOpen()" class="tab-main-button">
+    <span class="tab-file-icon"><mat-icon [inline]="true"> insert_drive_file</mat-icon></span>
+    <span *ngIf="editorTabsService.hasTabTitleDuplication(tab)" class="tab-path">
+          {{tab.path}}/</span>
+    <span class="tab-title"> {{tab.title}}</span>
+  </button>
+  <button class="tab-close-button" (click)="closeTab()" aria-label="close tab button">
+    <mat-icon [inline]="true" class="tab-close-button-icon">clear</mat-icon>
+  </button>
+  <div id="notification" *ngIf="tab.errors!==null" [class.notification-container]="true" [class.notification-success]="tab.errors===0">
+    <span class="notification-errors">{{tab.errors}}</span>
+  </div>
+</div>
+
+

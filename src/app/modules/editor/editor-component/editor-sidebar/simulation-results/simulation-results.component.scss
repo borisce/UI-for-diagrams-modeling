@@ -1,0 +1,30 @@
+.simulation-results-sidebar{
+  h3{
+    padding: 10px 10px 0;
+  }
+  &__list{
+    overflow-y: auto;height: 80vh;
+    &__item{
+      &__name{
+        padding: 3px 10px;
+        &__time{
+          font-size: 13px;
+        }
+      }
+      &__files{
+        &__file{
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+          padding: 3px 10px;
+          &:hover{
+            background: #46484a;
+          }
+          &__name{
+            margin-left: 3px;
+          }
+        }
+      }
+    }
+  }
+}

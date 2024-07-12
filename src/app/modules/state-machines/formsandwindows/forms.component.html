@@ -1,0 +1,288 @@
+<!--Properties of a state from the diagram-->
+<div class="properties-form" id="state-properties-form">
+  <div class="properties-form-content">
+    <div style="text-align: right;">
+      <button (click)="closeStatePropertiesWindow()" aria-label="close dialog" mat-icon-button>
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <h3>State Properties</h3>
+    <form (ngSubmit)="submitStateProperties($event)" *ngIf="statePropertiesForm" [formGroup]="statePropertiesForm">
+      <div class="form-group">
+        <h5 style="text-align: center;">{{stateType}}</h5>
+        <label>State Name:</label>
+        <input
+          [ngClass]="{'is-invalid': statePropertiesFormSubmitted && statePropertiesControls.displayedStateName.errors}"
+          class="form-control" formControlName="displayedStateName" type="search"
+          value={{displayedStateName}}>
+        <div *ngIf="statePropertiesFormSubmitted && statePropertiesControls.displayedStateName.errors"
+             class="invalid-feedback">
+          <div *ngIf="statePropertiesControls.displayedStateName.errors.required">
+            Name cannot be empty
+          </div>
+          <div *ngIf="statePropertiesControls.displayedStateName.errors.forbiddenName">
+            State's name format is incorrect
+          </div>
+          <div *ngIf="statePropertiesControls.displayedStateName.errors.existence">
+            State with the given name already exists
+          </div>
+          <div *ngIf="statePropertiesControls.displayedStateName.errors.keywordExistence">
+            Name of this state cannot be a reserved word from SystemVerilog, Verilog or VHDL
+          </div>
+        </div>
+      </div>
+      <div class="form-group" style="height: 30px;">
+        <button class="submit-button" color="primary" mat-button mat-raised-button>Save</button>
+      </div>
+    </form>
+    <h4 *ngIf="stateMachineType=='Moore'">Assignments</h4>
+    <p *ngIf="errorMessage !== ''" class="alert alert-danger">
+      <strong>{{errorMessage}}</strong>
+    </p>
+    <div *ngIf="stateMachineType=='Moore'" class="container">
+      <h5 style="margin-bottom: 10px; text-align: center;">Outputs</h5>
+      <table [dataSource]="stateOutputsData" class="mat-elevation-z8" mat-table
+             style="margin-bottom: 15px">
+        <ng-container matColumnDef="name">
+          <th *matHeaderCellDef mat-header-cell style="width: 33%;"> Output Name</th>
+          <td *matCellDef="let output" mat-cell>{{output['name']}}</td>
+        </ng-container>
+        <ng-container matColumnDef="bits">
+          <th *matHeaderCellDef mat-header-cell style="width: 15%;"> Bit Size</th>
+          <td *matCellDef="let output" mat-cell>{{output['bits']}}</td>
+        </ng-container>
+        <ng-container matColumnDef="type">
+          <th *matHeaderCellDef mat-header-cell style="width: 19%;"> Type</th>
+          <td *matCellDef="let output" mat-cell>
+            <select [(ngModel)]="output['type']"
+                    class="custom-select mb-3"
+                    style="width: 90%; border-radius: 5px; border: 1px solid lightgray; margin-top: 15px;">
+              <option *ngFor="let outputType of availableAssignmentTypes" [ngValue]="outputType">{{outputType}}</option>
+            </select>
+        </ng-container>
+        <ng-container matColumnDef="value">
+          <th *matHeaderCellDef mat-header-cell style="width: 33%;"> Assign Value</th>
+          <td *matCellDef="let output" mat-cell>
+            <input [(ngModel)]="output['value']" style="width: 90%; border-radius: 5px; border: 1px solid lightgray;"
+                   type="search"
+                   value="{{output['value']}}">
+          </td>
+        </ng-container>
+        <tr *matHeaderRowDef="availableColumns, sticky: true" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: availableColumns;" mat-row></tr>
+      </table>
+      <h5 style="margin-bottom: 10px; text-align: center;">Internal Signals</h5>
+      <table *ngIf="stateMachineType=='Moore'" [dataSource]="stateSignalsData" class="mat-elevation-z8" mat-table>
+        <ng-container matColumnDef="name">
+          <th *matHeaderCellDef mat-header-cell style="width: 33%;"> Signal Name</th>
+          <td *matCellDef="let signal" mat-cell>{{signal['name']}}</td>
+        </ng-container>
+        <ng-container matColumnDef="bits">
+          <th *matHeaderCellDef mat-header-cell style="width: 15%;"> Bit Size</th>
+          <td *matCellDef="let signal" mat-cell>{{signal['bits']}}</td>
+        </ng-container>
+        <ng-container matColumnDef="type">
+          <th *matHeaderCellDef mat-header-cell style="width: 19%;"> Type</th>
+          <td *matCellDef="let signal" mat-cell>
+            <select [(ngModel)]="signal['type']"
+                    class="custom-select mb-3"
+                    style="width: 90%; border-radius: 5px; border: 1px solid lightgray; margin-top: 15px;">
+              <option *ngFor="let signalType of availableAssignmentTypes" [ngValue]="signalType">{{signalType}}</option>
+            </select>
+        </ng-container>
+        <ng-container matColumnDef="value">
+          <th *matHeaderCellDef mat-header-cell style="width: 33%;"> Assign Value</th>
+          <td *matCellDef="let signal" mat-cell>
+            <input [(ngModel)]="signal['value']" style="width: 90%; border-radius: 5px; border: 1px solid lightgray;"
+                   type="search"
+                   value="{{signal['value']}}">
+          </td>
+        </ng-container>
+        <tr *matHeaderRowDef="availableColumns, sticky: true" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: availableColumns;" mat-row></tr>
+      </table>
+    </div>
+  </div>
+</div>
+<!--Properties of a transition from the diagram-->
+<div class="properties-form" id="transition-properties-form">
+  <div class="properties-form-content">
+    <div style="text-align: right;">
+      <button (click)="closeTransitionPropertiesWindow()" aria-label="close dialog" mat-icon-button>
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <h3>Transition Properties</h3>
+    <form (ngSubmit)="submitTransitionProperties($event)" *ngIf="transitionPropertiesForm"
+          [formGroup]="transitionPropertiesForm">
+      <div class="form-group">
+        <h5 style="text-align: center;">Source State: {{sourceState}} | Target State: {{targetState}}</h5>
+        <p *ngIf="displayErrorMessage" class="alert alert-danger">
+          <strong>{{conditionErrorMessage}}</strong>
+        </p>
+        <label>Condition:</label>
+        <input class="form-control" type="search" [value]="transitionCondition" (change)="transitionCondition=$event.target.value">
+        <label>Select from inputs, outputs, internal signals and parameters:</label>
+        <div class="element-row">
+          <input #selectedElement [formControl]="myControl" [matAutocomplete]="auto" class="form-control"
+                 id="selectedInput" placeholder="Choose from available options" type="search">
+          <mat-autocomplete #auto="matAutocomplete" filter="sta">
+            <mat-option *ngFor="let element of filteredElements | async" [value]="element">{{element}}</mat-option>
+          </mat-autocomplete>
+          <button (click)="insertInputIntoEquation(selectedElement.value)" color="primary" mat-raised-button
+                  type="button">Insert To Condition
+          </button>
+        </div>
+      </div>
+      <hr>
+      <div class="form-group" style="height: 30px;">
+        <button class="submit-button" color="primary" mat-button mat-raised-button>Save</button>
+      </div>
+    </form>
+    <h4 *ngIf="stateMachineType=='Mealy'">Assignments</h4>
+    <p *ngIf="errorMessage !== ''" class="alert alert-danger">
+      <strong>{{errorMessage}}</strong>
+    </p>
+    <div *ngIf="stateMachineType=='Mealy'" class="container">
+      <h5 style="margin-bottom: 10px; text-align: center;">Outputs</h5>
+      <table [dataSource]="transitionOutputsData" class="mat-elevation-z8" mat-table
+             style="margin-bottom: 15px;">
+        <ng-container matColumnDef="name">
+          <th *matHeaderCellDef mat-header-cell style="width: 33%;"> Output Name</th>
+          <td *matCellDef="let output" mat-cell>{{output['name']}}</td>
+        </ng-container>
+        <ng-container matColumnDef="bits">
+          <th *matHeaderCellDef mat-header-cell style="width: 15%;"> Bit Size</th>
+          <td *matCellDef="let output" mat-cell>{{output['bits']}}</td>
+        </ng-container>
+        <ng-container matColumnDef="type">
+          <th *matHeaderCellDef mat-header-cell style="width: 19%;"> Type</th>
+          <td *matCellDef="let output" mat-cell>
+            <select [(ngModel)]="output['type']"
+                    class="custom-select mb-3"
+                    style="width: 90%; border-radius: 5px; border: 1px solid lightgray; margin-top: 15px;">
+              <option *ngFor="let outputType of availableAssignmentTypes" [ngValue]="outputType">{{outputType}}</option>
+            </select>
+        </ng-container>
+        <ng-container matColumnDef="value">
+          <th *matHeaderCellDef mat-header-cell style="width: 33%;"> Assign Value</th>
+          <td *matCellDef="let output" mat-cell>
+            <input [(ngModel)]="output['value']" style="width: 90%; border-radius: 5px; border: 1px solid lightgray;"
+                   type="search"
+                   value="{{output['value']}}">
+          </td>
+        </ng-container>
+        <tr *matHeaderRowDef="availableColumns, sticky: true" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: availableColumns;" mat-row></tr>
+      </table>
+      <h5 style="margin-bottom: 10px; text-align: center;">Internal Signals</h5>
+      <table *ngIf="stateMachineType=='Mealy'" [dataSource]="transitionSignalsData" class="mat-elevation-z8" mat-table>
+        <ng-container matColumnDef="name">
+          <th *matHeaderCellDef mat-header-cell style="width: 33%;"> Signal Name</th>
+          <td *matCellDef="let signal" mat-cell>{{signal['name']}}</td>
+        </ng-container>
+        <ng-container matColumnDef="bits">
+          <th *matHeaderCellDef mat-header-cell style="width: 15%;"> Bit Size</th>
+          <td *matCellDef="let signal" mat-cell>{{signal['bits']}}</td>
+        </ng-container>
+        <ng-container matColumnDef="type">
+          <th *matHeaderCellDef mat-header-cell style="width: 19%;"> Type</th>
+          <td *matCellDef="let signal" mat-cell>
+            <select [(ngModel)]="signal['type']"
+                    class="custom-select mb-3"
+                    style="width: 90%; border-radius: 5px; border: 1px solid lightgray; margin-top: 15px;">
+              <option *ngFor="let signalType of availableAssignmentTypes" [ngValue]="signalType">{{signalType}}</option>
+            </select>
+        </ng-container>
+        <ng-container matColumnDef="value">
+          <th *matHeaderCellDef mat-header-cell style="width: 33%;"> Assign Value</th>
+          <td *matCellDef="let signal" mat-cell>
+            <input [(ngModel)]="signal['value']" style="width: 90%; border-radius: 5px; border: 1px solid lightgray;"
+                   type="search"
+                   value="{{signal['value']}}">
+          </td>
+        </ng-container>
+        <tr *matHeaderRowDef="availableColumns, sticky: true" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: availableColumns;" mat-row></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="properties-form" id="saveDiagram">
+  <div class="properties-form-content">
+    <div style="text-align: right;">
+      <button (click)="onCloseSaveDiagramButtonClicked()" aria-label="close dialog" mat-icon-button>
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <h3>Save Diagram Form</h3>
+    <form (ngSubmit)="submitSaveDiagramData($event)" *ngIf="saveDiagramForm" [formGroup]="saveDiagramForm">
+      <div class="form-group">
+        <label>Filename:</label>
+        <input [ngClass]="{'is-invalid': saveDiagramFormSubmitted && saveDiagramControls.filename.errors}"
+               class="form-control" formControlName="filename"
+               type="search">
+        <div *ngIf="saveDiagramFormSubmitted && saveDiagramControls.filename.errors" class="invalid-feedback">
+          <div *ngIf="saveDiagramControls.filename.errors.required">Please provide a filename</div>
+        </div>
+      </div>
+      <div class="form-group" style="height: 30px;">
+        <button class="submit-button" color="primary" mat-button mat-raised-button>Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="properties-form" id="loadDiagram">
+  <div class="properties-form-content">
+    <div style="text-align: right;">
+      <button (click)="onCloseLoadDiagramWindowClicked()" aria-label="close dialog" mat-icon-button>
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <h3>Load Diagram Form</h3>
+    <form (ngSubmit)="submitLoadDiagramData()" *ngIf="loadDiagramForm" [formGroup]="loadDiagramForm">
+      <div class="form-group">
+        <label>File:</label>
+        <select (change)="changeXmlFileToDisplay($event)" class="custom-select mb-3" formControlName="xmlFile">
+          <option value="">Choose an xml file you want to load...</option>
+          <option *ngFor="let file of availableXmlFiles" [ngValue]="file">{{file}}</option>
+        </select>
+        <div *ngIf="loadDiagramFormSubmitted && xmlFile?.invalid" class="invalid-feedback">
+          <sup>*</sup>Please choose one of the available xml files
+        </div>
+      </div>
+      <div class="form-group" style="height: 30px;">
+        <button class="submit-button" color="primary" mat-button mat-raised-button>Submit</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="properties-form" id="generateDiagramFromCode">
+  <div class="properties-form-content">
+    <div style="text-align: right;">
+      <button (click)="onCloseGenerateDiagramFromCodeWindowClicked()" aria-label="close dialog" mat-icon-button>
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <h3>Generate Diagram from Code Form</h3>
+    <form (ngSubmit)="submitGenerateDiagramFromCodeData()" *ngIf="generateDiagramFromCodeForm"
+          [formGroup]="generateDiagramFromCodeForm">
+      <div class="form-group">
+        <label>File:</label>
+        <select (change)="changeFileToDisplay($event)" class="custom-select mb-3" formControlName="file">
+          <option value="">Choose one file you want to load...</option>
+          <option *ngFor="let file of availableSourceCodeFiles" [ngValue]="file">{{file}}</option>
+        </select>
+        <div *ngIf="generateDiagramFromCodeFormSubmitted && file?.invalid" class="invalid-feedback">
+          <sup>*</sup>Please choose one of the available files
+        </div>
+      </div>
+      <div class="form-group" style="height: 30px;">
+        <button class="submit-button" color="primary" mat-button mat-raised-button>Submit</button>
+      </div>
+    </form>
+  </div>
+</div>

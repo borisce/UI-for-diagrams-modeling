@@ -1,0 +1,65 @@
+<div>
+    <h3 mat-dialog-title>Edit block</h3>
+    <div mat-dialog-content>
+        <p>Enter a block name</p>
+        <mat-form-field class="w-full">
+            <mat-label>Block name</mat-label>
+            <input matInput [(ngModel)]="blockName" />
+        </mat-form-field>
+        <br />
+        <mat-form-field class="w-full">
+            <mat-label>Logic</mat-label>
+            <mat-select matNativeControl [(value)]="logic">
+                <mat-option value="combinational">Combinational</mat-option>
+                <mat-option value="sequential">Sequential</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <br />
+        <div>
+            <!-- Choose clock -->
+            <div *ngIf="logic === 'sequential'" style="display: flex; gap: 8px;">
+                <mat-form-field>
+                    <mat-label>Clock signal</mat-label>
+                    <mat-select matNativeControl [(value)]="sensitivityList.clockSignal">
+                        <mat-option *ngFor="let input of data.inputs.data"
+                            [value]="input.name">{{input.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Clock type</mat-label>
+                    <mat-select matNativeControl [(value)]="sensitivityList.clockEdge">
+                        <mat-option value="rising">Rising edge</mat-option>
+                        <mat-option value="falling">Falling edge</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <!-- Choose reset -->
+            <mat-form-field *ngIf="logic === 'sequential'" class="w-full">
+                <mat-label>Reset signal</mat-label>
+                <mat-select matNativeControl [(value)]="sensitivityList.resetSignal">
+                    <mat-option *ngFor="let input of data.inputs.data" [value]="input.name">{{input.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <div *ngIf="logic === 'sequential'" style="display: flex; gap: 8px;">
+                <mat-form-field>
+                    <mat-label>Reset value</mat-label>
+                    <mat-select matNativeControl [(value)]="sensitivityList.resetValue">
+                        <mat-option value="active-1">Active high</mat-option>
+                        <mat-option value="active-0">Active low</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Reset type</mat-label>
+                    <mat-select matNativeControl [(value)]="sensitivityList.resetType">
+                        <mat-option value="sync">Synchronous</mat-option>
+                        <mat-option value="async">Asynchronous</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <button mat-flat-button color="primary"
+                [mat-dialog-close]="{blockName, logic, sensitivityList}">Edit</button>
+        </div>
+    </div>

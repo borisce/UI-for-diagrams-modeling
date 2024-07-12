@@ -1,0 +1,22 @@
+<div class="wrapper">
+  <div class="dialog-header">
+    <h1 class="mat-h2">Change classroom password</h1>
+    <button [mat-dialog-close]="false" class="icon-button">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div style="border-top: 1px solid #f2f2f2; margin-top: 8px;"></div>
+
+  <form (ngSubmit)="onSubmit()" [formGroup]="passwordForm">
+    <mat-form-field>
+      <mat-label>New password</mat-label>
+      <input formControlName="newPassword" matInput type="password">
+      <mat-error *ngIf="passwordForm.controls.newPassword.errors?.required">New password is required!</mat-error>
+    </mat-form-field>
+
+    <div class="dialog-controls">
+      <button color="primary" mat-flat-button type="submit">Change password</button>
+    </div>
+  </form>
+</div>

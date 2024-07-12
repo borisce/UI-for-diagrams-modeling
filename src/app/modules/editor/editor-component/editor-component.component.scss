@@ -1,0 +1,350 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 139px);
+  & > div {
+    width: 100%;
+  }
+}
+
+.info-editor-package {
+  background-color: #4a4a4a;
+  font-size: 13px;
+  padding-left: 0.75em;
+  a {
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+      font-weight: bold;
+    }
+  }
+}
+
+.wrapper > .breadcrumb-selector {
+  display: flex;
+  flex-direction: row;
+  background-color: #757575;
+  & > .breadcrumb-item {
+    font-size: 0.9em;
+    padding: 0.75em;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    cursor: pointer;
+    &:hover {
+      color: rgba(255, 255, 255, 1);
+      text-decoration: underline;
+    }
+  }
+  & > .breadcrumb-spacer {
+    font-size: 0.9em;
+    padding: 0.75em 0;
+    color: rgba(255, 255, 255, 0.5);
+    cursor: default;
+  }
+}
+
+.wrapper > .content-area {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+}
+
+.wrapper > .content-area > .sidebar-tools {
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  height: 100%;
+  background-color: #4c4c4c;
+  & > .sidebar-button {
+    padding: 0.75em 0.75em 0.75em calc(0.75em - 3px);
+    border-left: 3px solid rgba(25, 215, 245, 0);
+    transition: border-left ease-out 100ms;
+    cursor: pointer;
+    color: white;
+    &:hover {
+      border-left: 3px solid rgba(25, 215, 245, 0.5);
+    }
+    &.selected {
+      border-left: 3px solid rgba(25, 215, 245, 1);
+    }
+  }
+}
+
+.wrapper > .content-area > .editor-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  & > .editor-area {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+  }
+  & > .editor-bottom-toolbar {
+    display: flex;
+    align-items: center;
+    font-size: 0.8em;
+    padding: 0.5em 0.75em;
+    background-color: #7b7b7b;
+    color: white;
+    gap: 0.5rem;
+    cursor: default;
+
+    mat-icon {
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    & > .editor-bottom-toolbar-right {
+      align-self: flex-end;
+    }
+  }
+}
+
+.editor-area > .sidebar-window-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 16em;
+  background-color: #313335;
+  color: white;
+  & > .sidebar-window {
+    display: none;
+    overflow: auto;
+    flex: 1;
+    &.selected {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+  &.hidden {
+    display: none;
+  }
+}
+
+.editor-area > .window {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  background-color: #1e1e1e;
+  color: white;
+  &.hidden {
+    display: none;
+  }
+}
+
+.full-height {
+  height: 100%;
+}
+
+app-editor-tile {
+  flex-grow: 1;
+  & > div {
+    height: 100%;
+    & > .editor {
+      height: 100% !important;
+    }
+  }
+}
+
+app-editor-terminal {
+  flex-grow: 1;
+}
+
+#treeparent {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.e-treeview {
+  height: 100%;
+}
+
+.e-list-parent {
+  height: 100%;
+  padding: 0 0 0 1em !important;
+}
+
+.e-treeview .e-ul {
+  padding: 0;
+}
+
+.e-list-icon.file::before {
+  font-family: "Material Icons" !important;
+  content: "\e24d";
+  color: #808080;
+}
+
+.e-list-icon.dir::before {
+  font-family: "Material Icons" !important;
+  content: "folder";
+  color: #808080;
+}
+
+.mytree > ul > .e-list-item .e-fullrow {
+  background: white;
+  color: white;
+}
+
+.e-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: between;
+  justify-content: space-between;
+  padding-right: 1rem !important;
+
+  &.e-has-child {
+    &:after {
+      display: none;
+    }
+  }
+
+  &.modified {
+    span {
+      color: #e2c078 !important;
+    }
+
+    &[data-errors] span {
+      color: #fd452d !important;
+    }
+
+    &:after {
+      content: 'M';
+      color: #e2c078;
+    }
+
+    &[data-errors]:after {
+      content: attr(data-errors) ', M';
+      color: #fd452d;
+    }
+  }
+
+  &.added {
+    span {
+      color: #4caf50 !important;
+    }
+
+    &[data-errors] span {
+      color: #fd452d !important;
+    }
+
+    &:after {
+      content: 'U';
+      color: #4caf50;
+    }
+
+    &[data-errors]:after {
+      content: attr(data-errors) ', U';
+      color: #fd452d;
+    }
+  }
+
+  .e-list-text {
+    color: white !important;
+  }
+
+}
+
+
+.e-treeview .e-fullrow {
+  border: none !important;
+}
+
+.e-treeview .e-list-item.e-active > .e-fullrow,
+.e-treeview .e-list-item.e-hover.e-active > .e-fullrow {
+  background-color: rgba(255, 255, 255, 0.25) !important;
+}
+
+.e-treeview .e-list-item.e-hover > .e-fullrow {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.e-treeview .e-list-item.e-hover > .e-text-content,
+.e-treeview .e-list-item.e-hover > .e-text-content .e-icon-collapsible,
+.e-treeview .e-list-item.e-active > .e-text-content .e-icon-collapsible,
+.e-treeview .e-icon-expandable {
+  color: white !important;
+}
+
+.e-fullrow {
+  color: rgba(41, 41, 41, 0.63) !important;
+}
+
+.e-treeview .e-list-text {
+  color: white;
+}
+
+.e-treeview .e-list-item div.e-icons.interaction {
+  color: white;
+}
+
+.e-treeview .e-icon-collapsible,
+.e-treeview .e-icon-expandable {
+  color: white;
+}
+
+.e-list-item.toCommit span.e-list-text {
+  color: lightgreen !important;
+}
+
+.e-list-item.toPush span.e-list-text {
+  color: cornflowerblue !important;
+}
+
+.e-list-item.gitPushed span.e-list-text {
+  color: white !important;
+}
+
+.e-list-item.toAdd span.e-list-text {
+  color: indianred !important;
+}
+
+.e-checkbox-wrapper,
+.e-checkbox-wrapper > * {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.e-treeview.e-fullrow-wrap .e-text-content {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+}
+
+.e-treeview .e-checkbox-wrapper + .e-list-icon {
+  padding: 0 !important;
+  margin: 1px 0 0 0 !important;
+  vertical-align: middle !important;
+  height: auto !important;
+}
+
+::ng-deep .as-split-gutter {
+  background-color: yellow !important;
+}
+
+.split-container {
+  flex-grow: 1;
+  overflow-x: hidden;
+  max-width: calc(100vw - 16em - 49px);
+  max-height: calc(100vh - 64px - 43.2px - 40px - 32px);
+}
+
+.editor_window {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-self: start;
+  align-items: stretch;
+  overflow-x: hidden;
+}
+
+h1 {
+  white-space: nowrap;
+}
+
+#split-area-config {
+  background-color: #4c4c4c;
+}

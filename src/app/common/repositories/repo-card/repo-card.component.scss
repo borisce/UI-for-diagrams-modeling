@@ -1,0 +1,113 @@
+.repocard {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  border: 1px solid rgb(200, 200, 200);
+  border-radius: 5px;
+  background-color: white;
+  transition: background-color 0.5s;
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid #ddd;
+    h1 {
+      display: inline-block;
+      font-size: 18px;
+      margin: 5px;
+      word-break: break-all;
+      overflow: hidden;
+      max-inline-size: 230px;
+      max-height: 50px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    span {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+    }
+  }
+
+  &-menu {
+    text-align: right;
+    button {
+      margin: 5px;
+      transition: background-color 0.5s;
+    }
+    button:hover {
+      background-color: lightgrey;
+    }
+  }
+
+  &-content {
+    margin: 10px auto;
+    width: 90%;
+    height: 90px;
+  }
+
+  &-content p {
+    display: -webkit-box;
+    display: -moz-box;
+    overflow: hidden;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    text-align: justify;
+  }
+
+  &-footer,
+  &-footer a {
+    color: darkgray;
+    margin: 15px;
+
+    mat-icon {
+      vertical-align: bottom;
+      color: darkgray;
+    }
+  }
+
+  &-chipactive, &-chiparchived, &-chipteamrepo, &-chiporgrepo, &-chipuserrepo {
+    display: inline-block;
+    font-size: 14px;
+    padding: 5px 10px;
+    border-radius: 15px;
+    margin: 8px 5px;
+    transition: ease background-color .5s, ease color .5s;
+  }
+
+  &-chipactive {
+    background-color: cornflowerblue;
+    color: whitesmoke;
+  }
+
+  &-chiparchived {
+    background-color: lightgray;
+    color: black;
+  }
+
+  &-chipteamrepo {
+    background-color: darkorange;
+    color: #1D1E1D;
+  }
+
+  &-chiporgrepo {
+    background-color: blueviolet;
+    color: #ffffff;
+  }
+
+  &-chipuserrepo {
+    background-color: limegreen;
+    color: #ffffff;
+  }
+}
+
+.repocard:hover {
+  background-color: #eee;
+  box-shadow: 3px 3px 5px 0px lightgray;
+  cursor: pointer;
+  border: 1px solid lightgray;
+}

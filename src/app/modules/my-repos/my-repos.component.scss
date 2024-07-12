@@ -1,0 +1,147 @@
+.my-repos {
+  &-wrapper {
+    position: relative;
+    padding: 30px;
+    overflow-y: auto;
+  }
+
+  &-title {
+    display: flex;
+    align-items: flex-end;
+
+    h1,
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      font-size: 30px;
+      margin-left: 20px;
+    }
+  }
+
+  &-buttons {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &-loadingcard {
+    opacity: 0.5;
+    transition: ease opacity 0.5s;
+  }
+
+  &-card {
+    opacity: 1;
+    transition: ease opacity 0.5s;
+  }
+}
+
+.tab-label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+@media only screen and (min-width: 1050px) {
+  .search-bar {
+    position: absolute;
+    right: 0px;
+    top: 1px;
+    z-index: 100;
+    width: 386px;
+  }
+}
+
+// .mat-stroked-button {
+//   position: fixed;
+//   bottom: 25px;
+//   right: 30px;
+//   height: 40px;
+//   width: 40px;
+//   min-width: auto;
+//   padding: 0px;
+//   border: 1px solid #cbcdd1 !important;
+//   background-color: white !important;
+//   z-index: 100;
+//   transition: all 0.2s ease-in-out;
+// }
+
+mat-tab-group {
+  .my-repos-container-grid {
+    display: grid;
+    grid-gap: 2em;
+    grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+
+    mat-spinner {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      z-index: 1;
+    }
+  }
+
+  .my-repos-container-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    mat-spinner {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      z-index: 1;
+    }
+  }
+
+  ::ng-deep .mat-tab-body-content {
+    padding: 10px;
+  }
+
+  ::ng-deep .mat-tab-label:hover {
+    color: #3f51b5;
+  }
+}
+
+.paginator {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  padding-right: 40px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+mat-paginator {
+  border-radius: 8px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #e0e0e0;
+}
+
+.row-button-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.view-switcher {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #d5d5d5;
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.active-view {
+  color: #4350af;
+}
+
+.inactive-view {
+  color: #666;
+}

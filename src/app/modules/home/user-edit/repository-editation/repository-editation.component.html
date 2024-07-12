@@ -1,0 +1,65 @@
+<div class="container">
+  <h2>Repository settings</h2>
+
+  <div class="settings-group">
+    <span>Name</span>
+    <form [formGroup]="editRepForm">
+      <mat-form-field class="full-width">
+        <mat-label>Name</mat-label>
+        <input matInput value="dasdas" [formControl]="newRepoName">
+      </mat-form-field>
+      <button mat-flat-button color="primary" (click)="changeRepositoryName()">Rename</button>
+    </form>
+  </div>
+
+  <div class="settings-group">
+    <span>Git URL</span>
+    <form [formGroup]="editURLForm">
+      <mat-form-field class="full-width">
+        <mat-label>Git URL</mat-label>
+        <input matInput [formControl]="newRepoUrl"
+          pattern="^(http(s?):\/\/)?(www\.)?(github\.com|gitlab\.com|bitbucket\.org)+(\/[A-Za-z0-9-_.]{1,})+\.git$">
+        <mat-hint *ngIf="isUrlInvalid" class="text-danger" allign="start">
+          URL does not match Github, Gitlab or Bitbucket repository
+        </mat-hint>
+      </mat-form-field>
+      <div class="editRepForm-button-container">
+        <button [disabled]="isUrlInvalid" mat-flat-button color="primary" (click)="changeRepositoryUrl()">
+          Change
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="settings-group">
+    <span>Sharing options</span>
+    <form [formGroup]="editForm">
+      <div class="editRepForm-button-container">
+        <button mat-stroked-button color="primary" (click)="openShareRepoDialog()">
+          <span class="material-icons mr-3"> share </span>
+          Share this repository using e-mail
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="settings-group">
+    <span>Repository operations</span>
+    <button mat-flat-button color="primary"> Disable git synchronization </button>
+  </div>
+
+  <div>
+    <span>Danger zone</span>
+    <div class="danger-group">
+      <button class="danger-button" mat-flat-button color="warn" (click)="openDeleteDialog()">
+        <mat-icon>delete</mat-icon> Delete repository
+      </button>
+      <button class="danger-button" mat-flat-button color="warn" (click)="openTransferOwnershipDialog()">
+        <mat-icon>swap_horiz</mat-icon> Transfer ownership
+      </button>
+      <button class="danger-button" mat-flat-button color="warn">
+        <mat-icon>archive</mat-icon> Archive repository
+      </button>
+    </div>
+  </div>
+</div>

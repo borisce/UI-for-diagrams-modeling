@@ -1,0 +1,102 @@
+.mat-grid-list {
+    padding-bottom: 0 !important; 
+    width: 1000px;
+    margin: 0 auto;
+}
+
+.mat-grid-tile {
+    padding-top: 550px !important; 
+}
+
+#popular {
+    height: 500px;
+    border-top: 5px solid #3f51b5;
+}
+
+.price-card {
+    border: 1px solid white;
+    border-radius: 15px;
+    padding: 20px;
+    width: 280px;
+    text-align: center;
+    display: flex; 
+    justify-content: start; 
+    flex-direction: column; 
+    flex-wrap: wrap;
+    height: 450px;
+    padding-bottom: 30px;
+}
+
+.popular-banner {
+    background-color: #3f51b5;
+    top: -15px;
+    position: absolute;
+    padding: 0 5px;
+    border: 1px solid #3f51b5;
+    border-radius: 5px;
+    color: white;
+    font-size: small;
+    left: 34%;
+}
+
+mat-card-actions {
+    margin: auto 0 0;
+}
+
+mat-card-header {
+    display: inherit;
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 15px !important;
+    padding-bottom: 15px;
+}
+
+mat-card-subtitle {
+    width: 100%;
+    margin: 0 !important;
+    .price {
+        font-size: 1.9rem !important;
+    }
+}
+
+mat-card-title {
+    width: 100%;
+    margin: 0 !important;
+    color: #3f51b5;
+    font-size: 1.5rem !important;
+    margin-bottom: 15px !important;
+}
+
+mat-card-content {
+    text-align: center;
+    margin: 0 auto;
+    mat-list {
+        mat-list-item {
+            width: 170px !important;
+            height: 36px !important;
+            ::ng-deep .mat-list-item-content {
+                justify-content: space-between !important;
+            }
+        }
+    }
+    .feature {
+        font-size: 15px !important;
+        color: #495057;
+    }
+}
+
+button {
+    border: 1px solid #2a9d8f;
+    background-color: #2a9d8f;
+    color: white;
+    border-radius: 5px;
+    width: 70%;
+}
+
+.check {
+    color: #3f51b5;
+}
+
+.euro {
+    font-size: 1rem !important;
+}

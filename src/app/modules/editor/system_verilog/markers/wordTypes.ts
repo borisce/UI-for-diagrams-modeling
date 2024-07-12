@@ -1,0 +1,26 @@
+export enum wordTypes {
+  SingleQuote = '\'',
+  DoubleDot = ':',
+  OpenBracket = '(',
+  CloseBracket = ')',
+  String = 'string',
+  Function = 'function',
+  Number = 'number',
+  Keyword = 'keyword',
+  Expresion = 'expresion',
+  LogicalExpresion = 'logicalExpresion',
+  OpenSquareBracket = '[',
+  CloseSquareBracket = ']',
+  Unknown = 'unknown',
+  Dash = ',',
+  DottedDash = ';',
+  Begin = 'begin',
+  End = 'end',
+  Variable = 'variable',
+  MultilineCommentStart = '/*',
+  MultilineCommentStop = '*/',
+  OneLineComment = '//',
+  OpenCurtlyBrackets = '{',
+  CloseCurlyBrackets = '}'
+
+}

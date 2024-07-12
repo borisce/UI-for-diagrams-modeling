@@ -1,0 +1,15 @@
+<div
+  id="fetch-and-pull-popup"
+  [ngClass]="visible ? 'visible' : 'hidden'"
+>
+  <form (ngSubmit)="onSubmit()">
+    <label>This action will overwrite all your active changes, are you sure you
+      want to continue?</label>
+    <div class="button-wrapper">
+      <button type="submit" class="btn btn-primary">Confirm</button>
+      <button type="button" class="btn btn-secondary" (click)="onClose()">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

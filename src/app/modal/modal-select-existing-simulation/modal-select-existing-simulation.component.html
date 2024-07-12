@@ -1,0 +1,21 @@
+<div class="wrapper">
+  <div class="dialog-header">
+    <h3>An existing simulation environment has been found!</h3>
+  </div>
+  <div>
+    <p>Do you want to attach to a running environment?</p>
+    <label id="environment-group-label">Select an existing environment</label>
+    <mat-radio-group aria-labelledby="environment-group-label" class="environment-radio-group"
+      [(ngModel)]="selectedEnvironment">
+      <mat-radio-button class="environment-radio-button" *ngFor="let env of environments" [value]="env.id"
+        color="primary">
+        <strong>Created by: </strong>{{env.createdBy}}, <strong>Created at: </strong>{{env.createdAt}}, <strong>State:
+        </strong>{{env.state}}
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <div class="dialog-controls">
+    <button mat-button id="no-button" [mat-dialog-close]="''">No</button>
+    <button mat-flat-button color="primary" id="yes-button" (click)="confirm()">Yes</button>
+  </div>
+</div>

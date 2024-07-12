@@ -1,0 +1,98 @@
+.wrapper {
+  height: auto;
+  overflow: hidden;
+
+  &-spinner-wrapper {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    padding: 30px;
+  }
+}
+
+.repos {
+  &-header {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 10px;
+    height: 90px;
+    border-bottom: 1px solid #dbdbdb;
+  }
+  &-menu {
+    margin: 15px 20px;
+    text-align: right;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+
+  &-menu button {
+    transition: ease background-color 0.3s;
+    margin: 0px 5px;
+    display: inline-block;
+  }
+  &-header h1 {
+    margin: 0px;
+  }
+  &-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+    margin-bottom: 30px;
+    margin-left: 10px;
+    margin-right: 10px;
+    gap: 2em;
+  }
+
+  &-content app-repo-card {
+    flex-grow: 1;
+    flex-basis: 500px;
+    margin: 5px;
+  }
+
+  &-emptyrepo {
+    flex: 1 0 500px;
+    margin: 5px;
+    height: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  &-norepos {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    height: 100%;
+    margin: 50px 0;
+    padding: 40px 0px;
+
+    mat-icon,
+    div {
+      align-self: center;
+      display: block;
+      color: #aaa;
+      font-size: 36px;
+      margin: 10px 0px;
+    }
+
+    mat-icon {
+      font-size: 24px;
+      transform: scale(2);
+    }
+  }
+}
+
+form {
+  margin: 0px 10px;
+}
+
+form mat-icon {
+  vertical-align: bottom;
+}
+
+mat-paginator {
+  border-radius: 8px;
+}

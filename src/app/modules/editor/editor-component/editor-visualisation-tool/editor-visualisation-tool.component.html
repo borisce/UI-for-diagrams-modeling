@@ -1,0 +1,167 @@
+<div [ngClass]="maximized == true ? 'visualisation-container maximized' : 'visualisation-container'" id="vis-container">
+  <div class="visualisation-topbar">
+    <div class="visualisation-topbar-left">
+    </div>
+    <div class="visualisation-topbar-center">
+
+    </div>
+    <div class="visualisation-topbar-right">
+      <button (click)="maximized = !maximized" [disabled]="!this.loadedWaveform" mat-button matTooltip="Maximize">
+        <svg class="bi bi-fullscreen" fill="currentColor" height="10" viewBox="0 0 16 16"
+             width="10" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M1.5 1a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0v-4A1.5 1.5 0 0 1 1.5 0h4a.5.5 0 0 1 0 1h-4zM10 .5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 16 1.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5zM.5 10a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 0 14.5v-4a.5.5 0 0 1 .5-.5zm15 0a.5.5 0 0 1 .5.5v4a1.5 1.5 0 0 1-1.5 1.5h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5z"/>
+        </svg>
+      </button>
+      <button (click)="helpOpened = !helpOpened"  mat-button matTooltip="Help">
+        <svg class="bi bi-fullscreen" fill="currentColor" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+             width="10px" height="10px" viewBox="0 0 973.1 973.1" xml:space="preserve">
+      <g>
+        <path d="M502.29,788.199h-47c-33.1,0-60,26.9-60,60v64.9c0,33.1,26.9,60,60,60h47c33.101,0,60-26.9,60-60v-64.9
+          C562.29,815,535.391,788.199,502.29,788.199z"/>
+        <path d="M170.89,285.8l86.7,10.8c27.5,3.4,53.6-12.4,63.5-38.3c12.5-32.7,29.9-58.5,52.2-77.3c31.601-26.6,70.9-40,117.9-40
+          c48.7,0,87.5,12.8,116.3,38.3c28.8,25.6,43.1,56.2,43.1,92.1c0,25.8-8.1,49.4-24.3,70.8c-10.5,13.6-42.8,42.2-96.7,85.9
+          c-54,43.7-89.899,83.099-107.899,118.099c-18.4,35.801-24.8,75.5-26.4,115.301c-1.399,34.1,25.8,62.5,60,62.5h49
+          c31.2,0,57-23.9,59.8-54.9c2-22.299,5.7-39.199,11.301-50.699c9.399-19.701,33.699-45.701,72.699-78.1
+          C723.59,477.8,772.79,428.4,795.891,392c23-36.3,34.6-74.8,34.6-115.5c0-73.5-31.3-138-94-193.4c-62.6-55.4-147-83.1-253-83.1
+          c-100.8,0-182.1,27.3-244.1,82c-52.8,46.6-84.9,101.8-96.2,165.5C139.69,266.1,152.39,283.5,170.89,285.8z"/>
+      </g>
+    </svg>
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="helpOpened"  id="infoPanel" class="info-panel">
+    <div class="info-content">
+
+      <div class="help-panel-row">
+        <h3>Keyboard / Mouse shortcuts</h3>
+      </div>
+
+      <div class="help-panel-row even-row">
+        <span class="key-help-desc">Scroll into the past</span>
+        <span class="key-help-comb">
+              <span class="key-group">
+                <span class="key-item">Alt</span>
+                +
+                <span class="key-item">,</span>
+              </span>
+              <span class="key-group">
+                <span class="key-item">Shift</span>
+                +
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="28" height="24" viewBox="0 0 28 24"><path style="stroke:none;fill:#aa0" d="m 14,8.5 c 1,0 2,1 2,2 v 5 c 0,1 -1,2 -2,2 -1,0 -2,-1 -2,-2 v -5 c 0,-1 1,-2 2,-2"></path><path style="stroke:#fff;fill:none" d="m 14,8 c 1,0 2,1 2,2 v 5 c 0,1 -1,2 -2,2 -1,0 -2,-1 -2,-2 v -5 c 0,-1 1,-2 2,-2 m 0,0 V 6 m 0,13 V 17 M 3,22 V 13 C 3,8 10,6 13,6 h 2 c 3,0 10,2 10,7 v 9"></path><path style="stroke:#fff;fill:none" d="m 10,4 4,-3 4,3"></path></svg>
+              </span>
+            </span>
+      </div>
+
+      <div class="help-panel-row">
+        <span class="key-help-desc">Scroll into the future</span>
+        <span class="key-help-comb">
+              <span class="key-group">
+                <span class="key-item">Alt</span>
+                +
+                <span class="key-item">.</span>
+              </span>
+              <span class="key-group">
+                <span class="key-item">Shift</span>
+                +
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="28" height="24" viewBox="0 0 28 24"><path style="stroke:none;fill:#aa0" d="m 14,8.5 c 1,0 2,1 2,2 v 5 c 0,1 -1,2 -2,2 -1,0 -2,-1 -2,-2 v -5 c 0,-1 1,-2 2,-2"></path><path style="stroke:#fff;fill:none" d="m 14,8 c 1,0 2,1 2,2 v 5 c 0,1 -1,2 -2,2 -1,0 -2,-1 -2,-2 v -5 c 0,-1 1,-2 2,-2 m 0,0 V 6 m 0,13 V 17 M 3,22 V 13 C 3,8 10,6 13,6 h 2 c 3,0 10,2 10,7 v 9"></path><path style="stroke:#fff;fill:none" d="m 10,20 4,3 4,-3"></path></svg>
+              </span>
+            </span>
+      </div>
+
+      <div class="help-panel-row even-row">
+        <span class="key-help-desc">Jump to the beginning of time</span>
+        <span class="key-help-comb">
+              <span class="key-group">
+                <span class="key-item">Alt</span>
+                +
+                <span class="key-item">[</span>
+              </span>
+            </span>
+      </div>
+
+      <div class="help-panel-row">
+        <span class="key-help-desc">Jump to the end of time</span>
+        <span class="key-help-comb">
+              <span class="key-group">
+                <span class="key-item">Alt</span>
+                +
+                <span class="key-item">]</span>
+              </span>
+            </span>
+      </div>
+
+
+      <div class="help-panel-row even-row">
+        <span class="key-help-desc">Zoom in time</span>
+        <span class="key-help-comb">
+              <span class="key-group">
+                <span class="key-item">Alt</span>
+                +
+                <span class="key-item">=</span>
+              </span>
+              <span class="key-group">
+                <span class="key-item">Ctrl</span>
+                +
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="28" height="24" viewBox="0 0 28 24"><path style="stroke:none;fill:#aa0" d="m 14,8.5 c 1,0 2,1 2,2 v 5 c 0,1 -1,2 -2,2 -1,0 -2,-1 -2,-2 v -5 c 0,-1 1,-2 2,-2"></path><path style="stroke:#fff;fill:none" d="m 14,8 c 1,0 2,1 2,2 v 5 c 0,1 -1,2 -2,2 -1,0 -2,-1 -2,-2 v -5 c 0,-1 1,-2 2,-2 m 0,0 V 6 m 0,13 V 17 M 3,22 V 13 C 3,8 10,6 13,6 h 2 c 3,0 10,2 10,7 v 9"></path><path style="stroke:#fff;fill:none" d="m 10,4 4,-3 4,3"></path></svg>
+              </span>
+            </span>
+      </div>
+
+      <div class="help-panel-row">
+        <span class="key-help-desc">Zoom out time</span>
+        <span class="key-help-comb">
+              <span class="key-group">
+                <span class="key-item">Alt</span>
+                +
+                <span class="key-item">-</span>
+              </span>
+              <span class="key-group">
+                <span class="key-item">Ctrl</span>
+                +
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="28" height="24" viewBox="0 0 28 24"><path style="stroke:none;fill:#aa0" d="m 14,8.5 c 1,0 2,1 2,2 v 5 c 0,1 -1,2 -2,2 -1,0 -2,-1 -2,-2 v -5 c 0,-1 1,-2 2,-2"></path><path style="stroke:#fff;fill:none" d="m 14,8 c 1,0 2,1 2,2 v 5 c 0,1 -1,2 -2,2 -1,0 -2,-1 -2,-2 v -5 c 0,-1 1,-2 2,-2 m 0,0 V 6 m 0,13 V 17 M 3,22 V 13 C 3,8 10,6 13,6 h 2 c 3,0 10,2 10,7 v 9"></path><path style="stroke:#fff;fill:none" d="m 10,20 4,3 4,-3"></path></svg>
+              </span>
+            </span>
+      </div>
+
+      <div class="help-panel-row even-row">
+        <span class="key-help-desc">All of time</span>
+        <span class="key-help-comb">
+              <span class="key-group">
+                <span class="key-item">Alt</span>
+                +
+                <span class="key-item">0</span>
+              </span>
+            </span>
+      </div>
+
+      <div class="help-panel-row">
+        <span class="key-help-desc">Toggle edit mode</span>
+        <span class="key-help-comb">
+              <span class="key-group">
+                <span class="key-item">Alt</span>
+                +
+                <span class="key-item">/</span>
+              </span>
+            </span>
+      </div>
+
+      <div class="help-panel-row even-row">
+        <span class="key-help-desc">Toggle help panel</span>
+        <span class="key-help-comb">
+              <span class="key-group">
+                <span class="key-item">Shift</span>
+                +
+                <span class="key-item">?</span>
+              </span>
+            </span>
+      </div>
+
+    </div>
+  </div>
+
+  <iframe frameBorder="0" height="100%"
+          id="waveformTool" src="/vcdrom/index.html">
+  </iframe>
+</div>

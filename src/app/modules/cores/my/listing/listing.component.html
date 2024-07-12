@@ -1,0 +1,84 @@
+<mat-progress-bar *ngIf="this.loadingState; else coresBlock" mode="indeterminate"></mat-progress-bar>
+<ng-template #coresBlock>
+  <div class="container">
+    <div style="
+    display: flex;
+    align-items: center;
+    justify-content: space-between;">
+      <h2 class="pt-3 pb-3">My IP cores</h2>
+      <button (click)="this.newIPCoreLinkClick()" aria-label="Create" class="create-button"
+              color="primary"
+              mat-flat-button>
+        <mat-icon>add</mat-icon>
+        Create new IP core
+      </button>
+    </div>
+    <mat-table [dataSource]="cores.content">
+
+      <ng-container matColumnDef="active">
+        <mat-header-cell *matHeaderCellDef mat-header-cell>Visible</mat-header-cell>
+        <mat-cell *matCellDef="let core" mat-cell>
+          <mat-icon>{{core.active ? 'visibility' : 'visibility_off'}}</mat-icon>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-header-cell>Name</mat-header-cell>
+        <mat-cell *matCellDef="let core" mat-cell>
+          <a [routerLink]="['/cores/' + core?.uuid]">
+            {{core.name}}
+          </a>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="version_number">
+        <mat-header-cell *matHeaderCellDef mat-header-cell>Latest version</mat-header-cell>
+        <mat-cell *matCellDef="let core" mat-cell> {{core.latest_version.version_number}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="last_modified">
+        <mat-header-cell *matHeaderCellDef mat-header-cell>Last modified at</mat-header-cell>
+        <mat-cell *matCellDef="let core" mat-cell> {{core.last_modified | date: "dd/MM/yyyy, HH:mm:ss" }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="usage_count">
+        <mat-header-cell *matHeaderCellDef mat-header-cell>Usages</mat-header-cell>
+        <mat-cell *matCellDef="let core" mat-cell>
+          {{core.usage_count}}
+          <button *ngIf="core.usage_count > 0" [routerLink]="['/cores/my', core.uuid, 'usages']" color="primary"
+                  mat-icon-button
+                  matTooltip="View all usages"
+          >
+            <mat-icon>view_list</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef mat-header-cell></mat-header-cell>
+        <mat-cell *matCellDef="let core" class="table-actions" mat-cell>
+
+          <button [routerLink]="['/cores/my', core.uuid, 'versions']" color="primary" mat-raised-button>Versions
+          </button>
+          <button [disabled]="core.organization != null && !authenticationService.haveOwnerPermission"
+                  [routerLink]="['/cores/my', core.uuid, 'edit']" color="primary"
+                  mat-raised-button>Edit
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <mat-paginator (page)="pageChange($event)"
+                   [length]="this.cores.totalElements"
+                   [pageIndex]="pageIndex"
+                   [pageSizeOptions]="pageSizeOptions"
+                   [pageSize]="pageSize"
+                   aria-label="Select page">
+    </mat-paginator>
+
+  </div>
+</ng-template>
+

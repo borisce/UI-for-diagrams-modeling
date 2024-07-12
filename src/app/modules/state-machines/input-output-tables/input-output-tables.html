@@ -1,0 +1,201 @@
+<div class="modal" id="InputTable">
+  <div class="modal-content">
+    <h1>Table of Inputs</h1>
+    <p *ngIf="displayErrorMessage" class="alert alert-danger">
+      <strong>{{errorMessage}}</strong>
+    </p>
+    <div class="container">
+      <table [dataSource]="dataInputSource" class="mat-elevation-z8" mat-table>
+        <ng-container matColumnDef="name">
+          <th *matHeaderCellDef mat-header-cell style="width: 44%;"> Name</th>
+          <td *matCellDef="let input" mat-cell>
+            <input [(ngModel)]="input['name']" style="width: 90%; border-radius: 5px; border: 1px solid lightgray;"
+                   type="search" value="{{input['name']}}">
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="bits">
+          <th *matHeaderCellDef mat-header-cell style="width: 44%;"> Bit Size</th>
+          <td *matCellDef="let input" mat-cell>
+            <input [(ngModel)]="input['bits']" style="width: 90%; border-radius: 5px; border: 1px solid lightgray;"
+                   type="search" value="{{input['bits']}}">
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+          <th *matHeaderCellDef mat-header-cell style="width: 12%; text-align: center;"> Actions</th>
+          <td *matCellDef="let input" mat-cell>
+            <div style="display: flex; align-items: center; justify-content: center;">
+              <button (click)="deleteInput(input)" color="primary" mat-flat-button>
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+        <tr *matHeaderRowDef="availableColumns, sticky: true" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: availableColumns;" mat-row></tr>
+      </table>
+      <div class="button-row">
+        <button (click)="addNewInput()" color="primary" mat-raised-button>
+          <mat-icon>plus_one</mat-icon>
+          Add Input
+        </button>
+        <button (click)="onSubmitButtonClicked()" color="primary" mat-raised-button>
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="OutputTable">
+  <div class="modal-content">
+    <h1>Table of Outputs</h1>
+    <p *ngIf="displayErrorMessage" class="alert alert-danger">
+      <strong>{{errorMessage}}</strong>
+    </p>
+    <div class="container">
+      <table [dataSource]="dataOutputSource" class="mat-elevation-z8" mat-table>
+        <ng-container matColumnDef="name">
+          <th *matHeaderCellDef mat-header-cell style="width: 44%;"> Name</th>
+          <td *matCellDef="let output" mat-cell>
+            <input [(ngModel)]="output['name']" style="width: 90%; border-radius: 5px; border: 1px solid lightgray;"
+                   type="search" value="{{output['name']}}">
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="bits">
+          <th *matHeaderCellDef mat-header-cell style="width: 44%;"> Bit Size</th>
+          <td *matCellDef="let output" mat-cell>
+            <input [(ngModel)]="output['bits']" style="width: 90%; border-radius: 5px; border: 1px solid lightgray;"
+                   type="search" value="{{output['bits']}}">
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+          <th *matHeaderCellDef mat-header-cell style="width: 12%; text-align: center;"> Actions</th>
+          <td *matCellDef="let output" mat-cell>
+            <div style="display: flex; align-items: center; justify-content: center;">
+              <button (click)="deleteOutput(output)" color="primary" mat-flat-button>
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+        <tr *matHeaderRowDef="availableColumns, sticky: true" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: availableColumns;" mat-row></tr>
+      </table>
+      <div class="button-row">
+        <button (click)="addNewOutput()" color="primary" mat-raised-button>
+          <mat-icon>plus_one</mat-icon>
+          Add Output
+        </button>
+        <button (click)="onSubmitButtonClicked()" color="primary" mat-raised-button>
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="SignalTable">
+  <div class="modal-content">
+    <h1>Table of Internal Signals</h1>
+    <p *ngIf="displayErrorMessage" class="alert alert-danger">
+      <strong>{{errorMessage}}</strong>
+    </p>
+    <div class="container">
+      <table [dataSource]="dataSignalSource" class="mat-elevation-z8" mat-table>
+        <ng-container matColumnDef="name">
+          <th *matHeaderCellDef mat-header-cell style="width: 44%;"> Name</th>
+          <td *matCellDef="let signal" mat-cell>
+            <input [(ngModel)]="signal['name']" style="width: 90%; border-radius: 5px; border: 1px solid lightgray;"
+                   type="search" value="{{signal['name']}}">
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="bits">
+          <th *matHeaderCellDef mat-header-cell style="width: 44%;"> Bit Size</th>
+          <td *matCellDef="let signal" mat-cell>
+            <input [(ngModel)]="signal['bits']" style="width: 90%; border-radius: 5px; border: 1px solid lightgray;"
+                   type="search" value="{{signal['bits']}}">
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+          <th *matHeaderCellDef mat-header-cell style="width: 12%; text-align: center;"> Actions</th>
+          <td *matCellDef="let signal" mat-cell>
+            <div style="display: flex; align-items: center; justify-content: center;">
+              <button (click)="deleteSignal(signal)" color="primary" mat-flat-button>
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+        <tr *matHeaderRowDef="availableColumns, sticky: true" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: availableColumns;" mat-row></tr>
+      </table>
+      <div class="button-row">
+        <button (click)="addNewSignal()" color="primary" mat-raised-button>
+          <mat-icon>plus_one</mat-icon>
+          Add Signal
+        </button>
+        <button (click)="onSubmitButtonClicked()" color="primary" mat-raised-button>
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="ParameterTable">
+  <div class="modal-content">
+    <h1>Table of Parameters</h1>
+    <p *ngIf="displayErrorMessage" class="alert alert-danger">
+      <strong>{{errorMessage}}</strong>
+    </p>
+    <div class="container">
+      <table [dataSource]="dataParameterSource" class="mat-elevation-z8" mat-table>
+        <ng-container matColumnDef="name">
+          <th *matHeaderCellDef mat-header-cell style="width: 30%;"> Name</th>
+          <td *matCellDef="let parameter" mat-cell>
+            <input [(ngModel)]="parameter['name']" style="width: 90%; border-radius: 5px; border: 1px solid lightgray;"
+                   type="search" value="{{parameter['name']}}">
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="type">
+          <th *matHeaderCellDef mat-header-cell style="width: 30%;"> Type</th>
+          <td *matCellDef="let parameter" mat-cell>
+            <select [(ngModel)]="parameter['type']"
+                    class="custom-select mb-3"
+                    style="width: 90%; border-radius: 5px; border: 1px solid lightgray; margin-top: 15px;">
+              <option *ngFor="let parameterType of availableParameterTypes"
+                      [ngValue]="parameterType">{{parameterType}}</option>
+            </select>
+        </ng-container>
+        <ng-container matColumnDef="value">
+          <th *matHeaderCellDef mat-header-cell style="width: 30%;"> Value</th>
+          <td *matCellDef="let parameter" mat-cell>
+            <input [(ngModel)]="parameter['value']" style="width: 90%; border-radius: 5px; border: 1px solid lightgray;"
+                   type="search"
+                   value="{{parameter['value']}}"></td>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+          <th *matHeaderCellDef mat-header-cell style="width: 10%; text-align: center;"> Actions</th>
+          <td *matCellDef="let parameter" mat-cell>
+            <div style="display: flex; align-items: center; justify-content: center;">
+              <button (click)="deleteParameter(parameter)" color="primary" mat-flat-button>
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+        <tr *matHeaderRowDef="availableParameterColumns, sticky: true" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: availableParameterColumns;" mat-row></tr>
+      </table>
+      <div class="button-row">
+        <button (click)="addNewParameter()" color="primary" mat-raised-button style="width: auto;">
+          <mat-icon>plus_one</mat-icon>
+          Add Parameter
+        </button>
+        <button (click)="onSubmitButtonClicked()" color="primary" mat-raised-button>
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

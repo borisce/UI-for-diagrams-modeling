@@ -1,0 +1,93 @@
+<div class="forum-wrapper">
+	<div class="forum-header">
+		<div class="w-100 d-flex justify-content-start mt-2">
+			<button mat-flat-button color="primary" (click)="redirect('forum')">
+				<mat-icon>chevron_left</mat-icon> Back to forum
+			</button>
+		</div>
+	</div>
+
+
+	<div class="container mt-3">
+		<div class="w-100">
+			<!-- Spinner for loading messages -->
+
+			<!-- Individual replies -->
+			<div class="thread-card">
+				<div *ngIf="loadingState" class="w-100 d-flex pt-5 pb-5 justify-content-center">
+					<mat-spinner></mat-spinner>
+				</div>
+				<div *ngIf="!loadingState">
+					<h5 class="thread-autor mb-0">{{threadFirstMessage.user.firstName}}
+						{{threadFirstMessage.user.lastName}}</h5>
+					<p class="thread-username mb-0">@{{threadFirstMessage.user.username}}</p>
+					<h4 class="thread-title">{{threadTitle}}</h4>
+					<p class="thread-message" [innerHTML]="threadFirstMessage.text"></p>
+					<div class="thread-delete-btn" (click)="onDeleteMainMessage(threadFirstMessage.uuid)">
+						<mat-icon>delete</mat-icon>
+					</div>
+					<div class="thread-edit-btn"
+						(click)="redirectToEdit('forum/edit/' + threadId + '/' + threadFirstMessage.uuid)">
+						<mat-icon>edit</mat-icon>
+					</div>
+				</div>
+			</div>
+			<div class="w-75">
+				<div class="thread-reply" *ngFor="let thread of threadReplies">
+					<h5 class="thread-autor mb-0">{{thread.user.firstName}} {{thread.user.lastName}}</h5>
+					<p class="thread-username mb-0">@{{thread.user.username}}</p>
+					<p class="thread-message mt-2" [innerHTML]="thread.text"></p>
+					<!-- <div class="thread-delete-btn"></div>
+					<div class="thread-edit-btn"></div> -->
+				</div>
+				<div *ngIf="newReplyState" class="thread-card d-flex h- justify-content-center">
+					<mat-spinner></mat-spinner>
+				</div>
+				<!-- If no threads are available -->
+				<div class="w-100 d-flex justify-content-center pb-3"
+					*ngIf="!loadingState && threadReplies.length == 0 && newReplyState == false">
+					<div class="my-repos-blank d-flex">
+						<mat-icon>error_outline</mat-icon>
+						<p class="ml-2">No replies were found!</p>
+					</div>
+				</div>
+			</div>
+
+			<div *ngIf="!loadingState">
+				<quill-editor [styles]="{height: '180px'}" [(ngModel)]="newReplyMessage">
+					<div quill-editor-toolbar>
+						<span class="ql-formats">
+							<button class="ql-bold" [title]="'Bold'"></button>
+							<button class="ql-italic" [title]="'Italic'"></button>
+							<button class="ql-underline" [title]="'Underline'"></button>
+							<button class="ql-strike" [title]="'Strike'"></button>
+						</span>
+						<span class="ql-formats">
+							<button class="ql-link" [title]="'Link'"></button>
+							<button class="ql-image" [title]="'Image'"></button>
+						</span>
+						<span class="ql-formats">
+							<button class="ql-list" value="ordered" [title]="'Ordered list'"></button>
+							<button class="ql-list" value="bullet" [title]="'Bullet list'"></button>
+							<button class="ql-code-block" [title]="'Code block'"></button>
+							<button class="ql-blockquote" [title]="'Blockqoute'"></button>
+						</span>
+					</div>
+				</quill-editor>
+				<div class="d-flex justify-content-end mt-2">
+					<button mat-flat-button color="primary" (click)="onSendReply()">Publish</button>
+				</div>
+			</div>
+
+
+			<!-- If no threads are available -->
+			<div class="w-100 d-flex justify-content-center" *ngIf="!loadingState && emptyThreadFlag">
+				<div class="my-repos-blank d-flex">
+					<mat-icon>error_outline</mat-icon>
+					<p class="ml-2">Nothing in this thread...</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>

@@ -1,0 +1,61 @@
+<h1 class="mat-h1">Add member to the team</h1>
+<mat-paginator [length]="dataItems" [pageSize]="pageSize" [pageSizeOptions]="[30, 60, 90, 120]"
+  (page)="pageEvent($event)">
+</mat-paginator>
+<div class="members-table" *ngIf="!loading">
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+    <ng-container matColumnDef="selector">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <mat-checkbox color="primary" [(ngModel)]="element.selected"></mat-checkbox>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="first_name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>First name</th>
+      <td mat-cell *matCellDef="let element">
+        <span class="avatar">{{
+          element.firstName.substring(0, 1).toUpperCase() +
+          element.lastName.substring(0, 1).toUpperCase()
+          }}</span>{{ element.firstName }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="last_name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Last name</th>
+      <td mat-cell *matCellDef="let element">{{ element.lastName }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="username">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Username</th>
+      <td mat-cell *matCellDef="let element">{{ element.username }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+      <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="role">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Role</th>
+      <td mat-cell *matCellDef="let element">
+        {{ organizationOwnerUuid == element.uuid ? "Owner" : "Member" }}
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
+<form [formGroup]="roleForm">
+  <mat-radio-group formControlName="permission">
+    <mat-radio-button value="Owner" color="primary">Admin</mat-radio-button>
+    <mat-radio-button value="Member" color="primary">Member</mat-radio-button>
+  </mat-radio-group>
+</form>
+<mat-spinner [hidden]="!loading"></mat-spinner>
+<div class="controls">
+  <button mat-button [mat-dialog-close]="false">Cancel</button>
+  <button mat-flat-button color="primary" (click)="onSubmit()">
+    Add member
+  </button>
+</div>

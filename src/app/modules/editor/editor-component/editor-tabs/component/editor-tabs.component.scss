@@ -1,0 +1,164 @@
+$panelBackgroundColor: #35393d;
+$scrollbar-color: #5897ce;
+
+.relative {
+  position: relative;
+}
+
+.synthesis-button-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#editor-tabs-container {
+  height: 80vh;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: rgba(49, 51, 53, 1);
+}
+
+#editor-panel .tab,
+.cdk-drag-preview {
+  height: 100%;
+  padding-top: 5px;
+  width: fit-content;
+  background: $panelBackgroundColor;
+  border: none;
+  border-bottom: solid 3px $panelBackgroundColor;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 0.8em;
+}
+
+#editor-panel .tab .tab-file-icon,
+.cdk-drag-preview .tab-file-icon {
+  color: white;
+  pointer-events: none;
+}
+
+#editor-panel .tab .tab-path,
+.cdk-drag-preview .tab-path {
+  margin-left: 5px;
+  margin-right: -5px;
+  pointer-events: none;
+  color: white;
+}
+
+#editor-panel .tab .tab-title,
+.cdk-drag-preview .tab-title {
+  margin-left: 5px;
+  margin-right: 5px;
+  pointer-events: none;
+  color: white;
+}
+
+#editor-panel-container {
+  height: fit-content;
+  background-color: $panelBackgroundColor;
+}
+
+#editor-panel {
+  background-color: $panelBackgroundColor;
+  box-sizing: content-box;
+  width: 100%;
+  height: 36px;
+  display: flex;
+  flex-direction: row;
+}
+
+#editor-panel-container::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+}
+
+#editor-panel .cdk-drop-list-dragging .tab:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+#editor-panel-container::-webkit-scrollbar-thumb {
+  backdrop-filter: blur(3px);
+  background: $scrollbar-color;
+}
+
+#editor-panel-container::-webkit-scrollbar-thumb:hover {
+  backdrop-filter: blur(3px);
+  background: $scrollbar-color;
+}
+
+.cdk-drag-preview .tab-close-button-icon {
+  display: none;
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drop-list-dragging::ng-deep #tab:not(.cdk-drag-placeholder) {
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.controls>button {
+  background-color: transparent;
+  color: lightgray;
+  outline: 1px solid transparent;
+  transition: ease 0.5s all;
+}
+
+.controls>button:hover {
+  filter: brightness(50%);
+}
+
+.controls {
+  margin-right: 20px;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+app-editor-visualisation-tool {
+  display: flex;
+  height: 100%;
+}
+
+app-editor-terminal,
+app-synthesis-terminal {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}
+
+#manager {
+  width: 100%;
+  height: 100%;
+}
+
+.editor-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+p>strong {
+  padding: 20px;
+  display: block;
+}
+
+p {
+  text-align: center;
+  padding: 25px 15px;
+  margin: 5px;
+}

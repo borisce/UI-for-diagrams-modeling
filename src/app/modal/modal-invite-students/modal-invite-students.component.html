@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-8 offset-sm-2">
+      <h4>Add students to the classroom</h4>
+      <form [formGroup]="inviteStudents" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <div class="input-group mb-3">
+            <input type="text" formControlName="newStudent" class="form-control" placeholder="Name or email"
+                   [ngClass]="{ 'is-invalid': submitted && f.newStudent.errors }"/>
+            <div class="input-group-append">
+              <button type="button" mat-button (click)="addStudent()">
+                <mat-icon>add_box</mat-icon>
+              </button>
+            </div>
+          </div>
+          <div *ngIf="submitted && f.newStudent.errors" class="invalid-feedback">
+            <div *ngIf="f.newStudent.errors.required">Students name or email is required!</div>
+          </div>
+          <div *ngIf="studentsToInvite.length > 0">
+            <div class="row" *ngFor="let student of studentsToInvite">
+              <div class="col-sm-10 my-auto text-break">{{ student }}</div>
+              <div class="col-sm-2">
+                <button type="button" mat-button (click)="removeStudent(student)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">
+            Invite
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="col-sm-2 close">
+      <button mat-button [mat-dialog-close]="true">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

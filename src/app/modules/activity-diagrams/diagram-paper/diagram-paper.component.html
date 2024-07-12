@@ -1,0 +1,217 @@
+<div class="grid">
+    <div style="grid-area: 'left-sidebar'; overflow: auto;">
+        <activity-diagrams-toolbox [drawingMode]="drawingMode" [isDialogOpen]="this.dialog.openDialogs.length > 0"
+            [isTableOrElementActive]="activePaperElement !== null || activePaperLink !== null || activeTable !== null"
+            (addElement)="addElement($event)" (openTable)="openTable($event)"
+            (zoomIn)="this.paperScale = this.paperScale + 0.05; this.paper.scale(this.paperScale)"
+            (zoomOut)="this.paperScale = this.paperScale - 0.05; this.paper.scale(this.paperScale)"
+            (clear)="clearPaper()" (format)="formatPaper()" (save)="saveDiagram()" (load)="loadDiagram()"
+            (changeMode)="changeDrawingMode()" (generateCode)="generateCode()" (generateDiagram)="generateDiagram()"
+            (exportImage)="exportImage()">
+        </activity-diagrams-toolbox>
+    </div>
+
+    <div id="paper-wrapper" style="grid-area: 'diagram'; margin: 4px;">
+        <div class="blockWrapper">
+            <div class="block" [ngClass]="activeBlockIndex === i ? 'blueBorder' : 'grayBorder'"
+                *ngFor="let block of blocks; index as i">
+                <button mat-button color="basic" (click)="changeActiveBlock(i)">{{block.name}}</button>
+                <button *ngIf="activeBlockIndex === i" mat-button color="basic" matTooltip="Edit" (click)="editBlock()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                        <path fill="#888888"
+                            d="m9.25 22l-.4-3.2q-.325-.125-.612-.3t-.563-.375L4.7 19.375l-2.75-4.75l2.575-1.95Q4.5 12.5 4.5 12.338v-.675q0-.163.025-.338L1.95 9.375l2.75-4.75l2.975 1.25q.275-.2.575-.375t.6-.3l.4-3.2h5.5l.4 3.2q.325.125.613.3t.562.375l2.975-1.25l2.75 4.75l-2.575 1.95q.025.175.025.338v.674q0 .163-.05.338l2.575 1.95l-2.75 4.75l-2.95-1.25q-.275.2-.575.375t-.6.3l-.4 3.2zm2.8-6.5q1.45 0 2.475-1.025T15.55 12q0-1.45-1.025-2.475T12.05 8.5q-1.475 0-2.488 1.025T8.55 12q0 1.45 1.013 2.475T12.05 15.5" />
+                    </svg>
+                </button>
+                <button *ngIf="activeBlockIndex === i && blocks.length > 1" mat-button color="basic"
+                    matTooltip="Delete block" (click)="deleteBlock()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                        <path fill="#888888"
+                            d="m9.4 16.5l2.6-2.6l2.6 2.6l1.4-1.4l-2.6-2.6L16 9.9l-1.4-1.4l-2.6 2.6l-2.6-2.6L8 9.9l2.6 2.6L8 15.1zM7 21q-.825 0-1.412-.587T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.587 1.413T17 21z" />
+                    </svg>
+                </button>
+            </div>
+            <button mat-button color="basic" matTooltip="Add new block" (click)="addNewBlock()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                    <path fill="#888888" d="M11 13H5v-2h6V5h2v6h6v2h-6v6h-2z" />
+                </svg>
+            </button>
+        </div>
+        <div id="diagram-paper"></div>
+    </div>
+
+    <div style="grid-area: 'right-sidebar'; border-left: 1px solid #888888; overflow-y: scroll;">
+        <div *ngIf="!activePaperElement && !activePaperLink && !activeTable"
+            style="display: flex; align-items: center; justify-content: center; height: 100%;">
+            <span style="font-size: small; color: #888888">Click on an element to show it's properties here</span>
+        </div>
+
+        <div *ngIf="['action', 'if', 'case', 'loop'].includes(activePaperElement?.attributes.name) && activePaperElement?.attributes.attrs.label.text !== 'Loop'"
+            class="formWrapper">
+            <h5 *ngIf="activePaperElement?.attributes.name === 'action'">Action element</h5>
+            <h5 *ngIf="activePaperElement?.attributes.name === 'if'">If element</h5>
+            <h5 *ngIf="activePaperElement?.attributes.name === 'case'">Case element</h5>
+            <h5 *ngIf="activePaperElement?.attributes.name === 'loop'">Loop element</h5>
+
+            <language-operators [moduleInputs]="moduleInputs" [moduleOutputs]="moduleOutputs"
+                [internalSignals]="internalSignals" [parameters]="parameters"
+                (operatorAdded)="activePaperElementCaption = activePaperElementCaption + $event">
+            </language-operators>
+
+            <form>
+                <mat-form-field>
+                    <mat-label *ngIf="activePaperElement?.attributes.name === 'action'">Action caption</mat-label>
+                    <mat-label *ngIf="activePaperElement?.attributes.name === 'if'">If caption</mat-label>
+                    <mat-label *ngIf="activePaperElement?.attributes.name === 'case'">Case caption</mat-label>
+                    <mat-label *ngIf="activePaperElement?.attributes.name === 'loop'">
+                        Loop caption (for example: for&#40;i=0; i&lt;5; i=i+1&#41; )
+                    </mat-label>
+
+                    <input matInput #elementCaption type="text" name="elementCaption" placeholder="Caption..."
+                        [value]="this.activePaperElementCaption">
+                </mat-form-field>
+
+                <div style="display: flex; gap: 8px;">
+                    <mat-form-field style="width: 50%;">
+                        <mat-label>Width:</mat-label>
+                        <input matInput #elementWidth type="number" name="elementWidth" placeholder="Width..."
+                            [value]="this.activePaperElement?.attributes.size.width">
+                    </mat-form-field>
+                    <mat-form-field style="width: 50%;">
+                        <mat-label>Height:</mat-label>
+                        <input matInput #elementHeight type="number" name="elementHeight" placeholder="Height..."
+                            [value]="this.activePaperElement?.attributes.size.height">
+                    </mat-form-field>
+                </div>
+
+                <button mat-flat-button color="primary"
+                    (click)="updateElementProperties(elementCaption.value, {width: elementWidth.value, height: elementHeight.value})">
+                    Confirm
+                </button>
+            </form>
+
+            <button mat-stroked-button color="warn" style="margin-top: 16px;" (click)="deleteElement()">
+                Delete element
+            </button>
+        </div>
+
+        <div *ngIf="['start', 'end', 'merge'].includes(activePaperElement?.attributes.name)" class="formWrapper">
+            <h5>
+                {{activePaperElement?.attributes.name === 'start' ? 'Start' : activePaperElement?.attributes.name
+                ==='end' ? 'End' : 'Merge'}} element
+            </h5>
+
+            <button mat-stroked-button color="warn" (click)="deleteElement()">
+                Delete element
+            </button>
+        </div>
+
+        <!-- If, loop link - they have same requirements -->
+        <div *ngIf="activePaperLink && ['if', 'loop'].includes(activePaperLinkSource) && !activePaperElement"
+            class="formWrapper">
+            <h5 *ngIf="activePaperLinkSource === 'if'">If link</h5>
+            <h5 *ngIf="activePaperLinkSource === 'loop'">Loop link</h5>
+
+            <form>
+                <mat-form-field>
+                    <mat-label *ngIf="activePaperLinkSource === 'if'">If link caption:</mat-label>
+                    <mat-label *ngIf="activePaperLinkSource === 'loop'">Loop link caption:</mat-label>
+
+                    <select #selectValue matNativeControl [(value)]="this.activePaperLinkCaption">
+                        <option value="true">True</option>
+                        <option value="false">False</option>
+                    </select>
+                </mat-form-field>
+                <button mat-flat-button color="primary"
+                    (click)="updateLinkCaption(selectValue.value, 'ifLink')">Confirm</button>
+            </form>
+        </div>
+
+        <!-- Case link -->
+        <div *ngIf="activePaperLink && activePaperLinkSource === 'case' && !activePaperElement" class="formWrapper">
+            <h5>Case link</h5>
+
+            <language-operators [moduleInputs]="moduleInputs" [moduleOutputs]="moduleOutputs"
+                [internalSignals]="internalSignals" [parameters]="parameters"
+                (operatorAdded)="activePaperLinkCaption = activePaperLinkCaption + $event">
+            </language-operators>
+
+            <form>
+                <mat-form-field>
+                    <mat-label>Case link caption:</mat-label>
+                    <input matInput #caseLinkCaption type="text" id="caseLinkCaption" name="caseLinkCaption"
+                        placeholder="Caption..." value="{{this.activePaperLinkCaption}}">
+                </mat-form-field>
+                <button mat-flat-button color="primary"
+                    (click)="updateLinkCaption(caseLinkCaption.value, 'caseLink')">Confirm</button>
+            </form>
+        </div>
+
+        <!-- Inputs, outputs, signals, parameters -->
+        <div *ngIf="activeTable" class="formWrapper">
+            <h5 style="text-transform: capitalize;">{{activeTable.name}}</h5>
+            <mat-table [dataSource]="activeTable.tableData">
+
+                <ng-container matColumnDef="name">
+                    <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        <mat-form-field floatLabel="never">
+                            <input matInput placeholder="Name..." [value]="element.name" [(ngModel)]="element.name">
+                        </mat-form-field>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="type">
+                    <mat-header-cell *matHeaderCellDef>Type</mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        <mat-form-field floatLabel="never">
+                            <mat-select *ngIf="activeTable.name === 'inputs' || activeTable.name === 'outputs'"
+                                [(value)]="element.type">
+                                <mat-option *ngFor="let type of InputOutputType | keyvalue" [value]="type.key">
+                                    {{type.value}}
+                                </mat-option>
+                            </mat-select>
+
+                            <mat-select *ngIf="activeTable.name === 'signals'" [(value)]="element.type">
+                                <mat-option *ngFor="let type of InternalSignalType | keyvalue" [value]="type.key">
+                                    {{type.value}}
+                                </mat-option>
+                            </mat-select>
+
+                            <mat-select *ngIf="activeTable.name === 'parameters'" [(value)]="element.type">
+                                <mat-option *ngFor="let type of ParameterType | keyvalue" [value]="type.key">
+                                    {{type.value}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="bits">
+                    <mat-header-cell *matHeaderCellDef>
+                        {{this.activeTable.name === 'parameters' ? 'Value' : 'Bit size'}}
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        <mat-form-field floatLabel="never">
+                            <input *ngIf="activeTable.name !== 'parameters'" matInput placeholder="Value..."
+                                [value]="element.bits" [(ngModel)]="element.bits">
+                            <input *ngIf="activeTable.name === 'parameters'" matInput placeholder="Value..."
+                                [value]="element.value" [(ngModel)]="element.value">
+                        </mat-form-field>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="formActions">
+                    <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        <button mat-icon-button (click)="deleteFromTable(element)">Delete</button>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="['name', 'bits', 'type', 'formActions']"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: ['name', 'bits', 'type', 'formActions']"></mat-row>
+            </mat-table>
+            <button mat-flat-button style="margin-top:8px" color="primary" (click)="addToTable()">Add</button>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,46 @@
+<mat-progress-bar *ngIf="this.loadingState; else coresBlock" mode="indeterminate"></mat-progress-bar>
+<ng-template #coresBlock>
+  <div class="container">
+    <h2 class="pt-3 pb-3  d-flex">
+      <button [routerLink]="['/cores/my']" mat-icon-button routerLinkActive="active">
+        <mat-icon>navigate_before</mat-icon>
+      </button>
+      IP core usages
+    </h2>
+
+    <mat-table [dataSource]="coreUsages.content">
+
+      <ng-container matColumnDef="owner">
+        <mat-header-cell *matHeaderCellDef mat-header-cell>Owner</mat-header-cell>
+        <mat-cell *matCellDef="let coreUsage" mat-cell>
+          {{coreUsage.user ? coreUsage.user.firstName + " " + coreUsage.user.lastName : coreUsage.organization.name}}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="version_number">
+        <mat-header-cell *matHeaderCellDef mat-header-cell>Active version</mat-header-cell>
+        <mat-cell *matCellDef="let coreUsage"
+                  mat-cell> {{coreUsage.active_version ? coreUsage.active_version.version_number : ""}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="up_to_major_version">
+        <mat-header-cell *matHeaderCellDef mat-header-cell> Purchased versions</mat-header-cell>
+        <mat-cell *matCellDef="let coreUsage" mat-cell>
+          {{coreUsage.up_to_major_version == 0 ? 'ALL' : coreUsage.up_to_major_version + '.*.*'}}
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <mat-paginator (page)="pageChange($event)"
+                   [length]="this.coreUsages.totalElements"
+                   [pageIndex]="pageIndex"
+                   [pageSizeOptions]="pageSizeOptions"
+                   [pageSize]="pageSize"
+                   aria-label="Select page">
+    </mat-paginator>
+  </div>
+</ng-template>
+

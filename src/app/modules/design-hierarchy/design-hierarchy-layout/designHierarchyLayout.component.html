@@ -1,0 +1,58 @@
+<div class="wrapper">
+  <div class="sidebar-tools">
+    <div (click)="redirect('editor')" class="sidebar-button" matTooltip="Editor" [matTooltipPosition]="tooltipPosition">
+      <mat-icon aria-hidden="false" aria-label="Project explorer">folder</mat-icon>
+    </div>
+    <div (click)="redirect('visualization')" class="sidebar-button" matTooltip="Visualization" [matTooltipPosition]=tooltipPosition>
+      <mat-icon aria-hidden="false" aria-label="Visualization">blur_linear</mat-icon>
+    </div>
+    <div (click)="redirect('activitydiagrams')" class="sidebar-button" matTooltip="Activity Diagrams" [matTooltipPosition]="tooltipPosition">
+      <mat-icon aria-hidden="false" aria-label="Activity Diagrams">multiline_chart</mat-icon>
+    </div>
+    <div (click)="redirect('state-machines')"
+         [ngClass]="{'selecter': currentWindow == 'statemachines'}" class="sidebar-button" matTooltip="State Machines" [matTooltipPosition]="tooltipPosition">
+      <mat-icon aria-hidden="false" aria-label="State Machines">multiline_chart</mat-icon>
+    </div>
+    <div (click)="redirect('design-hierarchy')" class="sidebar-button" matTooltip="Design hierarchy" [matTooltipPosition]="tooltipPosition">
+      <mat-icon aria-hidden="false" aria-label="Design hierarchy">polyline</mat-icon>
+    </div>
+    <div (click)="changeWindow('search')"
+         [ngClass]="{'selected': currentWindow == 'search'}" class="sidebar-button" matTooltip="Search" [matTooltipPosition]="tooltipPosition">
+      <mat-icon aria-hidden="false" aria-label="Search">search</mat-icon>
+    </div>
+    <div (click)="changeWindow('source-control')"
+         [ngClass]="{'selected': currentWindow == 'source-control'}" class="sidebar-button" matTooltip="Source control" [matTooltipPosition]="tooltipPosition">
+      <mat-icon aria-hidden="false" aria-label="Source control">code</mat-icon>
+    </div>
+    <div (click)="changeWindow('code-review')" [matTooltipPosition]="tooltipPosition"
+         [ngClass]="{'selected': currentWindow == 'code-review'}" class="sidebar-button" matTooltip="Code review">
+      <mat-icon aria-hidden="false" aria-label="Source control">comment</mat-icon>
+    </div>
+    <div (click)="changeWindow('settings')"
+         [ngClass]="{'selected': currentWindow == 'settings'}" class="sidebar-button" matTooltip="Editor settings" [matTooltipPosition]="tooltipPosition">
+      <mat-icon aria-hidden="false" aria-label="Editor settings">settings</mat-icon>
+    </div>
+    <div (click)="changeWindow('simulation-results')" [matTooltipPosition]="tooltipPosition"
+         [ngClass]="{'selected': currentWindow == 'simulation-results'}" class="sidebar-button"
+         matTooltip="Simulation results">
+      <mat-icon aria-hidden="false" aria-label="Simulation results">offline_bolt</mat-icon>
+    </div>
+    <div class="sidebar-button" [ngClass]="{'selected': currentWindow == 'synthesis-results'}" [matTooltipPosition]="tooltipPosition"
+         (click)="changeWindow('synthesis-results')" matTooltip="Synthesis results">
+      <mat-icon aria-hidden="false" aria-label="Simulation results">dynamic_form</mat-icon>
+    </div>
+    <div (click)="changeWindow('ip-cores')" [matTooltipPosition]="tooltipPosition"
+         [ngClass]="{'selected': currentWindow == 'ip-cores'}" class="sidebar-button" matTooltip="IP cores">
+      <mat-icon aria-hidden="false" aria-label="IP cores">memory</mat-icon>
+    </div>
+  </div>
+</div>
+<app-diagram-paper
+  (loadedDrawingMode)="loadDrawingMode($event)"
+  (loadedLanguage)="loadLanguage($event)"
+  [areAnyWindowsOpen]="isAnyWindowOpen"
+  [isDrawingModeEnabled]="drawingMode">
+</app-diagram-paper>
+<div id="diagram-paper-contents">
+
+</div>

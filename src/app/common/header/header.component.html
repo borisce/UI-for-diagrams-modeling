@@ -1,0 +1,95 @@
+<mat-toolbar>
+  <mat-toolbar-row>
+    <div class="d-flex justify-content-center align-items-center">
+      <img src="./assets/images/logo-small.svg" class="mr-1" alt="Logo">
+      <span class="font-weight-bold" (click)="authenticationService.loggedIn ? redirect('my-repos') : redirect('')"
+            style="cursor: pointer;">ASICDE</span>
+    </div>
+    <span class="spacer"></span>
+    <mat-nav-list class="navigation" fxHide.lt-sm="true" fxShow="true">
+      <div *ngIf="!authenticationService.loggedIn; else authenticated" class="navigation-link-group">
+        <a (click)="scrollToSection('home')">Home</a>
+        <a (click)="scrollToSection('about-us')">About Us</a>
+        <a (click)="scrollToSection('features')">Features</a>
+        <a (click)="scrollToSection('pricing')">Pricing</a>
+      </div>
+      <ng-template #authenticated>
+        <div class="navigation-link-group">
+          <button *ngIf="authenticationService.isAdmin" mat-button routerLink="/dashboard"
+                  routerLinkActive="active_route">Dashboard
+          </button>
+          <button mat-button routerLink="/price-packages" routerLinkActive="active_route">Packages</button>
+          <button mat-button routerLink="/classrooms" routerLinkActive="active_route">Classrooms</button>
+          <button *ngIf="authenticationService.organization" mat-button routerLink="/organization"
+                  routerLinkActive="active_route">Organization
+          </button>
+          <button mat-button routerLink="/my-repos" routerLinkActive="active_route">Repositories</button>
+          <button mat-button routerLink="/forum" routerLinkActive="active_route">Forum</button>
+          <button mat-button routerLink="/cores">IP store</button>
+
+          <button (click)="cartService.openCart()" [disabled]="router.url === '/order'" mat-icon-button
+                  style="position: relative;">
+            <mat-icon
+              [matBadge]="router.url !== '/order' && cartService.cartItemCount > 0 ? cartService.cartItemCount : '' "
+              matBadgeColor="warn">shopping_cart
+            </mat-icon>
+            <div [class.shown]="cartItemAddedMessageShow" class="cart-item-added-message">
+              Item has been added to cart
+            </div>
+          </button>
+
+
+          <button [matMenuTriggerFor]="menu" class="navigation-icon-button" color="warn" mat-mini-fab>
+            {{
+              authenticationService.currentUser.firstName.charAt(0).toUpperCase() +
+              authenticationService.currentUser.lastName.charAt(0).toUpperCase()
+            }}
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item routerLink="/editUser/user">
+              <mat-icon>person</mat-icon>
+              <span>My account</span>
+            </button>
+            <button mat-menu-item routerLink="/my-wallet">
+              <mat-icon>account_balance_wallet</mat-icon>
+              <span>My wallet <span class="badge badge-light">{{
+                  authenticationService.currentUser.balance |
+                    priceFormat
+                }}</span></span>
+            </button>
+            <button mat-menu-item routerLink="/orders">
+              <mat-icon>request_quote</mat-icon>
+              <span>My orders</span>
+            </button>
+            <button mat-menu-item routerLink="/cores/my">
+              <mat-icon>memory</mat-icon>
+              <span>My IP cores</span>
+            </button>
+            <button mat-menu-item routerLink="/cores/purchased">
+              <mat-icon>payments</mat-icon>
+              <span>Purchased IP cores</span>
+            </button>
+            <button mat-menu-item routerLink="/notifications">
+              <mat-icon>email</mat-icon>
+              <span>Notifications</span>
+            </button>
+            <button (click)="createOrganizationdialog()" *ngIf="!authenticationService.currentOrganization"
+                    mat-menu-item>
+              <mat-icon>group</mat-icon>
+              <span>Create new Organization</span>
+            </button>
+            <button (click)="authenticationService.logout()" mat-menu-item>
+              <mat-icon>exit_to_app</mat-icon>
+              <span>Sign out</span>
+            </button>
+          </mat-menu>
+        </div>
+      </ng-template>
+    </mat-nav-list>
+    <div fxHide.gt-xs="true" fxShow="true">
+      <button (click)="onToggleSidenav()" mat-icon-button>
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>

@@ -1,0 +1,66 @@
+<div class="forum-wrapper">
+	<div class="forum-header">
+		<div class="w-100 d-flex justify-content-start mt-2">
+			<button mat-flat-button color="primary" *ngIf="!isEdit" (click)="redirect('forum')">
+				<mat-icon>chevron_left</mat-icon> Back to forum
+			</button>
+			<button mat-flat-button color="primary" *ngIf="isEdit" (click)="redirect('forum/thread/' + threadId)">
+				<mat-icon>chevron_left</mat-icon> Back to thread
+			</button>
+		</div>
+	</div>
+
+
+	<div class="container mt-3">
+		<div class="w-100">
+			<!-- Spinner for loading messages -->
+			<h3 class="page-title mt-4" *ngIf="!isEdit">Create a new post</h3>
+			<h3 class="page-title mt-4" *ngIf="isEdit">Edit your post</h3>
+
+			<form [formGroup]="createThreadForm" (ngSubmit)="isEdit ? onEditThread() : onCreateThread()">
+				<label for="title" class="form-label mt-3">Title</label>
+				<input matInput formControlName="title" autocomplete="off" class="px-3 form-control w-50"
+					placeholder="Add a title"
+					[ngClass]="{ 'is-invalid': submitted && f.title.errors, 'pointer-events-none': isEdit }" />
+				<div *ngIf="f.title.errors" class="invalid-feedback">
+					<div *ngIf="f.title.errors.required">Title is required</div>
+				</div>
+
+				<label for="tags" class="form-label mt-3">Tags</label>
+				<input matInput autocomplete="off" class="px-3 form-control w-50" placeholder="Add new tag" />
+
+				<div class="mt-3">
+					<label for="message" class="form-label mt-3">Text</label>
+					<quill-editor [styles]="{height: '180px'}" formControlName="message">
+						<div quill-editor-toolbar>
+							<span class="ql-formats">
+								<button class="ql-bold" [title]="'Bold'"></button>
+								<button class="ql-italic" [title]="'Italic'"></button>
+								<button class="ql-underline" [title]="'Underline'"></button>
+								<button class="ql-strike" [title]="'Strike'"></button>
+							</span>
+							<span class="ql-formats">
+								<button class="ql-link" [title]="'Link'"></button>
+								<button class="ql-image" [title]="'Image'"></button>
+							</span>
+							<span class="ql-formats">
+								<button class="ql-list" value="ordered" [title]="'Ordered list'"></button>
+								<button class="ql-list" value="bullet" [title]="'Bullet list'"></button>
+								<button class="ql-code-block" [title]="'Code block'"></button>
+								<button class="ql-blockquote" [title]="'Blockqoute'"></button>
+							</span>
+						</div>
+					</quill-editor>
+				</div>
+				<div *ngIf="f.message.errors" class="invalid-feedback">
+					<div *ngIf="f.message.errors.required">Message can't be empty</div>
+				</div>
+				<div class="d-flex justify-content-end mt-2">
+					<button mat-flat-button color="primary" *ngIf="!isEdit">Publish</button>
+					<button mat-flat-button color="primary" *ngIf="isEdit">Edit</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+</div>

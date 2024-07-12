@@ -1,0 +1,26 @@
+<div class="modal-wrapper">
+  <div class="tab-content-wrapper">
+    <h3>Create a new classroom</h3>
+
+    <form (ngSubmit)="onSubmit()" [formGroup]="joinClassroom">
+      <mat-form-field appearance="fill">
+        <mat-label>Slug</mat-label>
+        <input formControlName="slug" matInput required="true">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input formControlName="password" matInput required="true" type="password">
+      </mat-form-field>
+
+      <div class="button-group">
+        <button color="primary" mat-flat-button>
+          Join
+        </button>
+        <button [mat-dialog-close]="false" color="primary" mat-stroked-button>
+          Close
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

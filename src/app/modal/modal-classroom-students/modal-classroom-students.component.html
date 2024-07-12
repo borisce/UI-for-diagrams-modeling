@@ -1,0 +1,42 @@
+<h1 mat-dialog-title>Classroom members</h1>
+<div mat-dialog-content>
+  <mat-list>
+    <div mat-subheader>Teachers</div>
+    <mat-divider></mat-divider>
+
+    <ng-container *ngFor="let teacher of teachers">
+      <mat-list-item>
+        <mat-icon mat-list-icon>person</mat-icon>
+        <div mat-line>
+          {{ teacher.user.firstName + " " + teacher.user.lastName }}
+        </div>
+        <div mat-line>
+          <label>Joined: </label>
+          <span>{{ teacher.lastModified | date }}</span>
+        </div>
+      </mat-list-item>
+    </ng-container>
+    <div mat-subheader>Students</div>
+    <mat-divider></mat-divider>
+    <ng-container *ngFor="let student of students">
+      <mat-list-item>
+        <mat-icon mat-list-icon>person</mat-icon>
+        <div mat-line>
+          {{ student.user.firstName + " " + student.user.lastName }}
+        </div>
+        <div mat-line>
+          <label>Joined: </label>
+          <span>{{ student.lastModified | date }}</span>
+        </div>
+      </mat-list-item>
+    </ng-container>
+  </mat-list>
+</div>
+
+<mat-dialog-actions align="end">
+  <div style="margin-right: 70px">
+    <label>Number of students: </label>
+    <span>{{ students.length }}</span>
+  </div>
+  <button mat-button mat-dialog-close>Ok</button>
+</mat-dialog-actions>

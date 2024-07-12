@@ -1,0 +1,134 @@
+.forum {
+  &-page-title {
+    font-weight: bold;
+    color: #333;
+  }
+
+  &-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 30px;
+  }
+
+  &-header {
+    flex: 0 0 100%;
+    text-align: center;
+
+    mat-form-field {
+      width: 100%;
+    }
+
+    .search-input-wrapper{
+      width: 100%;
+    }
+
+    
+  }
+
+  &-left-bar {
+    flex: 0 0 30%;
+
+    h1,
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      color: grey;
+      font-size: 30px;
+      margin-left: 20px;
+    }
+  }
+
+  &-main-content {
+    flex: 0 0 70%;
+  }
+
+  &-buttons {
+    margin-bottom: 10px;
+  }
+
+  &-loadingcard {
+    opacity: 0.5;
+    transition: ease opacity 0.5s;
+  }
+
+  &-card {
+    opacity: 1;
+    transition: ease opacity 0.5s;
+  }
+
+  /*hr {
+    margin: 0px;
+  }*/
+
+}
+
+.thread {
+  &-card {
+    width: 100%;
+    border-radius: 20px;
+    background-color: #f4f4f4;
+    color: #666;
+    margin-bottom: 3rem;
+    padding: 1rem 2rem;
+  }
+
+  &-autor {
+    font-weight: bold;
+  }
+
+  &-title {
+    font-weight: bold;
+    cursor: pointer;
+    width: fit-content;
+    transition: transform 0.25s ease;
+    transform-origin: 0% 50%;
+    margin-top: 16px;
+  }
+
+  &-title:hover {
+    color: #666;
+    transform: scale(1.1);
+  }
+
+  &-message {
+    width: 100%;
+    color: #888;
+    line-height: 1.25rem;
+  }
+}
+
+mat-tab-group {
+  .forum-container {
+    padding: 2rem;
+
+    mat-spinner {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      z-index: 1;
+    }
+  }
+
+  .my-repos-blank {
+    color: #555;
+    text-align: center;
+    grid-column-start: 1;
+    grid-column-end: -1;
+
+    mat-icon,
+    p {
+      font-size: 3rem;
+      text-shadow: grey 2px 2px 5px;
+    }
+  }
+
+  ::ng-deep .mat-tab-body-content {
+    padding: 10px;
+  } 
+
+  ::ng-deep .mat-tab-label:hover {
+    color: #3f51b5;
+  }
+}

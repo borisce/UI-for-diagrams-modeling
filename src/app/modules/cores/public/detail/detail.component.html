@@ -1,0 +1,68 @@
+<div class="container pb-3 pt-3">
+  <a [routerLink]="['/cores']" class="ml-2" routerLinkActive="active">< Back to all IP cores</a>
+  <div *ngIf="!this.loadingState; then thenBlock else elseBlock"></div>
+  <ng-template #thenBlock>
+    <h1 class="pt-1">{{core.name}}</h1>
+    <h4>
+      <span *ngIf="core.author; else elseOrg">
+                  <mat-icon aria-hidden="false" aria-label="" fontIcon="person"
+                            style="vertical-align: bottom;"></mat-icon>
+        {{core.author.firstName}} {{core.author.lastName}}
+                </span>
+      <ng-template #elseOrg>
+        <mat-icon aria-hidden="false" aria-label="" fontIcon="groups" style="vertical-align: bottom;"></mat-icon>
+        {{core.organization.name}}
+      </ng-template>
+    </h4>
+    <div class="description mt-3">
+      <div class="description-meta col-sm-12 col-md-5 col-lg-4 pl-md-4 mb-3 mb-md-2">
+        <mat-card [formGroup]="addToCartForm">
+          <mat-card-content>
+            <div>Category: {{core.category.name}}</div>
+            <div>Latest version: {{core.latest_version.version_number}}</div>
+            <div class="mb-3">Last update: {{core.latest_version.created  | date: "dd/MM/yyyy, HH:mm:ss" }}</div>
+            <mat-radio-group [formControlName]="'variation'" aria-label="Select an option">
+              <div *ngIf="core.price_without_updates > 0">
+                <mat-radio-button color="primary" value="WITHOUT_UPDATES">
+                  Only latest major version {{core.price_without_updates | priceFormat}}
+                </mat-radio-button>
+              </div>
+              <div *ngIf="core.price_with_updates > 0">
+                <mat-radio-button color="primary" value="WITH_UPDATES">
+                  Include future versions {{core.price_with_updates | priceFormat}}
+                </mat-radio-button>
+              </div>
+            </mat-radio-group>
+          </mat-card-content>
+          <mat-card-actions align="end"
+                            style="justify-content: space-between;margin-bottom: 0;padding-bottom: 0;">
+
+            <a *ngIf="core.have_pdf_documentation" href="/api/v2/cores/{{uuid}}/documentation.pdf"
+               mat-raised-button
+               target="_blank">PDF documentation</a>
+
+            <button (click)="addToCart()" [disabled]="this.addToCartForm.value['variation'] == null" class="ml-auto"
+                    color="primary"
+                    mat-raised-button>
+              Add to cart
+            </button>
+          </mat-card-actions>
+        </mat-card>
+        <mat-card class="mt-3">
+          <mat-card-subtitle>Top module interface</mat-card-subtitle>
+          <mat-card-content>
+            {{params_before}}{{core.top_module_name}}{{params_after}} (
+            <div [innerHTML]="core.top_module_interface.join(', <br>')" style="margin-left: 10px;"></div>
+            )
+          </mat-card-content>
+        </mat-card>
+
+      </div>
+      <div [innerHTML]="core.description" class="description-content pl-3 pr-3 pl-md-3 pr-md-0 "></div>
+      <div style="clear: both;"></div>
+    </div>
+  </ng-template>
+  <ng-template #elseBlock>
+    <detail-skeleton></detail-skeleton>
+  </ng-template>
+</div>

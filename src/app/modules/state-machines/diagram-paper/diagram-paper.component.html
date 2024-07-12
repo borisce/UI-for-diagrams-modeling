@@ -1,0 +1,13 @@
+<div [ngStyle]="{'z-index': 1}" id="buttonsContainer">
+  <button (click)="zoomIn()" color="primary" mat-mini-fab style="margin-bottom: 7px; transform: scale(0.9);">
+    <mat-icon>add</mat-icon>
+  </button>
+  <button (click)="zoomOut()" color="primary" mat-mini-fab style="margin-bottom: 7px; transform: scale(0.9);">
+    <mat-icon>remove</mat-icon>
+  </button>
+  <button (click)="clearGraph()" color="warn" mat-mini-fab style="transform: scale(0.9);">
+    <mat-icon>delete</mat-icon>
+  </button>
+</div>
+<app-collaborators-list [collaborators]="collaborators" multipleConnectionsWord="sessions" zIndex="1">
+</app-collaborators-list>

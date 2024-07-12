@@ -1,0 +1,24 @@
+<div>
+  <mat-drawer-container (backdropClick)="cartService.closeCart()" autosize>
+    <mat-sidenav-container fxFlexFill>
+      <mat-sidenav #sidenav fxLayout="column" role="navigation">
+        <app-nav-list (sidenavClose)="sidenav.close()"></app-nav-list>
+      </mat-sidenav>
+
+      <!-- header -->
+      <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
+
+      <main>
+        <!-- content -->
+        <router-outlet></router-outlet>
+      </main>
+
+      <div id="diagram-paper-content"></div>
+    </mat-sidenav-container>
+    <mat-drawer [opened]="cartService.cartOpen" mode="over" position="end">
+      <app-cart></app-cart>
+    </mat-drawer>
+  </mat-drawer-container>
+  <app-message-stack></app-message-stack>
+  <app-chat></app-chat>
+</div>

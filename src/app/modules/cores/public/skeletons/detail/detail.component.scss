@@ -1,0 +1,18 @@
+.description {
+  position: relative;
+
+  &-meta {
+    position: absolute;
+    right: 0;
+    width: 400px;
+    height: 300px;
+    z-index: 9999;
+    background-color: #fafafa;
+    padding-left: 10px;
+    padding-bottom: 10px;
+  }
+
+  &-content {
+    text-align: justify;
+  }
+}

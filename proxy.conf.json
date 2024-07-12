@@ -1,0 +1,117 @@
+{
+  "/api/v2/orders": {
+    "target": "http://localhost:10000/",
+    "secure": false,
+    "logLevel": "debug"
+  },
+  "/api/v2/cart": {
+    "target": "http://localhost:10000/",
+    "secure": false,
+    "logLevel": "debug"
+  },
+  "/api/v2/cores": {
+    "target": "http://localhost:10000/",
+    "secure": false,
+    "logLevel": "debug"
+  },
+  "/api/v2/forum": {
+    "target": "http://localhost:10000/",
+    "secure": false,
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/api/v2": "/api"
+    }
+  },
+  "/api/v2/auth": {
+    "target": "http://localhost:10000/",
+    "secure": false,
+    "logLevel": "debug"
+  },
+  "/api/v2/visualization": {
+    "target": "http://localhost:10000/",
+    "secure": false,
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/api/v2": ""
+    }
+  },
+  "/api/v2/simulator": {
+    "target": "http://localhost:10000/",
+    "secure": false,
+    "logLevel": "debug"
+  },
+  "/api/v2/parser": {
+    "target": "http://localhost:10000/",
+    "secure": false,
+    "logLevel": "debug"
+  },
+  "/api/v2/repo": {
+    "target": "http://localhost:10000/",
+    "secure": false,
+    "logLevel": "debug"
+  },
+  "/api/v2/collab": {
+    "target": "http://localhost:10000/",
+    "secure": false,
+    "logLevel": "debug"
+  },
+  "/api/v2/ws/collab": {
+    "target": "http://localhost:10000/",
+    "secure": false,
+    "logLevel": "debug",
+    "ws": true
+  },
+  "/api/v2/vcd-storage": {
+    "target": "http://localhost:10000/",
+    "secure": false,
+    "logLevel": "debug"
+  },
+  "/api/v2": {
+    "target": "http://localhost:10000/",
+    "secure": false,
+    "logLevel": "debug"
+  },
+  "/api/v2/organization": {
+    "target": "http://localhost:10000/",
+    "secure": false,
+    "logLevel": "debug"
+  },
+  "/api/v2/admin": {
+    "target": "http://localhost:10000/",
+    "secure": false,
+    "logLevel": "debug"
+  },
+  "/api/v2/admin_users": {
+    "target": "http://localhost:10000/",
+    "secure": false,
+    "logLevel": "debug"
+  },
+  "/api/v2/edu": {
+    "target": "http://localhost:10000/",
+    "secure": false,
+    "logLevel": "debug"
+  },
+  "/api/v2/organization_invite": {
+    "target": "http://localhost:10000/",
+    "secure": false,
+    "logLevel": "debug"
+  },
+  "/github/api": {
+    "target": "https://api.github.com/",
+    "pathRewrite": {
+      "^/github/api": ""
+    },
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/github": {
+    "target": "https://github.com/",
+    "pathRewrite": {
+      "^/github": ""
+    },
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  }
+}

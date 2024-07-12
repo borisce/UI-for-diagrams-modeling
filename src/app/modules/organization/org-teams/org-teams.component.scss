@@ -1,0 +1,117 @@
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: 16px;
+}
+
+@media screen and (max-width: 1100px) {
+  .wrapper {
+    flex-direction: column;
+  }
+}
+
+.teams {
+  &-teamspane,
+  &-memberspane {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: hidden;
+    border-radius: 5px;
+  }
+
+  &-panecontrols {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 10px;
+    border-bottom: 1px solid #dbdbdb;
+  }
+
+  &-panecontrols h1 {
+    margin: 0px;
+  }
+
+  &-buttons {
+    margin: 15px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &-panecontrols button {
+    display: inline-block;
+    background-color: transparent;
+    color: #666;
+    box-shadow: none;
+  }
+
+  &-panecontrols button:hover {
+    background-color: #ccc;
+    transition: ease 0.5s background-color;
+  }
+
+  &-panecontrols mat-paginator {
+    display: inline-block;
+  }
+
+  &-availableteams {
+    display: grid;
+    grid-gap: 1em;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    margin: 10px 10px;
+  }
+
+  &-members {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    padding: 10px 0px;
+  }
+
+  &-members > table {
+    width: 100%;
+    flex-grow: 1;
+  }
+
+  &-content {
+    .mat-elevation-z8 {
+      box-shadow: none !important;
+      border: 1px solid lightgray;
+      border-radius: 10px;
+    }
+
+    &-spinner-wrapper {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      padding: 30px;
+    }
+  }
+}
+
+.mat-column-first_name span {
+  font-weight: 900;
+  background: #3f51b5;
+  color: white;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  border-radius: 50%;
+  padding: 10px;
+  margin: 10px;
+}
+
+mat-paginator {
+  border-radius: 8px;
+}
+
+app-team-card {
+  background-color: white;
+  border-radius: 5px;
+}

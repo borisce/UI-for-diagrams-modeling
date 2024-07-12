@@ -1,0 +1,88 @@
+<div class="wrapper">
+  <div id="editor-tabs-container">
+    <div class="controls">
+      <span *ngIf="!readOnly">
+        <span *ngIf="synthesis">
+          <button *ngFor="let testSim of testConfigurations; let i = index" [style]=""
+                            (click)="onSimulationStart(testSim.simulationTestNumber)" mat-button
+                            [matTooltip]="'Start Test '+ (i+1)"
+                            [style.background-color]="checkSimulationResults(testSim.simulationTestNumber) ? 'green': ''">
+            <mat-icon [style.color]="checkSimulationResults(testSim.simulationTestNumber) ? 'green': 'orange'"
+                      [ngStyle]="{ 'filter': 'brightness(' + (1.5 - i*0.8) + ')' }">play_arrow</mat-icon>
+          </button>
+          <button mat-button matTooltip="Start synthesis" (click)="!synthesisProcessingState ? onSynthesisClick() : ''"
+                  class="relative">
+            <mat-icon
+              [style.color]="simulationReady && !synthesisProcessingState ? 'lightblue' : 'grey'">tornado</mat-icon>
+            <div *ngIf="synthesisProcessingState" class="synthesis-button-spinner">
+              <mat-spinner [diameter]="30"></mat-spinner>
+            </div>
+          </button>
+        </span>
+        <button mat-button matTooltip="Disabled synthesis" *ngIf="!synthesis"
+                  (click)="redirect('price-packages')"
+                  class="relative"><mat-icon
+              style="color: grey">tornado</mat-icon>
+        </button>
+        <button (click)="onSimulationStart()" *ngIf="simulations" mat-button matTooltip="Start simulation">
+          <mat-icon [style.color]="simulationReady ? 'lightgreen' : 'grey'">play_arrow</mat-icon>
+        </button>
+         <button (click)="redirect('price-packages')" *ngIf="!simulations" mat-button matTooltip="Disabled simulation">
+           <mat-icon style="color: grey">play_arrow</mat-icon>
+         </button>
+        <button (click)="onConfigurationClick()" mat-button matTooltip="Project configuration">
+          <mat-icon>settings</mat-icon>
+        </button>
+        <button (click)="showTerminal()" mat-button matTooltip="Show terminal">
+          <svg class="bi bi-terminal-fill" fill="currentColor" height="16" viewBox="0 0 16 16" width="16"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M0 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3zm9.5 5.5h-3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1zm-6.354-.354a.5.5 0 1 0 .708.708l2-2a.5.5 0 0 0 0-.708l-2-2a.5.5 0 1 0-.708.708L4.793 6.5 3.146 8.146z" />
+          </svg>
+        </button>
+        <button (click)="onWaveformClick()" mat-button matTooltip="Show waveform tool">
+          <mat-icon>graphic_eq</mat-icon>
+        </button>
+      </span>
+      <button (click)="onDownloadClick()" mat-button matTooltip="Download project as zip">
+        <mat-icon>download</mat-icon>
+      </button>
+
+    </div>
+  </div>
+  <div class="split-container">
+    <ng-pane-manager (layoutChange)="onLayoutChange($event)" (layoutUpdate)="onLayoutChange($event)" [layout]="layout"
+      class="ng-theme-default" id="manager"></ng-pane-manager>
+    <app-editor-configuration #configurationComponent
+      *ngPaneTemplate="let pane named 'config' withHeader configurationHeader" [context]="context"
+      style="overflow: auto;">
+    </app-editor-configuration>
+
+    <div *ngPaneTemplate="let pane named 'editor' withHeader editorHeader" class="editor-container">
+      <div [hidden]="this.editorTabsService.tabs.length == 0" id="editor-panel-container">
+        <div (cdkDropListDropped)="drop($event)" cdkDropList cdkDropListOrientation="horizontal" id="editor-panel">
+          <div #editorPanel class="editor-panel-tabs"></div>
+        </div>
+      </div>
+      <div #dynamicInsert id="editor-monaco"></div>
+      <p [hidden]="this.editorTabsService.tabs.length > 0">
+        <svg class="bi bi-file-earmark-code-fill" fill="currentColor" height="64" viewBox="0 0 16 16" width="64"
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM6.646 7.646a.5.5 0 1 1 .708.708L5.707 10l1.647 1.646a.5.5 0 0 1-.708.708l-2-2a.5.5 0 0 1 0-.708l2-2zm2.708 0 2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L10.293 10 8.646 8.354a.5.5 0 1 1 .708-.708z" />
+        </svg>
+        <strong>Open a file from project explorer</strong>
+      </p>
+    </div>
+    <app-editor-terminal #terminalComponent *ngPaneTemplate="let pane named 'term' withHeader terminalHeader"
+      [context]="context" (simulationFinnishedEvent)="updateSimulationInfo()"></app-editor-terminal>
+
+    <app-synthesis-terminal *ngPaneTemplate="let pane named 'synthesis-term' withHeader synthesisTerminalHeader"
+      #synthesisTerminalComponent [context]="context"></app-synthesis-terminal>
+
+    <app-editor-visualisation-tool *ngPaneTemplate="let pane named 'waveform' withHeader waveformHeader"
+      [context]="context" style="height: 100%;">
+    </app-editor-visualisation-tool>
+  </div>
+
+</div>

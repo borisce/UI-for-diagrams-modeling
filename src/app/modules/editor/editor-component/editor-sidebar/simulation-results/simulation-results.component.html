@@ -1,0 +1,15 @@
+<div class="simulation-results-sidebar">
+  <h3>Simulation results</h3>
+  <div class="simulation-results-sidebar__list">
+      <div *ngFor="let result of results" class="simulation-results-sidebar__list__item">
+        <div class="simulation-results-sidebar__list__item__name">
+          {{result.testbench_file}} <span class="simulation-results-sidebar__list__item__name__time">[{{result.start_time | date: 'd.M.yy HH:mm:ss'}} - {{result.end_time | date: 'ss'}}] <mat-icon *ngIf="result.test" [style.color]="'green'" [matTooltip]="result.repo_simulation_configuration.simulationTestNumber">check_circle</mat-icon></span>
+        </div>
+        <div class="simulation-results-sidebar__list__item__files">
+          <div *ngFor="let file of result.files" class="simulation-results-sidebar__list__item__files__file" (click)="openFile(file.file_name, result, file.uuid)">
+            <div class="e-list-icon file"></div> <div class="simulation-results-sidebar__list__item__files__file__name">{{file.file_name}}</div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>

@@ -1,0 +1,79 @@
+<div class="operatorsWrapper">
+
+    <div class="elementsWrapper">
+        <button mat-button color="basic" [ngClass]="selectedLanguage === 'SystemVerilog' ? 'blueBorder' : 'grayBorder'"
+            (click)="selectedLanguage = 'SystemVerilog'">System Verilog</button>
+        <button mat-button color="basic" [ngClass]="selectedLanguage === 'VHDL' ? 'blueBorder' : 'grayBorder'"
+            (click)="selectedLanguage = 'VHDL'">VHDL</button>
+    </div>
+
+    <div *ngIf="moduleInputs.data?.length">
+        <span>Inputs</span>
+        <br>
+        <div class="elementsWrapper">
+            <button class="operatorButton" *ngFor="let input of moduleInputs.data" (click)="addOperator(input.name)">
+                {{input.name}}
+            </button>
+        </div>
+    </div>
+
+    <div *ngIf="moduleOutputs.data?.length">
+        <span>Outputs</span>
+        <br>
+        <div class="elementsWrapper">
+            <button class="operatorButton" *ngFor="let output of moduleOutputs.data" (click)="addOperator(output.name)">
+                {{output.name}}
+            </button>
+        </div>
+    </div>
+
+    <div *ngIf="internalSignals.data?.length">
+        <span>Internal signals</span>
+        <br>
+        <div class="elementsWrapper">
+            <button class="operatorButton" *ngFor="let signal of internalSignals.data"
+                (click)="addOperator(signal.name)">
+                {{signal.name}}
+            </button>
+        </div>
+    </div>
+
+    <div *ngIf="parameters.data?.length">
+        <span>Parameters</span>
+        <br>
+        <div class="elementsWrapper">
+            <button class="operatorButton" *ngFor="let parameter of parameters.data"
+                (click)="addOperator(parameter.name)">
+                {{parameter.name}}
+            </button>
+        </div>
+    </div>
+
+    <!-- Add parameters -->
+
+    <div *ngIf="selectedLanguage === 'SystemVerilog'">
+        <div *ngFor="let operatorGroup of operators.SystemVerilog | keyvalue">
+            <span>{{operatorGroup.key}}</span>
+            <br>
+            <div class="elementsWrapper">
+                <button class="operatorButton" *ngFor="let operator of operatorGroup.value"
+                    (click)="addOperator(operator)">
+                    {{operator}}
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="selectedLanguage === 'VHDL'">
+        <div *ngFor="let operatorGroup of operators.VHDL | keyvalue">
+            <span>{{operatorGroup.key}}</span>
+            <br>
+            <div class="elementsWrapper">
+                <button class="operatorButton" *ngFor="let operator of operatorGroup.value"
+                    (click)="addOperator(operator)">
+                    {{operator}}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

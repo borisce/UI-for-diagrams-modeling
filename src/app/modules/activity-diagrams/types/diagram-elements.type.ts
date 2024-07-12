@@ -1,0 +1,1 @@
+export type DiagramElements = 'start' | 'end' | 'action' | 'if' | 'case' | 'merge' | 'loop';

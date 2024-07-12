@@ -1,0 +1,14 @@
+#buttonsContainer {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  margin-right: 30px;
+  margin-bottom: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+mat-icon{
+  transform: scale(0.75);
+}

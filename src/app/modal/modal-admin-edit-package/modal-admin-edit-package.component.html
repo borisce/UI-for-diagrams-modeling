@@ -1,0 +1,51 @@
+<div class="dialog">
+  <div class="dialog-header">
+    <h1 mat-dialog-title>Package overview</h1>
+    <button mat-button [mat-dialog-close]="false">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <hr>
+  <mat-dialog-content>
+    <h3>Information</h3>
+    <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+    <div *ngIf="success" class="alert alert-success">{{ success }}</div>
+    <form [formGroup]="editForm" (ngSubmit)="onSubmit('basicInformation')">
+      <mat-list #overview role="list" id="overviewList">
+        <mat-list-item role="list-item">
+          <div class="name">ID</div>
+          <div class="from">{{ pricePackage.id }}</div>
+        </mat-list-item>
+        <mat-list-item role="list-item">
+          <div class="name">Name</div>
+          <div class="from">{{ pricePackage.name }}</div>
+        </mat-list-item>
+        <mat-list-item role="list-item">
+          <div class="name">Type</div>
+          <div class="from">{{ pricePackage.type }}</div>
+        </mat-list-item>
+        <mat-list-item role="list-item">
+          <div class="name">Price</div>
+          <div class="from">
+            <input type="text" formControlName="price" class="form-control" value="{{ pricePackage.price }}"
+                   [ngClass]="{ 'is-invalid': submittedInformation }"/>
+          </div>
+        </mat-list-item>
+        <mat-list-item role="list-item">
+          <div class="name">Default number of members</div>
+          <div class="from">{{ pricePackage.default_members }}</div>
+        </mat-list-item>
+        <mat-list-item role="list-item">
+          <div class="name">Update information</div>
+          <div class="from">
+            <button [disabled]="loading" mat-flat-button color="primary" class="action">
+              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
+              Update
+            </button>
+          </div>
+        </mat-list-item>
+      </mat-list>
+    </form>
+    <hr>
+  </mat-dialog-content>
+</div>

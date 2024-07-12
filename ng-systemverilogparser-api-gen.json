@@ -1,0 +1,5 @@
+{
+    "input": "systemverilogparser-api.yaml",
+    "output": "src/app/api/systemverilogparser",
+    "ignoreUnusedModels": false
+}

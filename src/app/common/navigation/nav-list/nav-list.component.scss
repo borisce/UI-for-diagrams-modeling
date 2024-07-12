@@ -1,0 +1,30 @@
+mat-nav-list {
+    span {
+        padding: 15px;
+        font-size: 1.3rem;
+        font-weight: 700;
+        text-align: center;
+    }
+    a {
+        padding: 10px;
+        font-size: 1.2rem;
+        font-weight: 400;
+    }
+    button {
+        padding: 20px;
+        font-size: 1.2rem;
+        font-weight: 400;
+        text-align: center;
+        width: 100%
+    }
+    #loggedInUser {
+        background-color: red;
+        color: white;
+        position: absolute;
+        bottom: 0;
+    }
+    br {
+        width: 100%;
+        color: grey;
+    }
+}

@@ -1,0 +1,15 @@
+h1 {
+    padding: 5px 10px;
+}
+
+mat-form-field {
+    display: block;
+    padding: 5px 10px;
+}
+
+.form-controls {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+}

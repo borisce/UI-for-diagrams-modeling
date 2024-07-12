@@ -1,0 +1,37 @@
+<div class="classroom-wrapper">
+  <!-- My classrooms controls -->
+  <div class="classroom-buttons">
+    <div style="display: flex; gap: 8px;">
+      <button mat-flat-button color="primary" (click)="openAddClassroomDialog()">
+        <mat-icon>add</mat-icon>
+        Create classroom
+      </button>
+
+      <button mat-flat-button color="primary" (click)="openJoinClassroomDialog()">
+        <mat-icon>group_add</mat-icon> &nbsp;
+        Join classroom
+      </button>
+    </div>
+
+    <mat-paginator [length]="pageLength" [pageSize]="pageSize" [pageSizeOptions]="[6, 12, 18, 24]"
+      (page)="pageEvent($event)">
+    </mat-paginator>
+  </div>
+
+  <hr>
+
+  <!-- If no classrooms -->
+  <app-placeholder-text *ngIf="!loadingState && classrooms.length == 0">
+    No classrooms were found!
+  </app-placeholder-text>
+
+  <div class="classroom-container">
+    <!-- Spinner for loading classroom -->
+    <mat-spinner [hidden]="!loadingState"></mat-spinner>
+    <!-- Individual classroom cards -->
+    <app-classroom-card [classroom]="classroom" *ngFor="let classroom of classrooms"
+      (onClassroomSelected)="onClassroomSelected(classroom)" (onClassroomDeleted)="onClassroomDeleted(classroom)"
+      (onClassroomSettings)="onClassroomSettingsSelected(classroom)">
+    </app-classroom-card>
+  </div>
+</div>

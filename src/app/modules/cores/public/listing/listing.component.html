@@ -1,0 +1,110 @@
+<div class="container-fluid pt-3">
+  <div class="row">
+    <div class="col-xl-2 col-md-3 col-sm-5 col-xs-12">
+      <form (ngSubmit)="applyFilters()" [formGroup]="filters">
+        <mat-card>
+          <mat-card-title>Filters</mat-card-title>
+          <mat-card-content>
+            <mat-form-field [style.width.%]="100">
+              <mat-label>Search query</mat-label>
+              <input autocomplete="off" formControlName="s" matInput type="search"/>
+            </mat-form-field>
+
+            <mat-form-field [style.width.%]="100">
+              <mat-label>Author</mat-label>
+              <input autocomplete="off" formControlName="author" matInput/>
+            </mat-form-field>
+
+            <mat-label class="mt-3">Price range</mat-label>
+            <div class="custom-slider">
+              <ngx-slider [options]="priceRangeOptions" formControlName="price_range"></ngx-slider>
+            </div>
+            <mat-label class="mt-3">Categories</mat-label>
+            <div formGroupName="categories">
+              <div *ngFor="let category of categories" class="repoList">
+                <mat-checkbox [formControlName]="category.name" color="primary">
+                  {{category.name}}
+                </mat-checkbox>
+              </div>
+            </div>
+          </mat-card-content>
+          <mat-card-actions align="end">
+            <button (click)="resetFilters()" mat-raised-button type="button">Reset</button>
+            <button color="primary" mat-raised-button type="submit">Apply filters</button>
+          </mat-card-actions>
+        </mat-card>
+      </form>
+    </div>
+    <div class="col-xl-10 col-md-9 col-sm-7 col-xs-12">
+      <div class="row">
+        <div *ngIf="!this.loadingState; then thenBlock else elseBlock"></div>
+        <ng-template #thenBlock>
+          <div *ngFor="let core of cores.content" class="col-xl-3 col-md-4 col-sm-6 col-xs-12 mb-4"
+               style="/*min-height: 280px;*/">
+            <mat-card [routerLink]="['/cores', core.uuid]" mat-ripple style="cursor: pointer;">
+              <div>
+                <mat-card-title>
+                  {{core.name}}
+                </mat-card-title>
+                <mat-card-subtitle>
+                <span *ngIf="this.core.author; else elseOrg">
+                  {{core.author.firstName}} {{core.author.lastName}}
+                </span>
+                  <ng-template #elseOrg>
+                    {{core.organization.name}}
+                  </ng-template>
+                </mat-card-subtitle>
+                <mat-card-content>
+                  <p>
+                    {{core.short_description}}
+                  </p>
+                </mat-card-content>
+                <mat-card-actions align="end"
+                                  style="justify-content: space-between;margin-bottom: 0;padding-bottom: 0;">
+                  <div
+                    style="  display: flex;  justify-content: center;  align-items: center;margin-left: 8px;">
+                   <span *ngIf="core.price_with_updates > 0 && core.price_without_updates > 0; else elseSinglePrice">
+                     <span *ngIf="core.price_with_updates > core.price_without_updates; else elsePriceWithout">
+                          {{core.price_without_updates | priceFormat}} - {{core.price_with_updates | priceFormat}}
+                     </span>
+                     <ng-template #elsePriceWithout>
+                       {{core.price_with_updates | priceFormat}} - {{core.price_without_updates | priceFormat}}
+                     </ng-template>
+                   </span>
+                    <ng-template #elseSinglePrice>
+                    <span *ngIf="core.price_with_updates > 0; else elsePriceWithout">
+                  {{core.price_with_updates | priceFormat}}
+                  </span>
+                      <ng-template #elsePriceWithout>
+                        {{core.price_without_updates | priceFormat}}
+                      </ng-template>
+                    </ng-template>
+                  </div>
+                  <button color="primary" mat-raised-button>View</button>
+                </mat-card-actions>
+              </div>
+            </mat-card>
+          </div>
+
+          <div class="col-12">
+            <mat-paginator (page)="pageChange($event)"
+                           [length]="this.cores.totalElements"
+                           [pageIndex]="pageIndex"
+                           [pageSizeOptions]="pageSizeOptions"
+                           [pageSize]="pageSize"
+                           aria-label="Select page">
+            </mat-paginator>
+          </div>
+        </ng-template>
+        <ng-template #elseBlock>
+          <ng-container *ngFor="let _ of [].constructor(4)">
+            <div class="col-xl-3 col-md-4 col-sm-6 col-xs-12 mt-4">
+              <list-card-skeleton></list-card-skeleton>
+            </div>
+          </ng-container>
+        </ng-template>
+
+      </div>
+    </div>
+  </div>
+</div>

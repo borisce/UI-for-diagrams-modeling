@@ -1,0 +1,50 @@
+<div>
+  <form (ngSubmit)="onSubmit()" [formGroup]="form">
+
+    <div *ngIf="repositories == null || versions == null; else loaded">
+      <mat-spinner></mat-spinner>
+    </div>
+    <ng-template #loaded>
+      <h4>{{data.coreOwnership.core.name}} assign</h4>
+      <mat-error *ngIf="this.error != null">
+        {{this.error}}
+      </mat-error>
+      <div>
+        <mat-form-field>
+          <mat-label>Repository</mat-label>
+          <mat-select formControlName="repository_uuid">
+            <mat-option [value]="null">
+              None
+            </mat-option>
+            <mat-option *ngFor="let repository of repositories" [value]="repository.uuid">
+              {{ repository.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <mat-label>Version</mat-label>
+          <mat-select formControlName="active_core_version_uuid">
+            <mat-option [value]="null">
+              None
+            </mat-option>
+            <mat-option *ngFor="let version of versions" [disabled]="!version.owned" [value]="version.uuid">
+              {{ version.version_number }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="actions">
+        <button (click)="closeDialog($event)" class="mr-2" mat-flat-button>
+          Cancel
+        </button>
+        <button
+          [disabled]="form.invalid || loadingState"
+          color="primary" mat-flat-button>
+          Save
+        </button>
+      </div>
+    </ng-template>
+  </form>
+</div>

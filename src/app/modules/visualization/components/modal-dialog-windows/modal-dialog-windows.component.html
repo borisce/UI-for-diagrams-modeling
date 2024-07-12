@@ -1,0 +1,797 @@
+<div id="modalNewModule" class="modal">
+    <div class="modal-content">
+        <form>
+            <label for="mName">Name:</label>
+            <input #nName (keyup)="checkInputStateForNewModule(nName.value, iName.value)" type="text" id="mName" name="moduleName" [(ngModel)]="name" placeholder="Name..">
+            <label for="iName">Name instance</label>
+            <input #iName (keyup)="checkInputStateForNewModule(nName.value, iName.value)" type="text" id="iName" name="instanceName" [(ngModel)]="instance" placeholder="Instance name..">
+            <input class="submitButton" type="button" value="Submit" [disabled]="textCheckNewModule" (click)="onModalWindowSubmitClicked(nName.value, iName.value)">
+            <input class="cancelButton" type="button" value="Cancel" (click)="onModalWindowCancelClicked()">
+        </form>
+    </div>
+</div>
+
+<div id="modalNewStandalonePortIn" class="modal">
+    <div class="modal-content">
+        <form>
+            <label for="pName">Name of your Port:</label>
+            <input #pName (keyup)="checkInputStateFowNewPort(pName.value, pBandwidthInput.value)" type="text" id="pName" name="portName" [(ngModel)]="name" placeholder="Port's name..">
+            <label class="label-inline" for="pBandwidth">Select Port's width:  </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="standAlonePBitRadio" checked (click)="bitPortChecked()"> Bit
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="standAlonePVectorRadio" (click)="vectorPortChecked()"> Vector
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="standAlonePStructRadio" (click)="customPortChecked()"> User defined
+            </label>
+            <label id="pBandwidthInputLabel" class="insideFormLab" for="pBandwidthInput">Width of vector:</label>
+            <input #pBandwidthInput (keyup)="checkInputStateFowNewPort(pName.value, pBandwidthInput.value)" type="text" id="pBandwidthInput" name="portBandwidth" placeholder="Port's width.." value="2">
+            <label id="pPackageLabel" class="insideFormLab" for="pPackage">Choose package file:</label>
+            <select id="pPackage" name="portPackage" (change)="onStandaloneSelectChanged($event.target.value)">
+                <option *ngFor="let package of availablePackages.items" [value]="package.package.name">
+                    {{package.package.name}}
+                </option>
+            </select>
+            <label id="pStructLabel" class="insideFormLab" for="pStruct">Choose user defined type:</label>
+            <select #pStruct id="pStruct" name="portStructure">
+                <option *ngFor="let data of packageDefines" [value]="data.dataName">
+                    {{data.dataType + ": " + data.dataName}}
+                </option>
+            </select>
+            <br>
+            <input class="submitButton" type="button" value="Submit" [disabled]="textCheckNewPort" (click)="onModalWindowSubmitClickedNewPort(pName.value, pBandwidthInput.value, 'in', pStruct.value)">
+            <input class="cancelButton" type="button" value="Cancel" (click)="onModalWindowCancelClicked()">
+        </form>
+    </div>
+</div>
+
+<div id="modalNewStandalonePortOut" class="modal">
+    <div class="modal-content">
+        <form>
+            <label for="pName">Name of your Port:</label>
+            <input #pName (keyup)="checkInputStateFowNewPort(pName.value, pBandwidthInputOut.value)" type="text" id="pName" name="portName" [(ngModel)]="name" placeholder="Port's name..">
+            <label class="label-inline" for="pBandwidthOut">Select Port's width:  </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="standAlonePBitRadioOut" checked (click)="bitPortCheckedOut()"> Bit
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="standAlonePVectorRadioOut" (click)="vectorPortCheckedOut()"> Vector
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="standAlonePStructRadioOut" (click)="customPortChecked()"> User defined
+            </label>
+            <label id="pBandwidthInputLabelOut" class="insideFormLab" for="pBandwidthInputOut">Width of vector:</label>
+            <input #pBandwidthInputOut (keyup)="checkInputStateFowNewPort(pName.value, pBandwidthInputOut.value)" type="text" id="pBandwidthInputOut" name="portBandwidth" placeholder="Port's width.." value="2">
+            <label id="pPackageLabelOut" class="insideFormLab" for="pPackageOut">Choose package file:</label>
+            <select id="pPackageOut" name="portPackage" (change)="onStandaloneSelectChanged($event.target.value)">
+                <option *ngFor="let package of availablePackages.items" [value]="package.package.name">
+                    {{package.package.name}}
+                </option>
+            </select>
+            <label id="pStructLabelOut" class="insideFormLab" for="pStructOut">Choose user defined type:</label>
+            <select #pStructOut id="pStructOut" name="portStructure">
+                <option *ngFor="let data of packageDefines" [value]="data.dataName">
+                    {{data.dataType + ": " + data.dataName}}
+                </option>
+            </select>
+            <br>
+            <input class="submitButton" type="button" value="Submit" [disabled]="textCheckNewPort" (click)="onModalWindowSubmitClickedNewPort(pName.value, pBandwidthInputOut.value, 'out', pStructOut.value)">
+            <input class="cancelButton" type="button" value="Cancel" (click)="onModalWindowCancelClicked()">
+        </form>
+    </div>
+</div>
+
+<div id="modalNewAndCustomPorts" class="modal">
+    <div class="modal-content">
+        <form>
+            <label id="andCustomPortsNameLabel" class="insideFormLab" for="andCustomPortsNameInput">AND signal's name:</label>
+            <input #andCustomPortsNameInput type="text" id="andCustomPortsNameInput" name="andCustomPortsNameInput" placeholder="Please insert AND's name">
+            <label for="andCustomPortsBandwidth">Select AND's width:  </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="ANDCustomPortsGBitRadio" checked (click)="andCustomPortsBitChecked()"> Bit
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="ANDCustomPortsGVectorRadio" (click)="andCustomPortsVectorChecked()"> Vector
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="ANDCustomPortsGStructRadio" (click)="andCustomPortsCustomChecked()"> User defined
+            </label>
+            <label for="andCustomPortsNumberofInPortsInput">Number of AND's input ports:  </label>
+            <input #andCustomPortsNumberofInPortsInput type="text" id="andCustomPortsNumberofInPortsInput" name="andCustomPortsNumberOfInPorts" placeholder="AND gate's number of input ports" value="2">
+            <label id="andCustomPortsBandwidthInputLabel" class="insideFormLab" for="andCustomPortsBandwidthInput">Width of vector:</label>
+            <input #andCustomPortsBandwidthInput type="text" id="andCustomPortsBandwidthInput" name="andCustomPortsBandwidth" placeholder="AND gate's width.." value="2">
+            <label id="andCustomPortsStructLabel" class="insideFormLab" for="andCustomPortsStruct">Choose custom struct:</label>
+            <select id="andCustomPortsStruct" name="portStructure">
+                <option value="notDef">User defined struct 1</option>
+                <option value="notDef">User defined struct 1</option>
+                <option value="notDef">User defined struct 1</option>
+                <option value="notDef">User defined struct 1</option>
+            </select>
+            <input class="submitButton" type="button" value="Submit" (click)="onModalWindowSubmitClickedNewAndCustomPorts(andCustomPortsBandwidthInput.value, andCustomPortsNameInput.value, andCustomPortsNumberofInPortsInput.value)">
+            <input class="cancelButton" type="button" value="Cancel" (click)="onModalWindowCancelClicked()">
+        </form>
+    </div>
+</div>
+
+<div id="modalNewOrCustomPorts" class="modal">
+    <div class="modal-content">
+        <form>
+            <label id="orCustomPortsNameLabel" class="insideFormLab" for="orCustomPortsNameInput">OR signal's name:</label>
+            <input #orCustomPortsNameInput type="text" id="orCustomPortsNameInput" name="orCustomPortsNameInput" placeholder="Please insert OR's name">
+            <label for="orCustomPortsBandwidth">Select OR's width:    </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="ORCustomPortsGBitRadio" checked (click)="orCustomPortsBitChecked()"> Bit
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="ORCustomPortsGVectorRadio" (click)="orCustomPortsVectorChecked()"> Vector
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="ORCustomPortsGStructRadio" (click)="orCustomPortsCustomChecked()"> User defined
+            </label>
+            <label style="display:block;" for="orCustomPortsNumberofInPortsInput">Number of OR's input ports:  </label>
+            <input #orCustomPortsNumberofInPortsInput type="text" id="orCustomPortsNumberofInPortsInput" name="orCustomPortsNumberOfInPorts" placeholder="OR gate's number of input ports" value="2">
+            <label id="orCustomPortsBandwidthInputLabel" class="insideFormLab" for="orCustomPortsBandwidthInput">Width of vector:</label>
+            <input #orCustomPortsBandwidthInput type="text" id="orCustomPortsBandwidthInput" name="orCustomPortsBandwidth" placeholder="OR gate's width.." value="2">
+            <label id="orCustomPortsStructLabel" class="insideFormLab" for="orCustomPortsStruct">Choose custom struct:</label>
+            <select id="orCustomPortsStruct" name="portStructure">
+                <option value="notDef">User defined struct 1</option>
+                <option value="notDef">User defined struct 1</option>
+                <option value="notDef">User defined struct 1</option>
+                <option value="notDef">User defined struct 1</option>
+            </select>
+            <input class="submitButton" type="button" value="Submit" (click)="onModalWindowSubmitClickedNewOrCustomPorts(orCustomPortsBandwidthInput.value, orCustomPortsNameInput.value, orCustomPortsNumberofInPortsInput.value)">
+            <input class="cancelButton" type="button" value="Cancel" (click)="onModalWindowCancelClicked()">
+        </form>
+    </div>
+</div>
+
+<!--<div id="modalNewOrCustomPorts2" class="modal">
+    <div class="modal-content">
+        <form>
+            <label id="orCustomPortsNameLabel2" class="insideFormLab" for="orCustomPortsNameInput2">OR signal's name:</label>
+            <input #orCustomPortsNameInput2 type="text" id="orCustomPortsNameInput2" name="orCustomPortsNameInput2" placeholder="Please insert OR's name">
+            <label for="orCustomPortsBandwidth2">Select OR's width:    </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="ORCustomPortsGBitRadio2" checked (click)="orCustomPortsBitChecked2()"> Bit
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="ORCustomPortsGVectorRadio2" (click)="orCustomPortsVectorChecked2()"> Vector
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="ORCustomPortsGStructRadio2" (click)="orCustomPortsCustomChecked2()"> User defined
+            </label>
+            <label style="display:block;" for="orCustomPortsNumberofInPortsInput2">Number of OR's input ports:  </label>
+            <input #orCustomPortsNumberofInPortsInput2 type="text" id="orCustomPortsNumberofInPortsInput2" name="orCustomPortsNumberOfInPorts2" placeholder="OR gate's number of input ports" value="2">
+            <label id="orCustomPortsBandwidthInputLabel2" class="insideFormLab" for="orCustomPortsBandwidthInput2">Width of vector:</label>
+            <input #orCustomPortsBandwidthInput2 type="text" id="orCustomPortsBandwidthInput2" name="orCustomPortsBandwidth2" placeholder="OR gate's width.." value="2">
+            <label id="orCustomPortsStructLabel2" class="insideFormLab" for="orCustomPortsStruct2">Choose custom struct:</label>
+            <select id="orCustomPortsStruct2" name="portStructure">
+                <option value="notDef">User defined struct 1</option>
+                <option value="notDef">User defined struct 1</option>
+                <option value="notDef">User defined struct 1</option>
+                <option value="notDef">User defined struct 1</option>
+            </select>
+            <input class="submitButton" type="button" value="Submit" (click)="onModalWindowSubmitClickedNewOrCustomPorts2(orCustomPortsBandwidthInput2.value, orCustomPortsNameInput2.value, orCustomPortsNumberofInPortsInput2.value)">
+            <input class="cancelButton" type="button" value="Cancel" (click)="onModalWindowCancelClicked()">
+        </form>
+    </div>
+</div> -->
+
+<div id="modalNewNorCustomPorts" class="modal">
+    <div class="modal-content">
+        <form>
+            <label id="norCustomPortsNameLabel" class="insideFormLab" for="norCustomPortsNameInput">NOR signal's name:</label>
+            <input #norCustomPortsNameInput type="text" id="norCustomPortsNameInput" name="norCustomPortsNameInput" placeholder="Please insert NOR's name">
+            <label for="norCustomPortsBandwidth">Select NOR's width:    </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="NORCustomPortsGBitRadio" checked (click)="norCustomPortsBitChecked()"> Bit
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="NORCustomPortsGVectorRadio" (click)="norCustomPortsVectorChecked()"> Vector
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="NORCustomPortsGStructRadio" (click)="norCustomPortsCustomChecked()"> User defined
+            </label>
+            <label for="norCustomPortsNumberofInPortsInput">Number of NOR's input ports:  </label>
+            <input #norCustomPortsNumberofInPortsInput type="text" id="norCustomPortsNumberofInPortsInput" name="norCustomPortsNumberOfInPorts" placeholder="NOR gate's number of input ports" value="2">
+            <label id="norCustomPortsBandwidthInputLabel" class="insideFormLab" for="norCustomPortsBandwidthInput">Width of vector:</label>
+            <input #norCustomPortsBandwidthInput type="text" id="norCustomPortsBandwidthInput" name="norCustomPortsBandwidth" placeholder="NOR gate's width.." value="2">
+            <label id="norCustomPortsStructLabel" class="insideFormLab" for="norCustomPortsStruct">Choose custom struct:</label>
+            <select id="norCustomPortsStruct" name="portStructure">
+                <option value="notDef">User defined struct 1</option>
+                <option value="notDef">User defined struct 1</option>
+                <option value="notDef">User defined struct 1</option>
+                <option value="notDef">User defined struct 1</option>
+            </select>
+            <input class="submitButton" type="button" value="Submit" (click)="onModalWindowSubmitClickedNewNorCustomPorts(norCustomPortsBandwidthInput.value, norCustomPortsNameInput.value, norCustomPortsNumberofInPortsInput.value)">
+            <input class="cancelButton" type="button" value="Cancel" (click)="onModalWindowCancelClicked()">
+        </form>
+    </div>
+</div>
+
+<div id="modalNewNandCustomPorts" class="modal">
+    <div class="modal-content">
+        <form>
+            <label id="nandCustomPortsNameLabel" class="insideFormLab" for="nandCustomPortsNameInput">NAND signal's name:</label>
+            <input #nandCustomPortsNameInput type="text" id="nandCustomPortsNameInput" name="nandCustomPortsNameInput" placeholder="Please insert NAND's name">
+            <label for="andCustomPortsBandwidth">Select AND's width:  </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="NANDCustomPortsGBitRadio" checked (click)="nandCustomPortsBitChecked()"> Bit
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="NANDCustomPortsGVectorRadio" (click)="nandCustomPortsVectorChecked()"> Vector
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="NANDCustomPortsGStructRadio" (click)="nandCustomPortsCustomChecked()"> User defined
+            </label>
+            <label for="nandCustomPortsNumberofInPortsInput">Number of NAND's input ports:  </label>
+            <input #nandCustomPortsNumberofInPortsInput type="text" id="nandCustomPortsNumberofInPortsInput" name="nandCustomPortsNumberOfInPorts" placeholder="NAND gate's number of input ports" value="2">
+            <label id="nandCustomPortsBandwidthInputLabel" class="insideFormLab" for="nandCustomPortsBandwidthInput">Width of vector:</label>
+            <input #nandCustomPortsBandwidthInput type="text" id="nandCustomPortsBandwidthInput" name="nandCustomPortsBandwidth" placeholder="NAND gate's width.." value="2">
+            <label id="nandCustomPortsStructLabel" class="insideFormLab" for="nandCustomPortsStruct">Choose custom struct:</label>
+            <select id="nandCustomPortsStruct" name="portStructure">
+                <option value="notDef">User defined struct 1</option>
+                <option value="notDef">User defined struct 1</option>
+                <option value="notDef">User defined struct 1</option>
+                <option value="notDef">User defined struct 1</option>
+            </select>
+            <input class="submitButton" type="button" value="Submit" (click)="onModalWindowSubmitClickedNewNandCustomPorts(nandCustomPortsBandwidthInput.value, nandCustomPortsNameInput.value, nandCustomPortsNumberofInPortsInput.value)">
+            <input class="cancelButton" type="button" value="Cancel" (click)="onModalWindowCancelClicked()">
+        </form>
+    </div>
+</div>
+
+<div id="modalNewXorCustomPorts" class="modal">
+    <div class="modal-content">
+        <form>
+            <label id="xorCustomPortsNameLabel" class="insideFormLab" for="xorCustomPortsNameInput">XOR signal's name:</label>
+            <input #xorCustomPortsNameInput type="text" id="xorCustomPortsNameInput" name="xorCustomPortsNameInput" placeholder="Please insert XOR's name">
+            <label for="xorCustomPortsBandwidth">Select XOR's width:    </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="XORCustomPortsGBitRadio" checked (click)="xorCustomPortsBitChecked()"> Bit
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="XORCustomPortsGVectorRadio" (click)="xorCustomPortsVectorChecked()"> Vector
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="XORCustomPortsGStructRadio" (click)="xorCustomPortsCustomChecked()"> User defined
+            </label>
+            <label style="display:block;" for="xorCustomPortsNumberofInPortsInput">Number of XOR's input ports:  </label>
+            <input #xorCustomPortsNumberofInPortsInput type="text" id="xorCustomPortsNumberofInPortsInput" name="xorCustomPortsNumberOfInPorts" placeholder="XOR gate's number of input ports" value="2">
+            <label id="xorCustomPortsBandwidthInputLabel" class="insideFormLab" for="xorCustomPortsBandwidthInput">Width of vector:</label>
+            <input #xorCustomPortsBandwidthInput type="text" id="xorCustomPortsBandwidthInput" name="xorCustomPortsBandwidth" placeholder="XOR gate's width.." value="2">
+            <label id="xorCustomPortsStructLabel" class="insideFormLab" for="xorCustomPortsStruct">Choose custom struct:</label>
+            <select id="xorCustomPortsStruct" name="portStructure">
+                <option value="notDef">User defined struct 1</option>
+                <option value="notDef">User defined struct 1</option>
+                <option value="notDef">User defined struct 1</option>
+                <option value="notDef">User defined struct 1</option>
+            </select>
+            <input class="submitButton" type="button" value="Submit" (click)="onModalWindowSubmitClickedNewXorCustomPorts(xorCustomPortsBandwidthInput.value, xorCustomPortsNameInput.value, xorCustomPortsNumberofInPortsInput.value)">
+            <input class="cancelButton" type="button" value="Cancel" (click)="onModalWindowCancelClicked()">
+        </form>
+    </div>
+</div>
+
+<div id="modalNewXnorCustomPorts" class="modal">
+    <div class="modal-content">
+        <form>
+            <label id="xnorCustomPortsNameLabel" class="insideFormLab" for="xnorCustomPortsNameInput">XNOR signal's name:</label>
+            <input #xnorCustomPortsNameInput type="text" id="xnorCustomPortsNameInput" name="xnorCustomPortsNameInput" placeholder="Please insert XNOR's name">
+            <label for="xnorCustomPortsBandwidth">Select XNOR's width:    </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="XNORCustomPortsGBitRadio" checked (click)="xnorCustomPortsBitChecked()"> Bit
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="XNORCustomPortsGVectorRadio" (click)="xnorCustomPortsVectorChecked()"> Vector
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="XNORCustomPortsGStructRadio" (click)="xnorCustomPortsCustomChecked()"> User defined
+            </label>
+            <label for="xnorCustomPortsNumberofInPortsInput">Number of XNOR's input ports:  </label>
+            <input #xnorCustomPortsNumberofInPortsInput type="text" id="xnorCustomPortsNumberofInPortsInput" name="xnorCustomPortsNumberOfInPorts" placeholder="XNOR gate's number of input ports" value="2">
+            <label id="xnorCustomPortsBandwidthInputLabel" class="insideFormLab" for="xnorCustomPortsBandwidthInput">Width of vector:</label>
+            <input #xnorCustomPortsBandwidthInput type="text" id="xnorCustomPortsBandwidthInput" name="xnorCustomPortsBandwidth" placeholder="XNOR gate's width.." value="2">
+            <label id="xnorCustomPortsStructLabel" class="insideFormLab" for="xnorCustomPortsStruct">Choose custom struct:</label>
+            <select id="xnorCustomPortsStruct" name="portStructure">
+                <option value="notDef">User defined struct 1</option>
+                <option value="notDef">User defined struct 1</option>
+                <option value="notDef">User defined struct 1</option>
+                <option value="notDef">User defined struct 1</option>
+            </select>
+            <input class="submitButton" type="button" value="Submit" (click)="onModalWindowSubmitClickedNewXnorCustomPorts(xnorCustomPortsBandwidthInput.value, xnorCustomPortsNameInput.value, xnorCustomPortsNumberofInPortsInput.value)">
+            <input class="cancelButton" type="button" value="Cancel" (click)="onModalWindowCancelClicked()">
+        </form>
+    </div>
+</div>
+<div id="modalNewOr" class="modal">
+    <div class="modal-content">
+        <form>
+            <label id="orNameLabel" class="insideFormLab" for="orNameInput">OR signal's name:</label>
+            <input #orNameInput type="text" id="orNameInput" name="orNameInput" placeholder="Please insert OR's name">
+            <label for="orBandwidth">Select OR's width:  </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="ORGBitRadio" checked (click)="orBitChecked()"> Bit
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="ORGVectorRadio" (click)="orVectorChecked()"> Vector
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="ORGStructRadio" (click)="orCustomChecked()"> User defined
+            </label>
+            <label id="orBandwidthInputLabel" class="insideFormLab" for="orBandwidthInput">Width of vector:</label>
+            <input #orBandwidthInput type="text" id="orBandwidthInput" name="orBandwidth" placeholder="OR gate's width.." value="2">
+            <label id="orStructLabel" class="insideFormLab" for="orStruct">Choose custom struct:</label>
+            <select id="orStruct" name="portStructure">
+                <option value="notDef">User defined struct 1</option>
+                <option value="notDef">User defined struct 1</option>
+                <option value="notDef">User defined struct 1</option>
+                <option value="notDef">User defined struct 1</option>
+            </select>
+            <input class="submitButton" type="button" value="Submit" (click)="onModalWindowSubmitClickedNewOR(orBandwidthInput.value, orNameInput.value)">
+            <input class="cancelButton" type="button" value="Cancel" (click)="onModalWindowCancelClicked()">
+        </form>
+    </div>
+</div>
+
+
+
+<div id="modalNewAnd" class="modal">
+    <div class="modal-content">
+        <form>
+            <label id="andNameLabel" class="insideFormLab" for="andNameInput">AND signal's name:</label>
+            <input #andNameInput type="text" id="andNameInput" name="andNameInput" placeholder="Please insert AND's name">
+            <label for="andBandwidth">Select AND's width:  </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="ANDGBitRadio" checked (click)="andBitChecked()"> Bit
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="ANDGVectorRadio" (click)="andVectorChecked()"> Vector
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="ANDGStructRadio" (click)="andCustomChecked()"> User defined
+            </label>
+            <label id="andBandwidthInputLabel" class="insideFormLab" for="andBandwidthInput">Width of vector:</label>
+            <input #andBandwidthInput type="text" id="andBandwidthInput" name="andBandwidth" placeholder="AND gate's width.." value="2">
+            <label id="andStructLabel" class="insideFormLab" for="andStruct">Choose custom struct:</label>
+            <select id="andStruct" name="portStructure">
+                <option value="notDef">User defined struct 1</option>
+                <option value="notDef">User defined struct 1</option>
+                <option value="notDef">User defined struct 1</option>
+                <option value="notDef">User defined struct 1</option>
+            </select>
+            <input class="submitButton" type="button" value="Submit" (click)="onModalWindowSubmitClickedNewAnd(andBandwidthInput.value, andNameInput.value)">
+            <input class="cancelButton" type="button" value="Cancel" (click)="onModalWindowCancelClicked()">
+        </form>
+    </div>
+</div>
+
+<div id="modalNewNor" class="modal">
+    <div class="modal-content">
+        <form>
+            <label id="norNameLabel" class="insideFormLab" for="norNameInput">NOR signal's name:</label>
+            <input #norNameInput type="text" id="norNameInput" name="norNameInput" placeholder="Please insert NOR's name">
+            <label for="norBandwidth">Select NOR's width:  </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="NORGBitRadio" checked (click)="norBitChecked()"> Bit
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="NORGVectorRadio" (click)="norVectorChecked()"> Vector
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="NORGStructRadio" (click)="norCustomChecked()"> User defined
+            </label>
+            <label id="norBandwidthInputLabel" class="insideFormLab" for="norBandwidthInput">Width of vector:</label>
+            <input #norBandwidthInput type="text" id="norBandwidthInput" name="norBandwidth" placeholder="NOR gate's width.." value="2">
+            <label id="norStructLabel" class="insideFormLab" for="norStruct">Choose custom struct:</label>
+            <select id="norStruct" name="portStructure">
+                <option value="notDef">User defined struct 1</option>
+                <option value="notDef">User defined struct 1</option>
+                <option value="notDef">User defined struct 1</option>
+                <option value="notDef">User defined struct 1</option>
+            </select>
+            <input class="submitButton" type="button" value="Submit" (click)="onModalWindowSubmitClickedNewNor(norBandwidthInput.value, norNameInput.value)">
+            <input class="cancelButton" type="button" value="Cancel" (click)="onModalWindowCancelClicked()">
+        </form>
+    </div>
+</div>
+
+<div id="modalNewNand" class="modal">
+    <div class="modal-content">
+        <form>
+            <label id="nandNameLabel" class="insideFormLab" for="nandNameInput">NAND signal's name:</label>
+            <input #nandNameInput type="text" id="nandNameInput" name="nandNameInput" placeholder="Please insert NAND's name">
+            <label for="nandBandwidth">Select NAND's width:  </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="NANDGBitRadio" checked (click)="nandBitChecked()"> Bit
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="NANDGVectorRadio" (click)="nandVectorChecked()"> Vector
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="NANDGStructRadio" (click)="nandCustomChecked()"> User defined
+            </label>
+            <label id="nandBandwidthInputLabel" class="insideFormLab" for="nandBandwidthInput">Width of vector:</label>
+            <input #nandBandwidthInput type="text" id="nandBandwidthInput" name="nandBandwidth" placeholder="NAND gate's width.." value="2">
+            <label id="nandStructLabel" class="insideFormLab" for="nandStruct">Choose custom struct:</label>
+            <select id="nandStruct" name="portStructure">
+                <option value="notDef">User defined struct 1</option>
+                <option value="notDef">User defined struct 1</option>
+                <option value="notDef">User defined struct 1</option>
+                <option value="notDef">User defined struct 1</option>
+            </select>
+            <input class="submitButton" type="button" value="Submit" (click)="onModalWindowSubmitClickedNewNand(nandBandwidthInput.value, nandNameInput.value)">
+            <input class="cancelButton" type="button" value="Cancel" (click)="onModalWindowCancelClicked()">
+        </form>
+    </div>
+</div>
+
+<div id="modalNewXor" class="modal">
+    <div class="modal-content">
+        <form>
+            <label id="xorNameLabel" class="insideFormLab" for="xorNameInput">XOR signal's name:</label>
+            <input #xorNameInput type="text" id="xorNameInput" name="xorNameInput" placeholder="Please insert XOR's name">
+            <label for="xorBandwidth">Select XOR's width:  </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="XORGBitRadio" checked (click)="xorBitChecked()"> Bit
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="XORGVectorRadio" (click)="xorVectorChecked()"> Vector
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="XORGStructRadio" (click)="xorCustomChecked()"> User defined
+            </label>
+            <label id="xorBandwidthInputLabel" class="insideFormLab" for="xorBandwidthInput">Width of vector:</label>
+            <input #xorBandwidthInput type="text" id="xorBandwidthInput" name="xorBandwidth" placeholder="XOR gate's width.." value="2">
+            <label id="xorStructLabel" class="insideFormLab" for="xorStruct">Choose custom struct:</label>
+            <select id="xorStruct" name="portStructure">
+                <option value="notDef">User defined struct 1</option>
+                <option value="notDef">User defined struct 1</option>
+                <option value="notDef">User defined struct 1</option>
+                <option value="notDef">User defined struct 1</option>
+            </select>
+            <input class="submitButton" type="button" value="Submit" (click)="onModalWindowSubmitClickedNewXor(xorBandwidthInput.value, xorNameInput.value)">
+            <input class="cancelButton" type="button" value="Cancel" (click)="onModalWindowCancelClicked()">
+        </form>
+    </div>
+</div>
+
+<div id="modalNewXnor" class="modal">
+    <div class="modal-content">
+        <form>
+            <label id="xnorNameLabel" class="insideFormLab" for="xnorNameInput">XNOR signal's name:</label>
+            <input #xnorNameInput type="text" id="xnorNameInput" name="xnorNameInput" placeholder="Please insert XNOR's name">
+            <label for="xnorBandwidth">Select XNOR's width:  </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="XNORGBitRadio" checked (click)="xnorBitChecked()"> Bit
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="XNORGVectorRadio" (click)="xnorVectorChecked()"> Vector
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="XNORGStructRadio" (click)="xnorCustomChecked()"> User defined
+            </label>
+            <label id="xnorBandwidthInputLabel" class="insideFormLab" for="xnorBandwidthInput">Width of vector:</label>
+            <input #xnorBandwidthInput type="text" id="xnorBandwidthInput" name="xnorBandwidth" placeholder="XNOR gate's width.." value="2">
+            <label id="xnorStructLabel" class="insideFormLab" for="xnorStruct">Choose custom struct:</label>
+            <select id="xnorStruct" name="portStructure">
+                <option value="notDef">User defined struct 1</option>
+                <option value="notDef">User defined struct 1</option>
+                <option value="notDef">User defined struct 1</option>
+                <option value="notDef">User defined struct 1</option>
+            </select>
+            <input class="submitButton" type="button" value="Submit" (click)="onModalWindowSubmitClickedNewXnor(xnorBandwidthInput.value, xnorNameInput.value)">
+            <input class="cancelButton" type="button" value="Cancel" (click)="onModalWindowCancelClicked()">
+        </form>
+    </div>
+</div>
+
+<div id="modalNewNot" class="modal">
+    <div class="modal-content">
+        <form>
+            <label id="notNameLabel" class="insideFormLab" for="notNameInput">NOT signal's name:</label>
+            <input #notNameInput type="text" id="notNameInput" name="notNameInput" placeholder="Please insert NOT's name">
+            <label for="notBandwidth">Select NOT's width:  </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="NOTGBitRadio" checked (click)="notBitChecked()"> Bit
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="NOTGVectorRadio" (click)="notVectorChecked()"> Vector
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="optradio" id="NOTGStructRadio" (click)="notCustomChecked()"> User defined
+            </label>
+            <label id="notBandwidthInputLabel" class="insideFormLab" for="notBandwidthInput">Width of vector:</label>
+            <input #notBandwidthInput type="text" id="notBandwidthInput" name="notBandwidth" placeholder="NOT gate's width.." value="2">
+            <label id="notStructLabel" class="insideFormLab" for="notStruct">Choose custom struct:</label>
+            <select id="notStruct" name="portStructure">
+                <option value="notDef">User defined struct 1</option>
+                <option value="notDef">User defined struct 1</option>
+                <option value="notDef">User defined struct 1</option>
+                <option value="notDef">User defined struct 1</option>
+            </select>
+            <input class="submitButton" type="button" value="Submit" (click)="onModalWindowSubmitClickedNewNot(notBandwidthInput.value, notNameInput.value)">
+            <input class="cancelButton" type="button" value="Cancel" (click)="onModalWindowCancelClicked()">
+        </form>
+    </div>
+</div>
+
+<div id="modalNewMultiplexor" class="modal">
+  <div class="modal-content">
+      <form>
+          <label id="mulNameLabel" class="insideFormLab" for="mulNameInput">Multiplexer signal's name:</label>
+          <input #mulNameInput type="text" id="mulNameInput" name="mulNameInput" placeholder="Please insert multiplexer's name">
+
+          <!-- <div id="singleSelSelected">
+              <label class="label-inline" for="multiplexorBandwidth">Select multiplexer's SEL width:  </label>
+              <label class="radio-inline">
+              <input type="radio" #selBit name="optradio" id="MULTIPLEXORGBitRadio" checked (click)="multiplexorSelBitChecked()"> Bit
+              </label>
+              <label class="radio-inline">
+              <input type="radio" name="optradio" #selVector id="MULTIPLEXORGVectorRadio" (click)="multiplexorSelVectorChecked()"> Vector
+              </label>
+              <label id="multiplexorBandwidthInputLabel" class="insideFormLab" for="multiplexorBandwidthInput">Width of vector:</label>
+              <input #multiplexorBandwidthInput type="text" id="multiplexorBandwidthInput" name="multiplexorBandwidth" placeholder="SEL's width.." value="2">
+          </div> -->
+
+          <div id="multiplexerDataBandwidth">
+              <label class="label-inline" for="andBandwidth">Select DATA input(s) width:  </label>
+              <label class="radio-inline">
+              <input #mulDataRadBit type="radio" name="dataBandwidth" id="mulDataBitRadio" checked (click)="mulDataBitChecked()"> Bit
+              </label>
+              <label class="radio-inline">
+              <input #mulDataRadVector type="radio" name="dataBandwidth" id="mulDataVectorRadio" (click)="mulDataVectorChecked()"> Vector
+              </label>
+              <label class="radio-inline">
+              <input #mulDataRadStruct type="radio" name="dataBandwidth" id="mulDataStructRadio" (click)="mulDataCustomChecked()"> User defined
+              </label>
+              <label id="mulDataBandwidthInputLabel" class="insideFormLab" for="mulDataBandwidthInput">Width of vector:</label>
+              <input #mulDataBandwidthInput type="text" id="mulDataBandwidthInput" name="mulDataBandwidth" value="2">
+              <label id="mulDataPackageLabel" class="insideFormLab" for="mulDataPackage">Choose package file:</label>
+              <select id="mulDataPackage" name="portPackage" (change)="onStandaloneSelectChanged($event.target.value)">
+              <option *ngFor="let package of availablePackages.items" [value]="package.package.name">
+                  {{package.package.name}}
+              </option>
+              </select>
+              <label id="mulDataStructLabel" class="insideFormLab" for="mulDataStruct">Choose user defined datatype:</label>
+              <select #mulDataStruct id="mulDataStruct" name="portStructure">
+                  <option *ngFor="let data of packageDefines" [value]="data.dataName">
+                      {{data.dataType + ": " + data.dataName}}
+                  </option>
+              </select>
+          </div>
+
+          <div id="multiplexerType">
+            <label class="label-inline" for="multiplexerType">Multiplexer type:  </label>
+            <label class="radio-inline">
+            <input #mulTypeTwo type="radio" name="mulType" id="mulTypeTwoRadio" checked> 2-to-1
+            </label>
+            <label class="radio-inline">
+            <input #mulTypeFour type="radio" name="mulType" id="mulTypeFourRadio"> 4-to-1
+            </label>
+            <label class="radio-inline">
+            <input #mulTypeEight type="radio" name="mulType" id="mulTypeEightRadio"> 8-to-1
+            </label>
+          </div>
+
+
+          <input class="submitButton" type="button" value="Submit" (click)="onModalWindowSubmitClickedNewMULTIPLEXOR( mulDataRadBit.checked, mulDataRadVector.checked, mulDataRadStruct.checked, mulDataBandwidthInput.value, mulDataStruct.value, mulNameInput.value, mulTypeTwo.checked, mulTypeFour.checked, mulTypeEight.checked)">
+          <input class="cancelButton" type="button" value="Cancel" (click)="onModalWindowCancelClicked()">
+      </form>
+  </div>
+</div>
+
+<!-- <div id="modalNewMultiplexor" class="modal">
+    <div class="modal-content">
+        <form>
+            <label id="mulNameLabel" class="insideFormLab" for="mulNameInput">Multiplexer signal's name:</label>
+            <input #mulNameInput type="text" id="mulNameInput" name="mulNameInput" placeholder="Please insert multiplexer's name">
+            <label class="label-inline" for="multiplexorBandwidth">Select MULTIPLEXER's SEL multiplicity:  </label>
+            <label class="radio-inline">
+                <input #single type="radio" name="multiplicity" value="single" id="MULTIPLEXORSingleSelRadio" checked (click)="multiplexorSingleSelChecked()"> Single port
+            </label>
+            <label class="radio-inline">
+                <input #multiple type="radio" name="multiplicity" value="multiple" id="MULTIPLEXORmultipleSelRadio" (click)="multiplexorMultipleSelChecked()"> Multiple ports
+            </label>
+            <div id="singleSelSelected">
+                <label class="label-inline" for="multiplexorBandwidth">Select MULTIPLEXER's SEL width:  </label>
+                <label class="radio-inline">
+                <input type="radio" #selBit name="optradio" id="MULTIPLEXORGBitRadio" checked (click)="multiplexorSelBitChecked()"> Bit
+                </label>
+                <label class="radio-inline">
+                <input type="radio" name="optradio" #selVector id="MULTIPLEXORGVectorRadio" (click)="multiplexorSelVectorChecked()"> Vector
+                </label>
+                <label id="multiplexorBandwidthInputLabel" class="insideFormLab" for="multiplexorBandwidthInput">Width of vector:</label>
+                <input #multiplexorBandwidthInput type="text" id="multiplexorBandwidthInput" name="multiplexorBandwidth" placeholder="SEL's width.." value="2">
+                <label id="mulIndexInputLabel" class="insideFormLab" for="mulIndexInput">Sel's key index:</label>
+                <input #mulIndexInput type="text" id="mulIndexInput" name="mulIndexInput" value="0">
+            </div>
+            <div id="multipleSelsSelected">
+                <label id="multiplexorMultiplicityLabel" class="insideFormLab" for="multiplexorMultiplicityInput">Number of signals:</label>
+                <input #multiplexorMultiplicityInput type="text" id="multiplexorMultiplicityInput" name="multiplexorMultiplicity" value="1">
+            </div>
+            <label id="mulDataMultiplicityInputLabel" class="insideFormLab" for="mulDataMultiplicityInput">Multipliciity of data ports:</label>
+            <input #mulDataMultiplicityInput type="text" id="mulDataMultiplicityInput" name="mulDataMultiplicity" value="2">
+            <div id="multiplexerDataBandwidth">
+                <label class="label-inline" for="andBandwidth">Select DATA input(s) width:  </label>
+                <label class="radio-inline">
+                <input #mulDataRadBit type="radio" name="dataBandwidth" id="mulDataBitRadio" checked (click)="mulDataBitChecked()"> Bit
+                </label>
+                <label class="radio-inline">
+                <input #mulDataRadVector type="radio" name="dataBandwidth" id="mulDataVectorRadio" (click)="mulDataVectorChecked()"> Vector
+                </label>
+                <label class="radio-inline">
+                <input #mulDataRadStruct type="radio" name="dataBandwidth" id="mulDataStructRadio" (click)="mulDataCustomChecked()"> User defined
+                </label>
+                <label id="mulDataBandwidthInputLabel" class="insideFormLab" for="mulDataBandwidthInput">Width of vector:</label>
+                <input #mulDataBandwidthInput type="text" id="mulDataBandwidthInput" name="mulDataBandwidth" value="2">
+                <label id="mulDataPackageLabel" class="insideFormLab" for="mulDataPackage">Choose package file:</label>
+                <select id="mulDataPackage" name="portPackage" (change)="onStandaloneSelectChanged($event.target.value)">
+                <option *ngFor="let package of availablePackages.items" [value]="package.package.name">
+                    {{package.package.name}}
+                </option>
+                </select>
+                <label id="mulDataStructLabel" class="insideFormLab" for="mulDataStruct">Choose user defined datatype:</label>
+                <select #mulDataStruct id="mulDataStruct" name="portStructure">
+                    <option *ngFor="let data of packageDefines" [value]="data.dataName">
+                        {{data.dataType + ": " + data.dataName}}
+                    </option>
+                </select>
+            </div>
+            <input class="submitButton" type="button" value="Submit" (click)="onModalWindowSubmitClickedNewMULTIPLEXOR(single.checked, multiple.checked, selBit.checked, selVector.checked, multiplexorBandwidthInput.value, multiplexorMultiplicityInput.value, mulDataMultiplicityInput.value, mulDataRadBit.checked, mulDataRadVector.checked, mulDataRadStruct.checked, multiplexorBandwidthInput.value, mulDataStruct.value, mulNameInput.value, mulIndexInput.value)">
+            <input class="cancelButton" type="button" value="Cancel" (click)="onModalWindowCancelClicked()">
+        </form>
+    </div>
+</div> -->
+
+<div id="modalNewDecoder" class="modal">
+    <div class="modal-content">
+        <form>
+            <label id="decoderOutNameLabel" class="insideFormLab" for="decoderOutName">DECODER name:</label>
+            <input #decoderOutName type="text" id="decoderOutName" name="decoderOutName" placeholder="DECODER's instance name..">
+            <div id="decodSingleDatSelected">
+                <label id="decoderBandwidthInputLabel" class="insideFormLab" for="decoderBandwidthInput">DATA width:</label>
+                <input #decoderBandwidthInput type="text" id="decoderBandwidthInput" name="decoderBandwidth" placeholder="DATA's width.." value="2">
+            </div>
+            <label class="label-inline" for="decodEnableRad">Add ENABLE port:  </label>
+            <label class="radio-inline">
+                <input #decodEnableRad type="radio" name="decodEnableRad" id="decodEnableRad" unchecked>
+            </label>
+            <br>
+            <label class="label-inline" for="decoderOutMultiplicity">Select DECODER's OUT multiplicity:  </label>
+            <label class="radio-inline">
+                <input #decoderOutSingle type="radio" name="multiplicity" value="single" id="DECODERSingleOutRadio" checked> Single port
+            </label>
+            <label class="radio-inline">
+                <input #decoderOutMultiple type="radio" name="multiplicity" value="multiple" id="DECODERMultipleOutRadio"> Multiple ports
+            </label>
+            <input class="submitButton" type="button" value="Submit" (click)="onModalWindowSubmitClickedNewDECODER(decoderBandwidthInput.value, decodEnableRad.checked, decoderOutSingle.checked, decoderOutMultiple.checked, decoderOutName.value)">
+            <input class="cancelButton" type="button" value="Cancel" (click)="onModalWindowCancelClicked()">
+        </form>
+    </div>
+</div>
+
+<div id="modalNewEncoder" class="modal">
+    <div class="modal-content">
+        <form>
+            <label id="encoderOutNameLabel" class="insideFormLab" for="encoderOutName">ENCODER name:</label>
+            <input #encoderOutName type="text" id="encoderOutName" name="encoderOutName" placeholder="ENCODER's instance name..">
+            <div id="encodSingleDatSelected">
+                <label id="encoderBandwidthInputLabel" class="insideFormLab" for="encoderBandwidthInput">DATA width:</label>
+                <input #encoderBandwidthInput type="text" id="encoderBandwidthInput" name="encoderBandwidth" placeholder="DATA's width.." value="2">
+            </div>
+            <br>
+            <input class="submitButton" type="button" value="Submit" (click)="onModalWindowSubmitClickedNewENCODER(encoderBandwidthInput.value, encoderOutName.value)">
+            <input class="cancelButton" type="button" value="Cancel" (click)="onModalWindowCancelClicked()">
+        </form>
+    </div>
+</div>
+
+<div id="modalNewAdder" class="modal">
+    <div class="modal-content">
+        <form>
+            <label id="adderOutNameLabel" class="insideFormLab" for="adderOutName">ADDER name:</label>
+            <input #adderOutName type="text" id="adderOutName" name="adderOutName" placeholder="ADDERS's instance name..">
+            <div>
+                <label id="adderBandwidthInputLabel" class="insideFormLab" for="adderBandwidthInput">DATA width:</label>
+                <input #adderBandwidthInput type="text" id="adderBandwidthInput" name="adderBandwidth" placeholder="DATA's width.." value="2">
+            </div>
+            <br>
+            <input class="submitButton" type="button" value="Submit" (click)="onModalWindowSubmitClickedNewAdder(adderBandwidthInput.value, adderOutName.value)">
+            <input class="cancelButton" type="button" value="Cancel" (click)="onModalWindowCancelClicked()">
+        </form>
+    </div>
+</div>
+
+<div id="modalNewRegister" class="modal">
+    <div class="modal-content">
+        <form>
+            <label id="registerOutNameLabel" class="insideFormLab" for="registerOutName">REGISTER name:</label>
+            <input #registerOutName type="text" id="registerOutName" name="registerOutName" placeholder="REGISTER's instance name..">
+            <div>
+                <label class="label-inline" for="andBandwidth">Select DATA input width:  </label>
+                <label class="radio-inline">
+                <input #registerDataRadBit type="radio" name="dataBandwidth" id="registerDataBitRadio" checked (click)="registerDataBitChecked()"> Bit
+                </label>
+                <label class="radio-inline">
+                <input #registerDataRadVector type="radio" name="dataBandwidth" id="registerDataVectorRadio" (click)="registerDataVectorChecked()"> Vector
+                </label>
+                <label id="registerBandwidthInputLabel" class="insideFormLab" for="registerBandwidthInput">Width of vector:</label>
+                <input #registerBandwidthInput type="text" id="registerBandwidthInput" name="registerBandwidth" placeholder="DATA's width.." value="2">
+            </div>
+            <label class="radio-inline">
+                <input #registerEnable type="checkbox" name="enableOpt" value="enable" id="registerEnableCheckBox"> Enable port
+            </label>
+            <label class="radio-inline">
+                <input #registerReset type="checkbox" name="resetOpt" value="reset" id="registerResetCheckBox"> Reset port
+            </label>
+            <br>
+            <input class="submitButton" type="button" value="Submit" (click)="onModalWindowSubmitClickedNewRegister(registerBandwidthInput.value, registerOutName.value, registerEnable.checked, registerReset.checked)">
+            <input class="cancelButton" type="button" value="Cancel" (click)="onModalWindowCancelClicked()">
+        </form>
+    </div>
+</div>
+
+<div id="modalSaveDiagram" class="modal">
+    <div class="modal-content2">
+        <form>
+            <label id="diagramSaveNameLabel" class="insideFormLab" for="diagramSaveName">Insert name of .json file where your diagram will be stored:</label>
+            <input #diagramSaveName type="text" id="diagramSaveName" name="diagramSaveName" placeholder="Diagram's name..">
+            <input class="submitButton" type="button" value="Submit" (click)="onModalWindowSubmitClickedDiagramName(diagramSaveName.value)">
+            <input class="cancelButton" type="button" value="Cancel" (click)="onModalWindowCancelClicked()">
+        </form>
+    </div>
+</div>
+
+<div id="modalSaveVhdlFile" class="modal">
+    <div class="modal-content2">
+        <form>
+            <label id="saveVhdlSourceNameLabel" class="insideFormLab" for="saveVhdlSourceName">Insert name of your .vhd file:</label>
+            <input #saveVhdlSourceName type="text" id="saveVhdlSourceName" name="saveVhdlSourceName" placeholder="Vhdl source code file's name..">
+            <input class="submitButton" type="button" value="Submit" (click)="onModalWindowSubmitClickedVhdlSourceCodeName(saveVhdlSourceName.value)">
+            <input class="cancelButton" type="button" value="Cancel" (click)="onModalWindowCancelClicked()">
+        </form>
+    </div>
+</div>
+
+<div id="modalSaveSystemVerilogFile" class="modal">
+    <div class="modal-content2">
+        <form>
+            <label id="saveSystemVerilogSourceNameLabel" class="insideFormLab" for="saveSystemVerilogSourceName">Insert name of your .sv file:</label>
+            <input #saveSystemVerilogSourceName type="text" id="saveSystemVerilogSourceName" name="saveSystemVerilogSourceName" placeholder="SystemVerilog file's name..">
+            <input class="submitButton" type="button" value="Submit" (click)="onModalWindowSubmitClickedSystemVerilogSourceCodeName(saveSystemVerilogSourceName.value)">
+            <input class="cancelButton" type="button" value="Cancel" (click)="onModalWindowCancelClicked()">
+        </form>
+    </div>
+</div>
+
+<div id="modalExistingModule" class="modal">
+    <div class="modal-content2">
+        <form>
+            <input #moduleInstanceInput type="text" id="moduleInstanceInput" name="moduleInstanceInput" placeholder="Insert unique instance identifier">
+            <select #loadSVselect id="loadSVselect" name="loadSVselect">
+                <option *ngFor="let reference of availableJSONFiles" [value]="reference.name">
+                  {{reference.displayName}}
+                </option>
+            </select>
+            <input class="submitButton" type="button" value="Load from source code" (click)="onModalWindowSubmitClickedLoadModuleFromCode(loadSVselect.value, moduleInstanceInput.value)">
+            <input class="cancelButton" type="button" value="Cancel" (click)="onModalWindowCancelClicked()">
+        </form>
+    </div>
+</div>
+
+<div id="modalLoadDiagram" class="modal">
+    <div class="modal-content2">
+        <form>
+            <select #loadJSONSelect id="loadJSONSelect" name="loadJSONSelect">
+              <option *ngFor="let reference of availableJSONFiles" [value]="reference.name">
+                {{reference.displayName}}
+              </option>
+            </select>
+            <input class="submitButton" type="button" value="Load from source code" (click)="onModalWindowSubmitClickedLoadModuleFromJSON(loadJSONSelect.value)">
+            <input class="cancelButton" type="button" value="Cancel" (click)="onModalWindowCancelClicked()">
+        </form>
+    </div>
+</div>

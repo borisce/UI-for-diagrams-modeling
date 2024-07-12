@@ -1,0 +1,122 @@
+$success-color: #54eb6d;
+$warning-color: #ebca54;
+$danger-color: #eb6554;
+$neutral-color: #e5dbdb;
+$background-color: #1D1E1D;
+
+
+.tooltip-monaco {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content !important;
+  height: 30px;
+  border-radius: 8px;
+  position: relative !important;
+  border: solid 2px $neutral-color;
+  background-color: $background-color !important;
+
+  & .inner {
+    padding: 5px;
+  }
+}
+
+.tooltip-monaco:before {
+  content: "";
+  position: absolute;
+  left: -3px;
+  bottom: -3px;
+  width: 10px;
+  height: 10px;
+  border-left: $neutral-color solid 3px;
+  border-bottom: $neutral-color solid 3px;
+  background-color: $background-color !important;
+  border-radius: 2px;
+}
+
+.warning-tooltip-monaco {
+  border-color: $warning-color;
+  background-color: $background-color;
+}
+
+.warning-tooltip-monaco:before, .warning-tooltip-monaco:after {
+  border-color: $warning-color;
+}
+
+.danger-tooltip-monaco {
+  border-color: $danger-color;
+  background-color: $background-color;
+}
+
+.danger-tooltip-monaco:before, .danger-tooltip-monaco:after {
+  border-color: $danger-color;
+}
+
+.success-tooltip-monaco {
+  border-color: $success-color;
+  background-color: $background-color;
+}
+
+.success-tooltip-monaco:before, .success-tooltip-monaco:after {
+  border-color: $success-color;
+}
+
+
+.decoration {
+  transition: color 0.2s cubic-bezier(0.65, 0.05, 0.36, 1);
+
+}
+
+.decoration:hover {
+  color: #6CE0E0 !important;
+  cursor: pointer !important;
+  text-decoration: underline;
+}
+
+.decoration-definition {
+  background-color: rgba(108, 224, 224, 0.12) !important;
+}
+
+.new-code-review-block {
+  opacity: 0.3;
+
+  &.white {
+    background-color: #FFF;
+  }
+
+  &.red {
+    background-color: #F00;
+  }
+
+  &.green {
+    background-color: #0F0;
+  }
+
+  &.blue {
+    background-color: #00F;
+  }
+
+  &.yellow {
+    background-color: #FF0;
+  }
+
+  &.orange {
+    background-color: #F90;
+  }
+
+  &.purple {
+    background-color: #F0F;
+  }
+
+  &.pink {
+    background-color: #F0F;
+  }
+
+  &.gray {
+    background-color: #888;
+  }
+
+  &.brown {
+    background-color: #A52A2A;
+  }
+}

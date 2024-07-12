@@ -1,0 +1,62 @@
+<mat-progress-bar *ngIf="this.loadingState; else ordersBlock" mode="indeterminate"></mat-progress-bar>
+<ng-template #ordersBlock>
+  <div class="container">
+    <h2 class="pt-3 pb-3">My orders</h2>
+
+    <mat-table [dataSource]="orders.content">
+
+      <ng-container matColumnDef="created">
+        <mat-header-cell *matHeaderCellDef mat-header-cell> Created at</mat-header-cell>
+        <mat-cell *matCellDef="let order" mat-cell> {{order.created | date: "dd/MM/yyyy, HH:mm:ss" }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="price">
+        <mat-header-cell *matHeaderCellDef mat-header-cell> Total price</mat-header-cell>
+        <mat-cell *matCellDef="let order" mat-cell> {{order.total_tax_price | priceFormat}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="last_modified">
+        <mat-header-cell *matHeaderCellDef mat-header-cell> Changed at</mat-header-cell>
+        <mat-cell *matCellDef="let order" mat-cell> {{order.last_modified | date: "dd/MM/yyyy, HH:mm:ss" }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="content">
+        <mat-header-cell *matHeaderCellDef mat-header-cell> Items</mat-header-cell>
+        <mat-cell *matCellDef="let order" mat-cell>
+          {{showContent(order)}}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="state">
+        <mat-header-cell *matHeaderCellDef mat-header-cell> State</mat-header-cell>
+        <mat-cell *matCellDef="let order" [ngSwitch]="order.state.state" mat-cell>
+          <span *ngSwitchCase="'CREATED'" class="badge badge-success">Created</span>
+          <span *ngSwitchCase="'COMPLETED'" class="badge badge-success">Completed</span>
+          <span *ngSwitchCase="'PENDING_PAYMENT'" class="badge badge-warning">Pending payment</span>
+          <span *ngSwitchCase="'CANCELLED'" class="badge badge-warning">Cancelled</span>
+          <span *ngSwitchCase="'REFUNDED'" class="badge badge-info">Refunded</span>
+          <span *ngSwitchCase="'FAILED'" class="badge badge-danger">Failed</span>
+          <span *ngSwitchCase="'PAYMENT_FAILED'" class="badge badge-danger">Failed</span>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef mat-header-cell></mat-header-cell>
+        <mat-cell *matCellDef="let order" class="table-actions" mat-cell>
+          <button [routerLink]="['/orders', order.uuid]" color="primary" mat-raised-button>View</button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row (click)="viewOrder(row.uuid)" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <mat-paginator (page)="pageChange($event)"
+                   [length]="this.orders.totalElements"
+                   [pageIndex]="pageIndex"
+                   [pageSizeOptions]="pageSizeOptions"
+                   [pageSize]="pageSize"
+                   aria-label="Select page">
+    </mat-paginator>
+  </div>
+</ng-template>

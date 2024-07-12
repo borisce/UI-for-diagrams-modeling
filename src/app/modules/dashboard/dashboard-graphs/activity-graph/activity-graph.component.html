@@ -1,0 +1,52 @@
+<mat-card class="dashboard-card">
+    <mat-card-title-group>
+        <div class="graph-action">
+            <mat-icon class="refresh-icon" (click)="refreshData()">refresh</mat-icon>
+            <mat-icon class="more-icon" mat-icon-button [matMenuTriggerFor]="menu">more_vert</mat-icon>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="changeInterval(12)">
+                <span>Last 12 days</span>
+              </button>
+              <button mat-menu-item (click)="changeInterval(30)">
+                <span>Last 30 days</span>
+              </button>
+              <button mat-menu-item (click)="changeInterval(90)">
+                <span>Last 3 months</span>
+              </button>
+              <button mat-menu-item (click)="changeInterval(180)">
+                <span>Last 6 months</span>
+              </button>
+              <button mat-menu-item (click)="changeInterval(365)">
+                <span>Last year</span>
+              </button>
+          </mat-menu>
+        </div>
+        <mat-card-title class="mat-card-title-text">User activity</mat-card-title>
+        <mat-card-subtitle>User activity in the last {{activityInterval}} days</mat-card-subtitle>
+    </mat-card-title-group>
+    <div class="graph-bg">
+        <mat-spinner [hidden]="!loadingState"></mat-spinner>
+        <ngx-charts-area-chart
+            *ngIf="!loadingState"
+            [view]="view"
+            [scheme]="colorScheme"
+            [legend]="legend"
+            [legendPosition]="legendPosition"
+            [legendTitle]="legendTitle"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxis]="xAxis"
+            [yAxis]="yAxis"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel"
+            [timeline]="timeline"
+            [results]="multi"
+            [yAxisTickFormatting]="axisFormat"
+            [maxXAxisTickLength]="maxXAxisTickLength"
+            [maxYAxisTickLength]="maxYAxisTickLength"
+            [yScaleMax]="yScaleMax"
+            [curve]="linearCurve"
+            (select)="onSelect($event)">
+        </ngx-charts-area-chart>
+    </div>
+</mat-card>

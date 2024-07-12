@@ -1,0 +1,164 @@
+#contextMenu {
+    width: 120px;
+    box-shadow: 0 4px 5px 3px rgba(0, 0, 0, 0.2);
+    background: white;
+    position: fixed;
+    z-index: 1;
+    display: none;
+    overflow: auto;
+}
+
+.menu-options {
+    list-style: none;
+    padding: 1px 0;
+}
+
+.menu-option {
+    font-weight: 500;
+    font-size: 14px;
+    padding: 10px 20px 10px 20px;
+    cursor: pointer;
+}
+
+.menu-option:hover {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.modalShowProperties {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-contentShowProperties {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 40%;
+}
+
+input[type=text],
+select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=button] {
+    width: 100%;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=button]:disabled {
+    background: #cecece;
+}
+
+.submitButton {
+    background-color: #4CAF50;
+}
+
+.cancelButton {
+    background-color: rgb(172, 54, 54);
+}
+
+#innerPBandwidthInput {
+    display: none;
+}
+
+#innerPBandwidthInputLabel {
+    display: none;
+}
+
+#innerPStruct {
+    display: none;
+}
+
+#innerPStructLabel {
+    display: none;
+}
+
+#innerPPackage {
+    display: none;
+}
+
+#innerPPackageLabel {
+    display: none;
+}
+
+.insideFormLab {
+    margin-top: 10px;
+}
+
+.port-body.joint-port-body.available-magnet {
+    fill: 'green'
+}
+
+.available-magnet {
+    fill: 'green'
+}
+
+.radio-inline {
+    padding-right: 8px;
+}
+
+.label-inline {
+    padding-right: 8px;
+}
+
+.label-class {
+    float: left;
+    width: 113px;
+}
+
+button {
+    background-color: #313331 !important;
+  }
+
+#buttonsContainer {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    margin-right: 30px;
+    margin-bottom: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.bbox {
+    stroke: #16a085;
+    stroke-width: 2;
+    stroke-opacity: 0;
+    fill: none;
+    transition-property: stroke-opacity;
+    transition-duration: 0.5s;
+    pointer-events: none;
+}
+
+.axis {
+    stroke: #95a5a6;
+    stroke-dasharray: 2,4;
+    stroke-width: 1;
+    pointer-events: none;
+}
+
+.active {
+    stroke-opacity: 0.5;
+}

@@ -1,0 +1,17 @@
+<div
+  id="new-branch-popup"
+  [ngClass]="visible ? 'visible' : 'hidden'"
+>
+  <form [formGroup]="newBranchForm" (ngSubmit)="onSubmit()">
+    <label>Enter branch name:</label>
+    <textarea formControlName="name" class="form-control" placeholder="Branch name" spellcheck="false">{{
+      name
+    }}</textarea>
+    <div class="button-wrapper">
+      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="button" class="btn btn-secondary" (click)="onClose()">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

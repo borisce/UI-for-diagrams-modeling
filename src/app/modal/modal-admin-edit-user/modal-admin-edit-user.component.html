@@ -1,0 +1,367 @@
+<div class="dialog">
+    <div class="dialog-header">
+        <h1 mat-dialog-title>User overview</h1>
+        <button mat-button [mat-dialog-close]="false">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <hr>
+    <mat-dialog-content>
+        <h3>Information</h3>
+        <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+        <div *ngIf="success" class="alert alert-success">{{ success }}</div>
+        <form [formGroup]="editForm" (ngSubmit)="onSubmit('basicInformation')">
+            <mat-list #overview role="list" id="overviewList">
+                <mat-list-item role="list-item">
+                    <div class="name">UUID</div>
+                    <div class="from">{{user.uuid}}</div>
+                </mat-list-item>
+                <mat-list-item role="list-item">
+                    <div class="name">Username</div>
+                    <div class="from">
+                        <input type="text" formControlName="username" class="form-control" value="{{user.username}}" [ngClass]="{ 'is-invalid': submittedInformation && f.username.errors }"/>
+                    </div>
+                </mat-list-item>
+                <mat-list-item role="list-item">
+                    <div class="name">First Name</div>
+                    <div class="from">
+                        <input type="text" formControlName="firstName" class="form-control" value="{{user.firstName}}" [ngClass]="{ 'is-invalid': submittedInformation && f.firstName.errors }"/>
+                    </div>
+                </mat-list-item>
+                <mat-list-item role="list-item">
+                    <div class="name">Last Name</div>
+                    <div class="from">
+                        <input type="text" formControlName="lastName" class="form-control" value="{{user.lastName}}" [ngClass]="{ 'is-invalid': submittedInformation && f.lastName.errors }"/>
+                    </div>
+                </mat-list-item>
+                <mat-list-item role="list-item">
+                    <div class="name">Email</div>
+                    <div class="from">
+                        <input type="text" formControlName="email" class="form-control" value="{{user.email}}" [ngClass]="{ 'is-invalid': submittedInformation && f.email.errors }"/>
+                    </div>
+                </mat-list-item>
+                <mat-list-item role="list-item">
+                    <div class="name">Role</div>
+                    <div class="from">
+                        {{userRoles}}
+<!--                       <mat-form-field>-->
+<!--                            <select matNativeControl>-->
+<!--                              <option value="{{userRoles}}">{{userRoles}}</option>-->
+<!--                              <option value="{{otherRoles}}">{{otherRoles}}</option>-->
+<!--                            </select>-->
+<!--                        </mat-form-field>-->
+                      <div class="row mb-3">
+                        <div class="col-md-12">
+                          <span class="rm-role text-danger mr-2" (click)="removeRole(user.uuid, 1)">
+                            X
+                          </span>
+                          <span class="switch-role" (click)="changeRole(user.uuid, 1)">
+                            Switch Admin
+                          </span>
+                        </div>
+                        <div class="col-md-12">
+                          <span class="rm-role text-danger mr-2" (click)="removeRole(user.uuid, 2)">
+                            X
+                          </span>
+                          <span class="switch-role" (click)="changeRole(user.uuid, 2)">
+                            Switch Tester
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                </mat-list-item>
+              <hr class="mt-5 mb-3">
+                <mat-list-item role="list-item">
+                    <div class="name">Account Status</div>
+                    <div *ngIf="user.active" class="from status">
+                        <span class="desc">Active</span>
+                        <span><mat-icon style="color: green;">lens</mat-icon></span>
+                    </div>
+                    <div *ngIf="!user.active" class="from status">
+                        <span class="desc">Suspended</span>
+                        <span><mat-icon style="color: red;">lens</mat-icon></span>
+                    </div>
+                </mat-list-item>
+                <mat-list-item role="list-item">
+                    <div class="name">Subscription</div>
+                    <div class="from">
+                        BASIC
+                        <!-- <mat-form-field>
+                            <select matNativeControl>
+                              <option value="basic">BASIC</option>
+                              <option value="standard">STANDARD</option>
+                              <option value="premium">PREMIUM</option>
+                              <option value="free">FREE</option>
+                            </select>
+                        </mat-form-field> -->
+                    </div>
+                </mat-list-item>
+                <mat-list-item role="list-item">
+                    <div class="name">Update information</div>
+                    <div class="from">
+                        <button [disabled]="loading" mat-flat-button color="primary" class="action">
+                            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
+                            Update
+                        </button>
+                    </div>
+                </mat-list-item>
+            </mat-list>
+        </form>
+        <hr>
+        <h3>Activity</h3>
+        <mat-list #activity role="list" id="activityList">
+            <mat-accordion multi>
+                <mat-expansion-panel *ngIf="orgOwner; else noOrgOwner">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Organization
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            1
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <mat-list class="expansionList organizationList">
+                        <mat-list-item class="topItem">
+                            <div class="name">Name</div>
+                            <div class="from">{{org.name}}</div>
+                        </mat-list-item>
+                        <mat-list-item>
+                            <div class="name">UUID</div>
+                            <div class="from">{{org.uuid}}</div>
+                        </mat-list-item>
+                        <mat-list-item>
+                            <div class="name">Created</div>
+                            <div class="from">{{((org.created).replace('T', ' ')).slice(0, -9)}}</div>
+                        </mat-list-item>
+                        <mat-list-item>
+                            <div class="name">Modified</div>
+                            <div class="from">{{((org.lastModified).replace('T', ' ')).slice(0, -9)}}</div>
+                        </mat-list-item>
+                    </mat-list>
+                </mat-expansion-panel>
+                <ng-template #noOrgOwner>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Organization
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                0
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <mat-list class="expansionList">
+                            <mat-list-item>
+                                This user is not an owner of any organization
+                            </mat-list-item>
+                        </mat-list>
+                    </mat-expansion-panel>
+                </ng-template>
+
+                <mat-expansion-panel *ngIf="teamOwner; else noTeamOwner">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Teams
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            {{teams.length}}
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <mat-list class="expansionList teamListParent">
+                        <div *ngFor="let team of teams" class="teamList">
+                            <mat-list-item class="topItem">
+                                <div class="name">Name</div>
+                                <div class="from">{{team.name}}</div>
+                            </mat-list-item>
+                            <mat-list-item>
+                                <div class="name">UUID</div>
+                                <div class="from">{{team.uuid}}</div>
+                            </mat-list-item>
+                            <mat-list-item>
+                                <div class="name">Members</div>
+                                <div class="from">
+                                    <span *ngFor="let member of team.memberships">{{member.user.username}} </span>
+                                </div>
+                            </mat-list-item>
+                            <mat-list-item>
+                                <div class="name">Repository</div>
+                                <div class="from">{{team.repo.name}}</div>
+                            </mat-list-item>
+                            <mat-list-item>
+                                <div class="name">Created</div>
+                                <div class="from">{{((team.created).replace('T', ' ')).slice(0, -9)}}</div>
+                            </mat-list-item>
+                            <mat-list-item>
+                                <div class="name">Modified</div>
+                                <div class="from">{{((team.lastModified).replace('T', ' ')).slice(0, -9)}}</div>
+                            </mat-list-item>
+                        </div>
+                    </mat-list>
+                </mat-expansion-panel>
+                <ng-template #noTeamOwner>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Teams
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                0
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <mat-list class="expansionList">
+                            <mat-list-item>
+                                This user is not an owner of any team
+                            </mat-list-item>
+                        </mat-list>
+                    </mat-expansion-panel>
+                </ng-template>
+
+                <mat-expansion-panel *ngIf="repoOwner; else noRepoOwner">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Repositories
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            {{repos.length}}
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <mat-list class="expansionList repoListParent">
+                        <div *ngFor="let repo of repos" class="repoList">
+                            <mat-list-item class="topItem">
+                                <div class="name">Name</div>
+                                <div class="from">{{repo.name}}</div>
+                            </mat-list-item>
+                            <mat-list-item>
+                                <div class="name">UUID</div>
+                                <div class="from">{{repo.uuid}}</div>
+                            </mat-list-item>
+                            <mat-list-item>
+                                <div class="name">Description</div>
+                                <div class="from">{{repo.description}}</div>
+                            </mat-list-item>
+                            <mat-list-item>
+                                <div class="name">URI</div>
+                                <div class="from">{{repo.uri}}</div>
+                            </mat-list-item>
+                            <mat-list-item>
+                                <div class="name">Created</div>
+                                <div class="from">{{((repo.created).replace('T', ' ')).slice(0, -9)}}</div>
+                            </mat-list-item>
+                            <mat-list-item>
+                                <div class="name">Modified</div>
+                                <div class="from">{{((repo.lastModified).replace('T', ' ')).slice(0, -9)}}</div>
+                            </mat-list-item>
+                        </div>
+                    </mat-list>
+                </mat-expansion-panel>
+                <ng-template #noRepoOwner>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Repositories
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                0
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <mat-list class="expansionList">
+                            <mat-list-item>
+                                This user is not an owner of any repositories
+                            </mat-list-item>
+                        </mat-list>
+                    </mat-expansion-panel>
+                </ng-template>
+
+                <mat-expansion-panel *ngIf="classroomOwner; else noClassroomOwner">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Classrooms
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            {{classrooms.length}}
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <mat-list class="expansionList classroomListParent">
+                        <div *ngFor="let classroom of classrooms" class="classroomList">
+                            <mat-list-item class="topItem">
+                                <div class="name">Name</div>
+                                <div class="from">{{classroom.name}}</div>
+                            </mat-list-item>
+                            <mat-list-item>
+                                <div class="name">UUID</div>
+                                <div class="from">{{classroom.uuid}}</div>
+                            </mat-list-item>
+                            <mat-list-item>
+                                <div class="name">Password</div>
+                                <div class="from">{{classroom.password}}</div>
+                            </mat-list-item>
+                            <mat-list-item>
+                                <div class="name">Slug</div>
+                                <div class="from">{{classroom.slug}}</div>
+                            </mat-list-item>
+                            <mat-list-item>
+                                <div class="name">Locked</div>
+                                <div class="from">{{classroom.locked}}</div>
+                            </mat-list-item>
+                            <mat-list-item>
+                                <div class="name">Created</div>
+                                <div class="from">{{((classroom.created).replace('T', ' ')).slice(0, -9)}}</div>
+                            </mat-list-item>
+                            <mat-list-item>
+                                <div class="name">Modified</div>
+                                <div class="from">{{((classroom.lastModified).replace('T', ' ')).slice(0, -9)}}</div>
+                            </mat-list-item>
+                        </div>
+                    </mat-list>
+                </mat-expansion-panel>
+                <ng-template #noClassroomOwner>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Classrooms
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                0
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <mat-list class="expansionList">
+                            <mat-list-item>
+                                This user is not an owner of any classroom
+                            </mat-list-item>
+                        </mat-list>
+                    </mat-expansion-panel>
+                </ng-template>
+            </mat-accordion>
+            <!-- <mat-list-item role="list-item">
+                <div class="name">Update activity</div>
+                <div class="from">
+                    <button mat-flat-button color="primary" class="action">
+                        Update
+                    </button>
+                </div>
+            </mat-list-item> -->
+        </mat-list>
+        <div *ngIf="!userAdmin">
+        <hr>
+        <h3>Critical section</h3>
+        <mat-list #reset role="list" id="criticalList">
+            <mat-list-item role="list-item">
+                <div class="name">Delete account</div>
+                <div class="from">
+                    <!-- <button mat-flat-button color="warn" class="action" (click)="onDelete(user)">Delete</button> -->
+                    <button mat-flat-button color="warn" class="action">Delete</button>
+                </div>
+            </mat-list-item>
+            <mat-list-item role="list-item">
+                <div *ngIf="user.active" class="name">Suspend account</div>
+                <div *ngIf="!user.active" class="name">Activate account</div>
+                <div *ngIf="user.active" class="from">
+                    <button mat-flat-button color="warn" class="action" (click)="onSuspend(user, false)">Suspend</button>
+                </div>
+                <div *ngIf="!user.active" class="from">
+                    <button mat-flat-button color="warn" class="action" (click)="onSuspend(user, true)">Activate</button>
+                </div>
+            </mat-list-item>
+        </mat-list>
+        </div>
+    </mat-dialog-content>
+</div>

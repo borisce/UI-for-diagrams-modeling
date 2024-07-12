@@ -1,0 +1,28 @@
+.modal-wrapper {
+  height: fit-content;
+  max-height: 500px;
+}
+
+.tab-content-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  gap: 8px;
+  padding: 20px;
+}
+
+form {
+  width: 100%;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.button-group {
+  display: flex;
+  gap: 8px;
+}

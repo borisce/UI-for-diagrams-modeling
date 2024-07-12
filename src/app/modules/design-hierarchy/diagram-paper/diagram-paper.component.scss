@@ -1,0 +1,240 @@
+#buttonsContainer {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  margin-right: 30px;
+  margin-bottom: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+#buttonsContainer > button {
+  margin-bottom: 7px;
+  transform: scale(0.9);
+  background-color: #2C3E50 !important;
+}
+
+#toolbarContainer {
+  position: relative;
+  justify-content: flex-end;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 3px 0;
+  margin: 0 20px;
+  z-index: 1;
+}
+
+#toolbarContainer > button {
+  width: 30px;
+  height: 31px;
+  margin-left: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+}
+
+mat-icon {
+  font-size: 20px;
+  line-height: 1;
+}
+
+#link-hover-tooltip {
+  position: absolute;
+  display: none;
+  background-color: #f5f5f5;
+  border: 1px solid #dcdcdc;
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  max-width: 350px;
+  left: 48px;
+  z-index: 100;
+}
+
+#link-hover-tooltip mat-icon {
+  vertical-align: middle;
+  margin-right: 8px;
+  height: 29px !important;
+}
+
+#settingsButtonContainer {
+  position: relative;
+}
+
+#settingsButtonContainer > button {
+  width: 30px;
+  height: 31px;
+  margin-left: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+}
+
+#settings {
+  position: absolute;
+  width: 350px;
+  height: auto;
+  padding-top: 10px;
+  margin-top: 3px;
+  background-color: #f5f5f5;
+  border: 1px solid #dcdcdc;
+  padding-left: 14px;
+  border-radius: 4px;
+  z-index: 100;
+  font-size: 14px;
+  top: 100%;
+}
+
+
+.mat-checkbox-checked .mat-checkbox-background,
+.mat-checkbox-indeterminate .mat-checkbox-background {
+  background-color: black !important;
+}
+
+mat-icon {
+  transform: scale(0.75);
+}
+
+#treeparent {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.e-treeview {
+  height: 100%;
+}
+
+.e-list-parent {
+  height: 100%;
+  padding: 0 0 0 1em !important;
+}
+
+.e-treeview .e-ul {
+  padding: 0;
+}
+
+.e-list-icon.file::before {
+  font-family: "Material Icons" !important;
+  content: "\e24d";
+  color: #808080;
+}
+
+.e-list-icon.dir::before {
+  font-family: "Material Icons" !important;
+  content: "folder";
+  color: #808080;
+}
+
+.mytree > ul > .e-list-item .e-fullrow {
+  background: white;
+  color: white;
+}
+
+.e-list-text {
+  color: white !important;
+}
+
+.e-treeview .e-fullrow {
+  border: none !important;
+}
+
+.e-treeview .e-list-item.e-active > .e-fullrow,
+.e-treeview .e-list-item.e-hover.e-active > .e-fullrow {
+  background-color: rgba(255, 255, 255, 0.25) !important;
+}
+
+.e-treeview .e-list-item.e-hover > .e-fullrow {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.e-treeview .e-list-item.e-hover > .e-text-content,
+.e-treeview .e-list-item.e-hover > .e-text-content .e-icon-collapsible,
+.e-treeview .e-list-item.e-active > .e-text-content .e-icon-collapsible,
+.e-treeview .e-icon-expandable {
+  color: white !important;
+}
+
+.e-fullrow {
+  color: rgba(41, 41, 41, 0.63) !important;
+}
+
+.e-treeview .e-list-text {
+  color: white;
+}
+
+.e-treeview .e-list-item div.e-icons.interaction {
+  color: white;
+}
+
+.e-treeview .e-icon-collapsible,
+.e-treeview .e-icon-expandable {
+  color: white;
+}
+
+.e-list-item.toCommit span.e-list-text {
+  color: lightgreen !important;
+}
+
+.e-list-item.toPush span.e-list-text {
+  color: cornflowerblue !important;
+}
+
+.e-list-item.gitPushed span.e-list-text {
+  color: white !important;
+}
+
+.e-list-item.toAdd span.e-list-text {
+  color: indianred !important;
+}
+
+.e-checkbox-wrapper,
+.e-checkbox-wrapper > * {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.e-treeview.e-fullrow-wrap .e-text-content {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+}
+
+.e-treeview .e-checkbox-wrapper + .e-list-icon {
+  padding: 0 !important;
+  margin: 1px 0 0 0 !important;
+  vertical-align: middle !important;
+  height: auto !important;
+}
+
+.snackbar-success {
+  color: #fff;
+  background-color: green;
+}
+
+.snackbar-error {
+  color: #fff;
+  background-color: red;
+}
+
+.snackbar-custom .mat-simple-snackbar-action {
+  color: white;
+}
+
+.overlay {
+  position: fixed; /* Or absolute, depending on other CSS */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5); /* Dim the background slightly */
+  z-index: 1050; /* Ensure it's on top, adjust this value based on your z-index usage */
+}

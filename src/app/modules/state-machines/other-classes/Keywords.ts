@@ -1,0 +1,42 @@
+export class Keywords {
+  public keywords: string[] = [
+    'always', 'and', 'assign', 'automatic', 'begin', 'buf', 'bufif1', 'bufif0', 'case', 'casex', 'casez', 'cell', 'cmos',
+    'config', 'deassign', 'default', 'defparam', 'design', 'disable', '$fullskew', '$hold', '$nochange', '$period',
+    '$recovery', '$recrem', '$removal', '$setup', '$setuphold', '$skew', '$timeskew', '$width', 'edge', 'else', 'end',
+    'endcase', 'endconfig', 'endfunction', 'endgenerate', 'endmodule', 'endprimitive', 'endspecify', 'endtable',
+    'endtask', 'event', 'for', 'force', 'forever', 'fork', 'function', 'generate', 'genvar', 'highz1', 'highz0', 'if',
+    'ifnone', 'include', 'initial', 'inout', 'input', 'instance', 'integer', 'join', 'large',
+    'liblist', 'library', 'localparam', 'macromodule', 'medium', '-incdir', 'module', 'nand', 'negedge', 'nmos', 'nor',
+    'noshowcancelled', 'not', 'notif1', 'notif0', 'or', 'output', 'parameter', 'PATHPULSE$', 'pmos',
+    'posedge', 'primitive', 'pulldown', 'pull1', 'pullup', 'pull0', 'pulsestyle_ondetect', 'pulsestyle_onevent', 'rcmos', 'real',
+    'realtime', 'reg', 'release', 'repeat', 'rnmos', 'rpmos', 'rtran', 'rtranif1', 'rtranif0', 'scalared',
+    'showcancelled', 'signed', 'small', 'specify', 'specparam', 'strong1', 'strong0', 'supply1', 'supply0',
+    'table', 'task', 'time', 'tran', 'tranif1', 'tranif0', 'tri', 'triand', 'tri1', 'trior', 'trireg', 'tri0', 'use',
+    'uwire', 'vectored', 'wait', 'wand', 'weak1', 'weak0', 'while', 'wire', 'wor', 'xnor', 'xor', 'accept_on', 'alias',
+    'always_comb', 'always_ff', 'always_latch', 'assert', 'assume', 'automatic', 'before', 'bind', 'bins', 'binsof',
+    'bit', 'break', 'byte', 'chandle', 'checker', 'class', 'clocking', 'const', 'constraint', 'context', 'continue',
+    'cover', 'covergroup', 'coverpoint', 'cross', 'dist', '$error', '$fatal', '$info', '$root', '$unit', '$warning',
+    'do', '"DPI"', '"DPI-C"', 'endchecker', 'endclass', 'endclocking', 'endgroup', 'endinterface', 'endpackage',
+    'endprogram', 'endproperty', 'endsequence', 'enum', 'eventually', 'expect', 'export', 'extends', 'extern', 'final',
+    'first_match', 'foreach', 'forkjoin', 'global', 'iff', 'ignore_bins', 'illegal_bins', 'implements', 'implies',
+    'import', 'inside', 'int', 'interconnect', 'interface', 'intersect', 'join_any', 'join_none', 'let', 'local',
+    'logic', 'longint', 'matches', 'modport', 'nettype', 'new', 'nexttime', 'null', '1step', 'option', 'package',
+    'packed', 'priority', 'program', 'property', 'protected', 'pure', 'rand', 'randc', 'randcase', 'randomize',
+    'randsequence', 'ref', 'reject_on', 'restrict', 'return', 's_always', 's_eventually', 's_nexttime', 's_until',
+    's_until_with', 'sample', 'sequence', 'shortint', 'shortreal', 'soft', 'solve', 'static', 'std', 'string',
+    'strong', 'struct', 'super', 'sync_accept_on', 'sync_reject_on', 'tagged', 'this', 'throughout', 'timeprecision',
+    'timeunit', 'type', 'type_option', 'typedef', 'union', 'unique', 'unique0', 'unsigned', 'until', 'until_with',
+    'untyped', 'var', 'virtual', 'void', 'wait_order', 'weak', 'wildcard', 'with', 'within'];
+
+  public vhdlKeywords: string[] = [
+    'ABS', 'ACCESS', 'ACROSS', 'AFTER', 'ALIAS', 'ALL', 'AND', 'ARCHITECTURE', 'ARRAY', 'ASSERT', 'ATTRIBUTE', 'BEGIN',
+    'BLOCK', 'BODY', 'BREAK', 'BUFFER', 'BUS', 'CASE', 'COMPONENT', 'CONFIGURATION', 'CONSTANT', 'DISCONNECT', 'DOWNTO',
+    'END', 'ENTITY', 'ELSE', 'ELSIF', 'EXIT', 'FILE', 'FOR', 'FUNCTION', 'GENERATE', 'GENERIC', 'GROUP', 'GUARDED',
+    'IF', 'IMPURE', 'IN', 'INERTIAL', 'INOUT', 'IS', 'LABEL', 'LIBRARY', 'LIMIT', 'LINKAGE', 'LITERAL', 'LOOP',
+    'MAP', 'MOD', 'NAND', 'NATURE', 'NEW', 'NEXT', 'NOISE', 'NOR', 'NOT', 'NULL_', 'OF', 'ON', 'OPEN', 'OR', 'OTHERS',
+    'OUT', 'PACKAGE', 'PORT', 'POSTPONED', 'PROCESS', 'PROCEDURE', 'PROCEDURAL', 'PURE', 'QUANTITY', 'RANGE', 'REVERSE_RANGE',
+    'REJECT', 'REM', 'RECORD', 'REFERENCE', 'REGISTER', 'REPORT', 'RETURN', 'ROL', 'ROR', 'SELECT', 'SEVERITY', 'SHARED',
+    'SIGNAL', 'SLA', 'SLL', 'SPECTRUM', 'SRA', 'SRL', 'SUBNATURE', 'SUBTYPE', 'TERMINAL', 'THEN', 'THROUGH', 'TO',
+    'TOLERANCE', 'TRANSPORT', 'TYPE', 'UNAFFECTED', 'UNITS', 'UNTIL', 'USE', 'VARIABLE', 'WAIT', 'WITH', 'WHEN', 'WHILE',
+    'XNOR', 'XOR'];
+}

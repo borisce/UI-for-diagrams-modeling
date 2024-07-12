@@ -1,0 +1,40 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon-button {
+  background-color: transparent;
+  border: transparent;
+  transition: ease 0.5s background-color;
+  box-shadow: none;
+  color: black;
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  border-radius: 8px;
+}
+
+.icon-button:hover {
+  background-color: #eee;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+mat-icon {
+  color: #777;
+}
+
+h1 {
+  margin-bottom: 0px;
+}

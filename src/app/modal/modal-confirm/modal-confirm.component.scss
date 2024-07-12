@@ -1,0 +1,44 @@
+.dialog {
+  &-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+
+  &-header button {
+    background-color: transparent;
+    border: transparent;
+    transition: ease 0.5s background-color;
+    box-shadow: none;
+    color: black;
+    display: flex;
+    align-items: center;
+    padding: 4px;
+    border-radius: 8px;
+  }
+
+  &-header button:hover {
+    background-color: #eee;
+  }
+
+  &-controls {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 8px;
+
+    button {
+      width: 50%;
+    }
+  }
+}
+
+h3 {
+  margin: 0px;
+}
+
+p {
+  margin-top: 1rem !important;
+}

@@ -1,0 +1,63 @@
+.editor {
+    height: 100vh;
+    position: relative;
+}
+
+button.saveButton {
+    width: 100%;
+    margin: auto;
+}
+
+body {
+    padding: 20px;
+    background-color: #20262e;
+}
+
+div.info {
+    width: 100%;
+    position: absolute;
+    background: #ffdd57;
+    border-radius: 3px;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(1px, 1fr));
+    grid-gap: 10px;
+}
+
+div.info-header {
+    position: relative;
+    background: #05ffb0;
+    border-radius: 3px;
+    padding: 20px;
+    font-size: 14px;
+}
+
+div.info-header2 {
+    position: relative;
+    background: #05ffb0;
+    border-radius: 3px;
+    padding: 20px;
+    font-size: 14px;
+}
+
+@keyframes spinner {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.spinner:before {
+    content: "";
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    margin-left: -10px;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    border-top-color: #000000;
+    animation: spinner 0.8s linear infinite;
+}

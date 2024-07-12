@@ -1,0 +1,707 @@
+.objectsPropertiesWrapper{
+    margin-top: 0px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    /*margin: 5% auto;
+    padding: 20px;
+    /*border: 1px solid #888;*/
+    width: 100%;
+    display: none;
+}
+
+/*.radio-inline{
+    display: block;
+}*/
+
+input[type=text],
+select {
+    width: 90%;
+    padding: 6px 10px;
+    margin: 4px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=button] {
+    width: 90%;
+    color: white;
+    padding: 6px 10px;
+    margin: 4px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=button]:disabled {
+    background: #cecece;
+}
+
+.submitButton {
+    background-color: #4CAF50;
+}
+
+.cancelButton {
+    background-color: rgb(172, 54, 54);
+}
+
+#pBandwidthInput {
+    display: none;
+}
+
+#pBandwidthInputLabel {
+    display: none;
+}
+
+#pStruct {
+    display: none;
+}
+
+#pStructLabel {
+    display: none;
+}
+
+#pPackage {
+    display: none;
+}
+
+#pPackageLabel {
+    display: none;
+}
+
+#pBandwidthInputOut {
+    display: none;
+}
+
+#pBandwidthInputLabelOut {
+    display: none;
+}
+
+#pStructOut {
+    display: none;
+}
+
+#pStructLabelOut {
+    display: none;
+}
+
+#pPackageOut {
+    display: none;
+}
+
+#pPackageLabelOut {
+    display: none;
+}
+
+#orBandwidthInput {
+    display: none;
+}
+
+#orBandwidthInputLabel {
+    display: none;
+}
+
+#notBandwidthInput {
+    display: none;
+}
+
+#notBandwidthInputLabel {
+    display: none;
+}
+
+#notStruct {
+    display: none;
+}
+
+#notStructLabel {
+    display: none;
+}
+
+#orStruct {
+    display: none;
+}
+
+#orStructLabel {
+    display: none;
+}
+
+#norBandwidthInput {
+    display: none;
+}
+
+#norBandwidthInputLabel {
+    display: none;
+}
+
+#norStruct {
+    display: none;
+}
+
+#norStructLabel {
+    display: none;
+}
+
+#xorBandwidthInput {
+    display: none;
+}
+
+#xorBandwidthInputLabel {
+    display: none;
+}
+
+#xorStruct {
+    display: none;
+}
+
+#xorStructLabel {
+    display: none;
+}
+
+#xnorBandwidthInput {
+    display: none;
+}
+
+#xnorBandwidthInputLabel {
+    display: none;
+}
+
+#xnorStruct {
+    display: none;
+}
+
+#xnorStructLabel {
+    display: none;
+}
+
+#nandBandwidthInput {
+    display: none;
+}
+
+#nandBandwidthInputLabel {
+    display: none;
+}
+
+#nandStruct {
+    display: none;
+}
+
+#nandStructLabel {
+    display: none;
+}
+
+#andBandwidthInput {
+    display: none;
+}
+
+#andBandwidthInputLabel {
+    display: none;
+}
+
+#andStruct {
+    display: none;
+}
+
+#andStructLabel {
+    display: none;
+}
+
+#panelMultiplexorBandwidthInput {
+    display: none;
+}
+
+#panelMultiplexorBandwidthInputLabel {
+    display: none;
+}
+
+#panelMultiplexorStruct {
+    display: none;
+}
+
+#panelMultiplexorStructLabel {
+    display: none;
+}
+
+.insideFormLab {
+    margin-top: 10px;
+}
+
+.radio-inline {
+    padding-right: 8px;
+    margin-bottom: 0px;
+    display: block;
+}
+
+.label-inline {
+    padding-right: 8px;
+}
+
+#panelInnerPBandwidthInputLabel{
+    display: none;
+}
+
+#panelInnerPBandwidthInput{
+    display: none;
+}
+
+#panelInnerPPackageLabel{
+    display: none;
+}
+
+#panelInnerPPackage{
+    display: none;
+}
+
+#panelInnerPStructLabel{
+    display: none;
+}
+
+#panelInnerPStruct{
+    display: none;
+}
+
+#panelInnerPStructPartsLabel{
+    display: none;
+}
+
+#panelInnerPStructParts{
+    display: none;
+}
+
+#panelMultipleSelsSelected {
+    display: none;
+}
+
+#panelMulDataBandwidthInputLabel {
+    display: none;
+}
+
+#panelMulDataBandwidthInput {
+    display: none;
+}
+
+#panelRegisterBandwidthInputLabel {
+    display: none;
+}
+
+#panelRegisterBandwidthInput {
+    display: none;
+}
+
+#panelRegisterDataPackageLabel {
+    display: none;
+}
+
+#panelRegisterDataPackage {
+    display: none;
+}
+#panelRegisterDataStructLabel {
+    display: none;
+}
+
+#panelRegisterDataStruct {
+    display: none;
+}
+#panelRegisterDataStructPartsLabel {
+    display: none;
+}
+
+#panelRegisterDataStructParts {
+    display: none;
+}
+
+#panelMulDataStructLabel {
+    display: none;
+}
+
+#panelMulDataStruct {
+    display: none;
+}
+
+#panelMulDataStructPartsLabel {
+    display: none;
+}
+
+#panelMulDataStructParts {
+    display: none;
+}
+
+#panelMulDataPackageLabel {
+    display: none;
+}
+
+#panelMulDataPackage {
+    display: none;
+}
+
+#panelMulIndexInputLabel {
+    display: none;
+}
+
+#panelMulIndexInput {
+    display: none;
+}
+
+/* display handling for dialogues for custom logic gates*/
+
+#panelAndCustomPortsBandwidthInput {
+    display: none;
+}
+
+#panelAndCustomPortsBandwidthInputLabel {
+    display: none;
+}
+
+#panelAndCustomPortsStruct {
+    display: none;
+}
+
+#panelAndCustomPortsStructLabel {
+    display: none;
+}
+
+
+#panelOrCustomPortsBandwidthInput {
+    display: none;
+}
+
+#panelOrCustomPortsBandwidthInputLabel {
+    display: none;
+}
+
+#panelOrCustomPortsStruct {
+    display: none;
+}
+
+#panelOrCustomPortsStructLabel {
+    display: none;
+}
+
+#panelNorCustomPortsBandwidthInput {
+    display: none;
+}
+
+#panelNorCustomPortsBandwidthInputLabel {
+    display: none;
+}
+
+#panelNorCustomPortsStruct {
+    display: none;
+}
+
+#panelNorCustomPortsStructLabel {
+    display: none;
+}
+
+#panelNandCustomPortsBandwidthInput {
+    display: none;
+}
+
+#panelNandCustomPortsBandwidthInputLabel {
+    display: none;
+}
+
+#panelNandCustomPortsStruct {
+    display: none;
+}
+
+#panelNandCustomPortsStructLabel {
+    display: none;
+}
+
+#panelXorCustomPortsBandwidthInput {
+    display: none;
+}
+
+#panelXorCustomPortsBandwidthInputLabel {
+    display: none;
+}
+
+#panelXorCustomPortsStruct {
+    display: none;
+}
+
+#panelXorCustomPortsStructLabel {
+    display: none;
+}
+
+#panelXnorCustomPortsBandwidthInput {
+    display: none;
+}
+
+#panelXnorCustomPortsBandwidthInputLabel {
+    display: none;
+}
+
+#panelXnorCustomPortsStruct {
+    display: none;
+}
+
+#panelXnorCustomPortsStructLabel {
+    display: none;
+}
+
+#panelNotBandwidthInputLabel{
+    display: none;
+}
+
+#panelNotBandwidthInput{
+    display: none;
+}
+
+#panelPBandwidthInput {
+    display: none;
+}
+
+#panelPBandwidthInputLabel {
+    display: none;
+}
+
+#panelPStruct {
+    display: none;
+}
+
+#panelPpStructLabel {
+    display: none;
+}
+
+#panelPStructParts {
+    display: none;
+}
+
+#panelPStructPartsLabel {
+    display: none;
+}
+
+#panelPPackage {
+    display: none;
+}
+
+#panelPPackageLabel {
+    display: none;
+}
+
+#panelPBandwidthInputOut {
+    display: none;
+}
+
+#panelPBandwidthInputLabelOut {
+    display: none;
+}
+
+#panelPStructOut {
+    display: none;
+}
+
+#panelPStructLabelOut {
+    display: none;
+}
+
+#panelPStructPartsOut {
+    display: none;
+}
+
+#panelPStructPartsLabelOut {
+    display: none;
+}
+
+#panelPPackageOut {
+    display: none;
+}
+
+#panelPPackageLabelOut {
+    display: none;
+}
+
+#panelRamDataPackage {
+    display: none;
+}
+
+#panelRamDataPackageLabel {
+    display: none;
+}
+
+#panelRamDataStruct {
+    display: none;
+}
+
+#panelRamDataStructLabel {
+    display: none;
+}
+
+#panelRamDataStructParts {
+    display: none;
+}
+
+#panelRamDataStructPartsLabel {
+    display: none;
+}
+
+h3 {
+    color: #757575;
+}
+
+.elementsAdditionDiv {
+    width: 13%;
+    margin: auto;
+    padding-bottom: 10px;
+    float: left;
+    text-align: center;
+}
+
+.btn-group button {
+    background-color: #4CAF50;
+    border: 1px solid green;
+    color: white;
+    font-size: 20px;
+    margin: 5px;
+    padding: 20px 24px;
+    cursor: pointer;
+}
+
+.btn-group button:not(:last-child) {
+    border-right: none;
+    /* Prevent double borders */
+}
+
+.box2 {
+    display: inline-block;
+    margin: 8px;
+}
+
+
+/* Clear floats (clearfix hack) */
+
+.btn-group:after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+
+/* Add a background color on hover */
+
+.btn-group button:hover {
+    background-color: #3e8e41;
+}
+
+.available-magnet {
+    fill: yellow;
+}
+
+.available-cell {
+    fill: yellow;
+}
+
+
+/* The switch - the box around the slider */
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 30px;
+    height: 17px;
+}
+
+
+/* Hide default HTML checkbox */
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+
+/* The slider */
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 13px;
+    width: 13px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked+.slider {
+    background-color: #3e8e41;
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px #3e8e41;
+}
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+
+/* Rounded sliders */
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.menuButtonImg {
+    width: 90px;
+    height: 40px;
+}
+
+.topMenuDiv {
+    width: max-content;
+    border-block-color: black;
+    border: 3px solid;
+}
+
+.jqx-menu-vertical {
+    background-color: #0cc14c;
+}
+
+.jqx-menu ul {
+    background-color: #4caf50;
+}
+
+::ng-deep .mat-form-field-underline {
+    display: none;
+}
+
+::ng-deep .mat-form-field-wrapper {
+    padding-bottom: 0px;
+}

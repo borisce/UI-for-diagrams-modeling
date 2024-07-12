@@ -1,0 +1,77 @@
+<div class="cart">
+  <div *ngIf="cartService.cartItemCount > 0; else cartEmpty">
+    <h1 class="cart-header">
+      <mat-icon>shopping_cart</mat-icon>
+      Cart items ({{ cartService.cartItemCount }})
+    </h1>
+    <div class="cart-items">
+      <div *ngFor="let cartItem of cartService.cartItems" class="cart-items-item">
+        <div class="cart-items-item-name">
+          <span *ngIf="cartItem.core">
+          <a [routerLink]="['/cores/' + cartItem.core?.uuid]">
+            {{ cartItem.core?.name || 'Unknown IP core' }}
+          </a>
+          </span>
+          <span *ngIf="cartItem.package_id">
+            {{ cartItem.package_id?.name || 'Unknown package' }}
+          </span>
+        </div>
+        <div class="cart-items-item-variation">
+          <div *ngIf="!cartItem.package_id">
+            {{
+              cartItem.variation === 'WITH_UPDATES' ? "With updates" :
+                (cartItem.variation === 'WITHOUT_UPDATES' ? "Without updates" : "Upgrade")
+            }}
+            <span *ngIf="cartItem.variation == 'WITH_UPDATES' &&  cartItem.core?.price_without_updates > 0">
+                <button (click)="changeItemVariation(cartItem.uuid, 'WITHOUT_UPDATES')" color="primary"
+                        mat-icon-button
+                        matTooltip="Change to without updates {{cartItem.core?.price_without_updates - cartItem.price | priceFormat:'with_sign'}}">
+                  <mat-icon>arrow_circle_down</mat-icon>
+                </button>
+          </span>
+            <span *ngIf="cartItem.variation == 'WITHOUT_UPDATES' &&  cartItem.core?.price_with_updates > 0">
+                <button
+                  (click)="changeItemVariation(cartItem.uuid, 'WITH_UPDATES')"
+                  color="primary" mat-icon-button
+                  matTooltip="Change to with updates {{cartItem.core?.price_with_updates - cartItem.price | priceFormat:'with_sign'}}">
+                  <mat-icon>arrow_circle_up</mat-icon>
+                </button>
+          </span>
+          </div>
+        </div>
+        <div class="cart-items-item-price">
+          <span matTooltip="Including tax">{{ cartItem.tax_price | priceFormat }}</span>
+          <div class="cart-items-item-price-without-tax" matTooltip="Without tax">{{ cartItem.price | priceFormat }}
+          </div>
+        </div>
+        <div class="cart-items-item-actions">
+          <button (click)="removeItem(cartItem.uuid)" color="primary" mat-icon-button>
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="cart-totals">
+      <div>
+        <span>
+          <span>Total price without VAT</span><span>{{ cartService.totalPrice | priceFormat }}</span>
+        </span>
+        <span>
+          <span>Total price</span><span>{{ cartService.totalTaxPrice | priceFormat }}</span>
+        </span>
+      </div>
+      <div>
+        <button (click)="cartService.closeCart()" [routerLink]="['/order']" color="primary" mat-raised-button>Proceed to
+          checkout
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #cartEmpty>
+    <h1 class="cart-header">
+      Cart is empty
+    </h1>
+  </ng-template>
+</div>

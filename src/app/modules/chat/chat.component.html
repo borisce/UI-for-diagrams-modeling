@@ -1,0 +1,189 @@
+<div class="chat-container">
+  <div
+    class="chat-bubble"
+    (click)="toggleVisibility()"
+    [ngClass]="{ expanded: expanded }"
+    *ngIf="authService.loggedIn"
+  >
+    <mat-icon>chat</mat-icon>
+  </div>
+  <div class="chat-content-wrapper" [ngClass]="{ expanded: expanded }">
+    <div class="chat-rooms-loading" *ngIf="!chatService.chatRooms">
+      <span class="spinner-border spinner-border-sm mr-1"></span>
+      Connecting to chat server...
+    </div>
+    <div
+      class="chat-rooms"
+      *ngIf="!activeRoom?.id && chatService.chatRooms && !activeForm && !activeDirect?.id"
+    >
+      <div class="chat-rooms-header">
+        <p>Available rooms</p>
+        <mat-icon class="refresh-icon" matTooltip="Refresh rooms" (click)="chatService.getRooms(classrooms.content)"
+          >refresh</mat-icon
+        >
+      </div>
+      <span class="no-rooms" *ngIf="chatService.chatRooms.length === 0">
+        No rooms available.
+      </span>
+      <div
+        class="chat-rooms-item"
+        *ngFor="let room of chatService.chatRooms"
+        (click)="connectToRoom(room.id, room.name, room.author_id)"
+      >
+        <mat-icon>tag</mat-icon>
+        <div class="chat-rooms-item-name">{{ room.name }}</div>
+        <div
+          class="chat-rooms-item-status"
+          [ngClass]="{ active: room.active }"
+        ></div>
+      </div>
+      <div class="chat-rooms-header">
+        <p>Direct messages</p>
+        <mat-icon class="refresh-icon" matTooltip="Refresh directs" (click)="chatService.getDirectMessages(authService.currentUser.email)"
+          >refresh</mat-icon
+        >
+      </div>
+      <span class="no-rooms" *ngIf="chatService.directs.length === 0">
+        No directs available.
+      </span>
+      <div
+        class="chat-rooms-item"
+        *ngFor="let direct of chatService.directs"
+        (click)="connectToDirect(direct.id, direct.user)"
+      >
+        <mat-icon>message</mat-icon>
+        <div class="chat-rooms-item-name small">{{ direct.user }}</div>
+      </div>
+      <div class="chat-rooms-new" (click)="openForm('new')">
+        <mat-icon>add</mat-icon> Create new room
+      </div>
+      <div class="chat-rooms-new" (click)="openForm('newDirect')">
+        <mat-icon>person</mat-icon> Direct message
+      </div>
+    </div>
+    <div class="chat-create-room" *ngIf="activeForm === 'newDirect'">
+      <!-- Direct message form -->
+      <form
+        [formGroup]="directForm"
+        (ngSubmit)="onCreateDirect()"
+        class="room-form"
+      >
+        <input
+          type="text"
+          formControlName="directUser"
+          class="form-control"
+          placeholder="User name"
+          spellcheck="false"
+        />
+        <input
+          type="text"
+          formControlName="directMessage"
+          class="form-control"
+          placeholder="Message"
+          spellcheck="false"
+        />
+        <div class="button-wrapper">
+          <button type="submit">Submit</button>
+          <button (click)="openForm(undefined)">Cancel</button>
+        </div>
+      </form>
+    </div>
+    <div class="chat-create-room" *ngIf="activeForm === 'new'">
+      <!-- New room form -->
+      <form
+        [formGroup]="roomForm"
+        (ngSubmit)="onCreateRoom()"
+        class="room-form"
+      >
+        <input
+          type="text"
+          formControlName="roomName"
+          class="form-control"
+          placeholder="Room name"
+          spellcheck="false"
+        />
+        <div class="checkbox-wrapper">
+          <label for="private">Private</label>
+          <mat-checkbox
+            color="white"
+            formControlName="roomPrivate"
+          ></mat-checkbox>
+        </div>
+        <mat-form-field *ngIf="roomForm.value.roomPrivate">
+          <mat-label>Classroom</mat-label>
+          <mat-select [(value)]="roomClassroom">
+            <mat-option
+              *ngFor="let classroom of classrooms.content"
+              [value]="classroom.uuid"
+              >{{ classroom.name }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+        <div class="button-wrapper">
+          <button type="submit">Submit</button>
+          <button (click)="openForm(undefined)">Cancel</button>
+        </div>
+      </form>
+    </div>
+    <div class="chat-messages" *ngIf="activeRoom?.id || activeDirect">
+      <div class="chat-messages-header">
+        <div class="chat-messages-header-back" (click)="connectToRoom(null)">
+          <mat-icon>arrow_back</mat-icon>
+        </div>
+        <div class="chat-messages-header-name">
+          <mat-icon>{{activeDirect ? 'person' : 'tag'}}</mat-icon>{{ activeRoom?.name ?? activeDirect?.user }}
+        </div>
+        <div
+          class="chat-messages-header-delete"
+          *ngIf="chatService.userID === activeRoom?.author_id || activeDirect"
+          matTooltip="{{ activeDirect ? 'Delete chat' : 'Delete room' }}"
+        >
+          <mat-icon (click)="activeDirect ? deleteDirect(activeDirect?.id) : deleteRoom(activeRoom?.id)">delete</mat-icon>
+        </div>
+      </div>
+      <!-- Messages -->
+      <div class="chat-messages-items">
+        <span class="no-messages" *ngIf="chatService.messages.length === 0">
+          No messages yet.
+        </span>
+        <div
+          class="chat-messages-item"
+          *ngFor="let message of chatService.messages.reverse()"
+          [ngClass]="{ mine: activeDirect ? message?.authorName !== chatService?.userName : message.authorID !== chatService.userID }"
+        >
+          <div class="chat-messages-item-content">{{ message.content }}</div>
+          <div class="chat-messages-item-footer">
+            <div
+              class="chat-messages-item-author"
+              *ngIf="activeDirect ? message?.authorName !== chatService?.userName : message.authorID !== chatService.userID"
+            >
+              {{ message.authorName }}
+            </div>
+            <div class="chat-messages-item-date">
+              {{ message.date | date : "H:mm" }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Message form -->
+      <form
+        [formGroup]="messageForm"
+        (ngSubmit)="activeDirect ? onSendDirectMessage() : onSendMessage()"
+        class="message-form"
+      >
+        <textarea
+          formControlName="message"
+          class="form-control"
+          placeholder="Your message"
+          spellcheck="false"
+          >{{ message }}</textarea
+        >
+        <div class="button-wrapper">
+          <button type="submit">
+            <mat-icon>send</mat-icon>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

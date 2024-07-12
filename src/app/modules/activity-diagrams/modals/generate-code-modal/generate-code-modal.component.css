@@ -1,0 +1,11 @@
+.mat-stepper-horizontal {
+  margin-top: 8px;
+}
+
+::ng-deep .mat-horizontal-stepper-content {
+  margin-top: 16px !important;
+}
+
+::ng-deep .mat-horizontal-content-container {
+  padding: 0 24px 0px 24px !important;
+}
